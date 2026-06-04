@@ -1,6 +1,0 @@
-<Solution>
-  <Project Path="BaseMicroservicio.API/BaseMicroservicio.API.csproj" />
-  <Project Path="BaseMicroservicio.Aplicacion/BaseMicroservicio.Aplicacion.csproj" />
-  <Project Path="BaseMicroservicio.Dominio/BaseMicroservicio.Dominio.csproj" />
-  <Project Path="BaseMicroservicio.Infraestructura/BaseMicroservicio.Infraestructura.csproj" />
-</Solution>

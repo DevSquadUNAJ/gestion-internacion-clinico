@@ -15,14 +15,14 @@ git clone [https://github.com/DevSquadUNAJ/TU_NUEVO_REPO.git](https://github.com
 cd TU_NUEVO_REPO
 
 ## 🪄 Paso 3: Script de Inicialización del Microservicio
-Por defecto, todo el código interno (carpetas, namespaces y el .sln) se llama `BaseMicroservicio`. Para cambiar todo esto de forma segura y automática, abre **PowerShell** dentro de la carpeta de tu nuevo repositorio y pega el siguiente script.
+Por defecto, todo el código interno (carpetas, namespaces y el .sln) se llama `Clinico`. Para cambiar todo esto de forma segura y automática, abre **PowerShell** dentro de la carpeta de tu nuevo repositorio y pega el siguiente script.
 
 **⚠️ IMPORTANTE:** Cambia el valor de `$nuevo` en la línea 3 por el nombre real de tu microservicio (ej. `"Medico"`, `"Enfermeria"`, `"Admision"`).
 Ejecuta por bloques. Recuerda cambiar el nombre antes de copiar y pegar para evitar que se ejecute todo de corrido en la consola.
 
 ---
 
-$viejo = "BaseMicroservicio"
+$viejo = "Clinico"
 $nuevo = "PonNuevoNombreAquiMicroservicio"
 
 Write-Host "Iniciando reemplazo de texto de '$viejo' a '$nuevo'..."
