@@ -1,7 +1,10 @@
+using Clinico.Infraestructura;
+using Clinico.Infraestructura.Persistencia;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Clinico.Infraestructura;
 
 
 namespace Clinico.API
@@ -14,7 +17,8 @@ namespace Clinico.API
 
             // Add services to the container.
             builder.Services.AddControllers();
-            builder.Services.AddInfraestructura(builder.Configuration);
+            //builder.Services.AddInfraestructura(builder.Configuration);
+            builder.Services.AddDbContext<ContextoBaseDeDatos>(opciones =>opciones.UseSqlServer(builder.Configuration.GetConnectionString("ClinicoDb")));
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

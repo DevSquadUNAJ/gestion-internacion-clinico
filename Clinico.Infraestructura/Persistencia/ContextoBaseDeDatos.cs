@@ -9,10 +9,10 @@ using Clinico.Dominio.Entidades;
 namespace Clinico.Infraestructura.Persistencia
 {
 
-    public class ClinicalDbContext : DbContext
+    public class ContextoBaseDeDatos : DbContext
     {
-        public ClinicalDbContext(
-            DbContextOptions<ClinicalDbContext> options)
+        public ContextoBaseDeDatos(
+            DbContextOptions<ContextoBaseDeDatos> options)
             : base(options)
         {
         }
@@ -35,7 +35,7 @@ namespace Clinico.Infraestructura.Persistencia
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(
-                typeof(ClinicalDbContext).Assembly);
+                typeof(ContextoBaseDeDatos).Assembly);
 
             base.OnModelCreating(modelBuilder);
         }
