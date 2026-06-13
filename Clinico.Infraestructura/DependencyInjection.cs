@@ -12,7 +12,7 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         // agregar el contexto de la base de datos
-        services.AddDbContext<ClinicalDbContext>(options =>
+        services.AddDbContext<ContextoBaseDeDatos>(options =>
         {
             options.UseSqlServer(
                 configuration.GetConnectionString("ClinicaDb"));
