@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Clinico.Infraestructura.Persistencia;
+using Clinico.Aplicacion.Interfaces.IConsultas;
+using Clinico.Infraestructura.Consultas;
 
 namespace Clinico.Infraestructura;
 
@@ -18,6 +20,9 @@ public static class DependencyInjection
                 configuration.GetConnectionString("ClinicaDb"));
         });
 
+        // registrar consultas
+        services.AddScoped<IGetNurseQuery, GetNurseQuery>();
+        services.AddScoped<IGetNursingDashboardQuery, GetNursingDashboardQuery>();
         return services;
     }
 }

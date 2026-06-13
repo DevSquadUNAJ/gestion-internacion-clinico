@@ -1,5 +1,6 @@
 using Clinico.Infraestructura;
 using Clinico.Infraestructura.Persistencia;
+using Clinico.Aplicacion;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +20,10 @@ namespace Clinico.API
             builder.Services.AddControllers();
             //builder.Services.AddInfraestructura(builder.Configuration);
             builder.Services.AddDbContext<ContextoBaseDeDatos>(opciones =>opciones.UseSqlServer(builder.Configuration.GetConnectionString("ClinicoDb")));
+            //builder.Services.AddAplicacion(builder.Configuration);
+            builder.Services.AddAplicacion();
+            builder.Services.AddInfraestructura(builder.Configuration);
+
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
