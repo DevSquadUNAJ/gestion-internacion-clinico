@@ -1,4 +1,12 @@
+using Clinico.Aplicacion.CasosDeUso;
+using Clinico.Aplicacion.Interfaces.ICasosDeUso;
+using Clinico.Aplicacion.Interfaces.IComandos;
+using Clinico.Aplicacion.Interfaces.IConsultas;
+using Clinico.Aplicacion.Interfaces.IMapeadores;
+using Clinico.Aplicacion.Mapeadores;
 using Clinico.Infraestructura;
+using Clinico.Infraestructura.Comandos;
+using Clinico.Infraestructura.Consultas;
 using Clinico.Infraestructura.Persistencia;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +23,41 @@ namespace Clinico.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // ==========================================
+            // 1. CONFIGURACIÓN BASE (Base de Datos)
+            // ==========================================
+            builder.Services.AddDbContext<ContextoBaseDeDatos>(opciones =>opciones.UseSqlServer(builder.Configuration.GetConnectionString("ClinicoDb")));
+
+            // ==========================================
+            // 2. DOMINIO: AUTH & USERS (Usuarios y Login)
+            // ==========================================
+
+
+            // ==========================================
+            // 3. DOMINIO: Historia Clinica
+            // ==========================================
+            builder.Services.AddScoped<IHistoriaClinicaConsulta, HistoriaClinicaConsulta>();
+            builder.Services.AddScoped<IHistoriaClinicaMapper, HistoriaClinicaMapper>();
+            builder.Services.AddScoped<IObtenerHistoriaClinicaCasoDeUso, ObtenerHistoriaClinicaCasoDeUso>();
+
+            // ==========================================
+            // 4. DOMINIO: Medico
+            // ==========================================
+            builder.Services.AddScoped<IMedicoConsulta,MedicoConsulta>();
+
+            // ==========================================
+            // 5. DOMINIO: Catalogo CIE-10
+            // ==========================================
+            builder.Services.AddScoped<ICatalogoCie10Consulta,CatalogoCie10Consulta>();
+
+            // ==========================================
+            // 6. DOMINIO: Diagnostico
+            // ==========================================
+            builder.Services.AddScoped<IDiagnosticoComando,DiagnosticoComando>();
+            builder.Services.AddScoped<IRegistrarDiagnosticoCasoDeUso,RegistrarDiagnosticoCasoDeUso>();
+
             // Add services to the container.
             builder.Services.AddControllers();
-            //builder.Services.AddInfraestructura(builder.Configuration);
-            builder.Services.AddDbContext<ContextoBaseDeDatos>(opciones =>opciones.UseSqlServer(builder.Configuration.GetConnectionString("ClinicoDb")));
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
