@@ -26,7 +26,7 @@ namespace Clinico.API
             // ==========================================
             // 1. CONFIGURACIÓN BASE (Base de Datos)
             // ==========================================
-            builder.Services.AddDbContext<ContextoBaseDeDatos>(opciones =>opciones.UseSqlServer(builder.Configuration.GetConnectionString("ClinicoDb")));
+            builder.Services.AddInfraestructura(builder.Configuration);
 
             // ==========================================
             // 2. DOMINIO: AUTH & USERS (Usuarios y Login)
@@ -71,6 +71,7 @@ namespace Clinico.API
             builder.Services.AddScoped<ITratamientoDosisConsulta,TratamientoDosisConsulta>();
             builder.Services.AddScoped<ITratamientoComando,TratamientoComando>();
             builder.Services.AddScoped<ITratamientoDosisComando,TratamientoDosisComando>();
+            builder.Services.AddScoped<IObtenerSeguimientoTratamientoCasoDeUso, ObtenerSeguimientoTratamientoCasoDeUso>();
 
 
             // Add services to the container.
