@@ -48,18 +48,18 @@ namespace Clinico.API
             // ==========================================
             // 4. DOMINIO: Medico
             // ==========================================
-            builder.Services.AddScoped<IMedicoConsulta,MedicoConsulta>();
+            builder.Services.AddScoped<IMedicoConsulta, MedicoConsulta>();
 
             // ==========================================
             // 5. DOMINIO: Catalogo CIE-10
             // ==========================================
-            builder.Services.AddScoped<ICatalogoCie10Consulta,CatalogoCie10Consulta>();
+            builder.Services.AddScoped<ICatalogoCie10Consulta, CatalogoCie10Consulta>();
 
             // ==========================================
             // 6. DOMINIO: Diagnostico
             // ==========================================
-            builder.Services.AddScoped<IDiagnosticoComando,DiagnosticoComando>();
-            builder.Services.AddScoped<IRegistrarDiagnosticoCasoDeUso,RegistrarDiagnosticoCasoDeUso>();
+            builder.Services.AddScoped<IDiagnosticoComando, DiagnosticoComando>();
+            builder.Services.AddScoped<IRegistrarDiagnosticoCasoDeUso, RegistrarDiagnosticoCasoDeUso>();
 
             // ==========================================
             // 7. DOMINIO: Evolucion Clinica
@@ -70,13 +70,21 @@ namespace Clinico.API
             // ==========================================
             // 7. DOMINIO: Evolucion Clinica
             // ==========================================
-            builder.Services.AddScoped<IModificarTratamientoCasoDeUso,ModificarTratamientoCasoDeUso>();
-            builder.Services.AddScoped<ITratamientoConsulta,TratamientoConsulta>();
-            builder.Services.AddScoped<IFrecuenciaAdministracionConsulta,FrecuenciaAdministracionConsulta>();
-            builder.Services.AddScoped<ITratamientoDosisConsulta,TratamientoDosisConsulta>();
-            builder.Services.AddScoped<ITratamientoComando,TratamientoComando>();
-            builder.Services.AddScoped<ITratamientoDosisComando,TratamientoDosisComando>();
+            builder.Services.AddScoped<IModificarTratamientoCasoDeUso, ModificarTratamientoCasoDeUso>();
+            builder.Services.AddScoped<ITratamientoConsulta, TratamientoConsulta>();
+            builder.Services.AddScoped<IFrecuenciaAdministracionConsulta, FrecuenciaAdministracionConsulta>();
+            builder.Services.AddScoped<ITratamientoDosisConsulta, TratamientoDosisConsulta>();
+            builder.Services.AddScoped<ITratamientoComando, TratamientoComando>();
+            builder.Services.AddScoped<ITratamientoDosisComando, TratamientoDosisComando>();
             builder.Services.AddScoped<IObtenerSeguimientoTratamientoCasoDeUso, ObtenerSeguimientoTratamientoCasoDeUso>();
+
+            // ==========================================
+            // 8. DOMINIO: Auditoría
+            // ==========================================
+            builder.Services.AddScoped<IObtenerHistorialAuditoriaCasoDeUso, ObtenerHistorialAuditoriaCasoDeUso>();
+            builder.Services.AddScoped<IHistorialAuditoriaConsulta, HistorialAuditoriaConsulta>();
+            builder.Services.AddScoped<IHistorialAuditoriaMapper, HistorialAuditoriaMapper>();
+
 
             // ==========================================
             // CONFIGURACIÓN DE AUTENTICACIÓN JWT
@@ -101,6 +109,7 @@ namespace Clinico.API
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
+
 
             // Add services to the container.
             builder.Services.AddControllers();
