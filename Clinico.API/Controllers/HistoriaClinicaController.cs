@@ -18,13 +18,13 @@ namespace Clinico.API.Controllers
             _obtenerHistoriaClinicaCasoDeUso = obtenerHistoriaClinicaCasoDeUso;
         }
 
-        [HttpGet("paciente/{pacienteId}")]
+        [HttpGet("paciente/{Id}")]
         [ProducesResponseType(typeof(ObtenerHistoriaClinicaRespuesta), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<ObtenerHistoriaClinicaRespuesta>> ObtenerPorPaciente(Guid pacienteId)
+        public async Task<ActionResult<ObtenerHistoriaClinicaRespuesta>> ObtenerPorPaciente(Guid Id)
         {
-            var resultado = await _obtenerHistoriaClinicaCasoDeUso.EjecutarAsync(pacienteId);
+            var resultado = await _obtenerHistoriaClinicaCasoDeUso.EjecutarAsync(Id);
             return Ok(resultado);
         }
     }

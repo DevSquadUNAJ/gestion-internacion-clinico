@@ -30,19 +30,19 @@ namespace Clinico.Aplicacion.CasosDeUso
             var historiaClinica = await _historiaClinicaConsulta.ObtenerPorIdAsync(solicitud.HistoriaClinicaId);
             if (historiaClinica is null)
             {
-                throw new EntidadNoEncontradaException("La historia clínica indicada no existe.");
+                throw new ExceptionNotFound("La historia clínica indicada no existe.");
             }
 
             var medico = await _medicoConsulta.ObtenerPorIdAsync(solicitud.MedicoId);
             if (medico is null)
             {
-                throw new EntidadNoEncontradaException("El médico indicado no existe.");
+                throw new ExceptionNotFound("El médico indicado no existe.");
             }
 
             var codigoCie10 = await _catalogoCie10Consulta.ObtenerPorCodigoAsync(solicitud.CodigoCie10);
             if (codigoCie10 is null)
             {
-                throw new EntidadNoEncontradaException(
+                throw new ExceptionNotFound(
                     "El código CIE-10 indicado no existe.");
             }
 

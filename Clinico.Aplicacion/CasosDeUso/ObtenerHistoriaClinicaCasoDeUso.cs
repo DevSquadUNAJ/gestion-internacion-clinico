@@ -29,7 +29,7 @@ namespace Clinico.Aplicacion.CasosDeUso
 
             if (historiaClinica is null)
             {
-                throw new EntidadNoEncontradaException("Historia Clinica no encontrada");
+                throw new ExceptionNotFound("Historia Clinica no encontrada");
             }
 
             return _mapper.Mapear(historiaClinica);

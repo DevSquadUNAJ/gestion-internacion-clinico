@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Clinico.Aplicacion.Excepciones
 {
-    public class EntidadNoEncontradaException : Exception
+    public class ExceptionBadRequest : Exception
     {
-        public EntidadNoEncontradaException(string mensaje): base(mensaje)
+        public ExceptionBadRequest(string mensaje) : base(mensaje)
         {
         }
     }
