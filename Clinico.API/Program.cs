@@ -56,6 +56,23 @@ namespace Clinico.API
             builder.Services.AddScoped<IDiagnosticoComando,DiagnosticoComando>();
             builder.Services.AddScoped<IRegistrarDiagnosticoCasoDeUso,RegistrarDiagnosticoCasoDeUso>();
 
+            // ==========================================
+            // 7. DOMINIO: Evolucion Clinica
+            // ==========================================
+            builder.Services.AddScoped<IEvolucionClinicaComando, EvolucionClinicaComando>();
+            builder.Services.AddScoped<IRegistrarEvolucionClinicaCasoDeUso, RegistrarEvolucionClinicaCasoDeUso>();
+
+            // ==========================================
+            // 7. DOMINIO: Evolucion Clinica
+            // ==========================================
+            builder.Services.AddScoped<IModificarTratamientoCasoDeUso,ModificarTratamientoCasoDeUso>();
+            builder.Services.AddScoped<ITratamientoConsulta,TratamientoConsulta>();
+            builder.Services.AddScoped<IFrecuenciaAdministracionConsulta,FrecuenciaAdministracionConsulta>();
+            builder.Services.AddScoped<ITratamientoDosisConsulta,TratamientoDosisConsulta>();
+            builder.Services.AddScoped<ITratamientoComando,TratamientoComando>();
+            builder.Services.AddScoped<ITratamientoDosisComando,TratamientoDosisComando>();
+
+
             // Add services to the container.
             builder.Services.AddControllers();
 

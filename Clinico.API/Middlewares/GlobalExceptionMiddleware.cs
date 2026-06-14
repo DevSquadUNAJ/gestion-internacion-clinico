@@ -28,15 +28,20 @@ public class ManejadorGlobalExcepcionesMiddleware
         {
             await _next(context);
         }
-        catch (EntidadNoEncontradaException ex)
+        catch (ExceptionNotFound ex)
         {
-            _logger.LogWarning("Entidad no encontrada: {Mensaje}",ex.Message);
+            _logger.LogWarning("Entidad no encontrada: {Mensaje}", ex.Message);
             await HandleExceptionAsync(context, ex, HttpStatusCode.NotFound);
+        }
+        catch (ExceptionBadRequest ex)
+        {
+            _logger.LogWarning("Bad Request: {Mensaje}", ex.Message);
+            await HandleExceptionAsync(context, ex, HttpStatusCode.BadRequest);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex,"Ha ocurrido un error crítico no controlado en la API.");
-            await HandleExceptionAsync(context, ex, HttpStatusCode.InternalServerError);
+            _logger.LogError(ex, "Ha ocurrido un error crítico no controlado en la API.");
+            await HandleExceptionAsync(context,ex, HttpStatusCode.InternalServerError);
         }
     }
 

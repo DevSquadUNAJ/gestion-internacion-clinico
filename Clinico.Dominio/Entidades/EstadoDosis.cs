@@ -11,6 +11,7 @@ namespace Clinico.Dominio.Entidades
         Pendiente = 1,
         Administrada = 2,
         Omitida = 3,
-        Vencida = 4
+        Vencida = 4,
+        Cancelada = 5
     }
 }
