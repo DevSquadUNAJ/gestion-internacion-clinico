@@ -8,11 +8,16 @@ using Clinico.Infraestructura;
 using Clinico.Infraestructura.Comandos;
 using Clinico.Infraestructura.Consultas;
 using Clinico.Infraestructura.Persistencia;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Text;
+using System;
 
 
 namespace Clinico.API
@@ -73,13 +78,62 @@ namespace Clinico.API
             builder.Services.AddScoped<ITratamientoDosisComando,TratamientoDosisComando>();
             builder.Services.AddScoped<IObtenerSeguimientoTratamientoCasoDeUso, ObtenerSeguimientoTratamientoCasoDeUso>();
 
+            // ==========================================
+            // CONFIGURACIÓN DE AUTENTICACIÓN JWT
+            // ==========================================
+            var configuracionJwt = builder.Configuration.GetSection("Jwt");
+            var claveSecreta = Encoding.UTF8.GetBytes(configuracionJwt["Key"]!);
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opciones =>
+                {
+                    opciones.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = configuracionJwt["Issuer"],
+                        ValidAudience = configuracionJwt["Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(claveSecreta)
+                    };
+                });
+
+            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
 
             // Add services to the container.
             builder.Services.AddControllers();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(opciones =>
+            {
+                opciones.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Pega tu token JWT directamente aquí. (Nota: NO escribas la palabra 'Bearer', Swagger lo agregará por ti automáticamente)."
+                });
+
+                opciones.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
+            });
 
             var app = builder.Build();
 
@@ -90,7 +144,10 @@ namespace Clinico.API
                 app.UseSwaggerUI();
             }
 
+            app.UseMiddleware<Middlewares.ManejadorGlobalExcepcionesMiddleware>();
+
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
 
