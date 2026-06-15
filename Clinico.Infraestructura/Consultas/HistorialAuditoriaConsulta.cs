@@ -3,12 +3,9 @@ using Clinico.Aplicacion.Interfaces.IConsultas;
 using Clinico.Dominio.Entidades;
 using Clinico.Infraestructura.Persistencia;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Clinico.Infraestructura.Consultas
 {
@@ -35,16 +32,16 @@ namespace Clinico.Infraestructura.Consultas
             if (!string.IsNullOrEmpty(filtros.Entidad))
                 consulta = consulta.Where(x => x.Entidad == filtros.Entidad);
 
-            if (filtros.EntidadId != Guid.Empty)
-                consulta = consulta.Where(x => x.EntidadId == filtros.EntidadId);
+            if (filtros.EntidadId.HasValue)
+                consulta = consulta.Where(x => x.EntidadId == filtros.EntidadId.Value);
 
             if (filtros.FechaDesde.HasValue)
                 consulta = consulta.Where(x => x.FechaHora >= filtros.FechaDesde.Value);
 
             if (filtros.FechaHasta.HasValue)
-               consulta = consulta.Where(x => x.FechaHora <= filtros.FechaHasta.Value);
+                consulta = consulta.Where(x => x.FechaHora <= filtros.FechaHasta.Value);
 
-            return await consulta.ToListAsync();
+            return await consulta.OrderByDescending(x => x.FechaHora).ToListAsync();
         }
     }
 }

@@ -1,13 +1,8 @@
 ﻿using Clinico.Aplicacion.DTOs.Respuestas;
 using Clinico.Aplicacion.DTOs.Solicitudes;
-using Clinico.Aplicacion.Excepciones;
 using Clinico.Aplicacion.Interfaces.ICasosDeUso;
 using Clinico.Aplicacion.Interfaces.IConsultas;
 using Clinico.Aplicacion.Interfaces.IMapeadores;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Clinico.Aplicacion.CasosDeUso
