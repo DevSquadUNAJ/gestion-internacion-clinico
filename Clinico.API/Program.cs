@@ -9,9 +9,7 @@ using Clinico.Infraestructura.Comandos;
 using Clinico.Infraestructura.Consultas;
 using Clinico.Infraestructura.Persistencia;
 using Clinico.Aplicacion;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -32,7 +30,7 @@ namespace Clinico.API
             var builder = WebApplication.CreateBuilder(args);
 
             // ==========================================
-            // 1. CONFIGURACIÓN BASE (Base de Datos)
+            // 1. CONFIGURACIÃ“N BASE (Base de Datos)
             // ==========================================
             builder.Services.AddInfraestructura(builder.Configuration);
 
@@ -82,7 +80,7 @@ namespace Clinico.API
             builder.Services.AddScoped<IObtenerSeguimientoTratamientoCasoDeUso, ObtenerSeguimientoTratamientoCasoDeUso>();
 
             // ==========================================
-            // 8. DOMINIO: Auditoría
+            // 8. DOMINIO: AuditorÃ­a
             // ==========================================
             builder.Services.AddScoped<IObtenerHistorialAuditoriaCasoDeUso, ObtenerHistorialAuditoriaCasoDeUso>();
             builder.Services.AddScoped<IHistorialAuditoriaConsulta, HistorialAuditoriaConsulta>();
@@ -90,7 +88,7 @@ namespace Clinico.API
 
 
             // ==========================================
-            // CONFIGURACIÓN DE AUTENTICACIÓN JWT
+            // CONFIGURACIÃ“N DE AUTENTICACIÃ“N JWT
             // ==========================================
             var configuracionJwt = builder.Configuration.GetSection("Jwt");
             var claveSecreta = Encoding.UTF8.GetBytes(configuracionJwt["Key"]!);
@@ -116,16 +114,6 @@ namespace Clinico.API
 
             // Add services to the container.
             builder.Services.AddControllers();
-            /*
-             * 
-            //builder.Services.AddInfraestructura(builder.Configuration);
-            builder.Services.AddDbContext<ContextoBaseDeDatos>(opciones =>opciones.UseSqlServer(builder.Configuration.GetConnectionString("ClinicoDb")));
-            //builder.Services.AddAplicacion(builder.Configuration);
-            builder.Services.AddAplicacion();
-            builder.Services.AddInfraestructura(builder.Configuration);
-
-*/
-
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -138,7 +126,7 @@ namespace Clinico.API
                     Scheme = "bearer",
                     BearerFormat = "JWT",
                     In = ParameterLocation.Header,
-                    Description = "Pega tu token JWT directamente aquí. (Nota: NO escribas la palabra 'Bearer', Swagger lo agregará por ti automáticamente)."
+                    Description = "Pega tu token JWT directamente aquÃ­. (Nota: NO escribas la palabra 'Bearer', Swagger lo agregarÃ¡ por ti automÃ¡ticamente)."
                 });
 
                 opciones.AddSecurityRequirement(new OpenApiSecurityRequirement
