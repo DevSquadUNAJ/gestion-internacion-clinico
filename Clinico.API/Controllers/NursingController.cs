@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Clinico.Aplicacion.CasosDeUso;
+using Clinico.Aplicacion.DTOs.Respuestas;
+using Clinico.Aplicacion.DTOs.Solicitudes;
+using Clinico.Aplicacion.Interfaces.ICasosDeUso;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Clinico.Aplicacion.CasosDeUso;
-using Clinico.Aplicacion.Interfaces.ICasosDeUso;
-using Clinico.Aplicacion.DTOs.Respuestas;
-using System;
 
 namespace Clinico.API.Controllers
 {
@@ -13,10 +14,17 @@ namespace Clinico.API.Controllers
     public sealed class NursingController : ControllerBase
     {
         private readonly IGetNursingDashboardUseCase _useCase;
+        private readonly IRegistrarAdministracionMedicacionCasoDeUso _casoDeUso;
+        private readonly IRegistrarOmisionMedicacionCasoDeUso _registrarOmisionCasoDeUso;
 
-        public NursingController(IGetNursingDashboardUseCase useCase)
+        public NursingController(
+            IGetNursingDashboardUseCase useCase,
+            IRegistrarAdministracionMedicacionCasoDeUso casoDeUso,
+            IRegistrarOmisionMedicacionCasoDeUso registrarOmisionCasoDeUso)
         {
             _useCase = useCase;
+            _casoDeUso = casoDeUso;
+            _registrarOmisionCasoDeUso = registrarOmisionCasoDeUso;
         }
 
         [HttpGet("dashboard")]
@@ -34,5 +42,42 @@ namespace Clinico.API.Controllers
 
             return Ok(result);
         }
+        [HttpPut("dosis/{dosisId:guid}/administracion")]
+        public async Task<IActionResult> RegistrarAdministracion(
+        Guid dosisId,
+        RegistrarAdministracionMedicacionSolicitud solicitud,
+        CancellationToken cancellationToken)
+            {
+                // Temporal hasta integrar Seguridad
+                var enfermeraId = Guid.Parse(
+                    "GUID_DE_ENFERMERA");
+
+                await _casoDeUso.EjecutarAsync(
+                    dosisId,
+                    enfermeraId,
+                    solicitud,
+                    cancellationToken);
+
+                return NoContent();
+            }
+
+        [HttpPut("dosis/{dosisId:guid}/omision")]
+        public async Task<IActionResult> RegistrarOmision(
+        Guid dosisId,
+        RegistrarOmisionMedicacionSolicitud solicitud,
+        CancellationToken cancellationToken)
+            {
+                // Temporal hasta integrar Seguridad
+                var enfermeraId = Guid.Parse(
+                    "GUID_DE_ENFERMERA");
+
+                await _registrarOmisionCasoDeUso.EjecutarAsync(
+                    dosisId,
+                    enfermeraId,
+                    solicitud,
+                    cancellationToken);
+
+                return NoContent();
+            }
     }
 }
