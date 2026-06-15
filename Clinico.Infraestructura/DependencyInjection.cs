@@ -17,7 +17,7 @@ public static class DependencyInjection
         services.AddDbContext<ContextoBaseDeDatos>(options =>
         {
             options.UseSqlServer(
-                configuration.GetConnectionString("ClinicaDb"));
+                configuration.GetConnectionString("ClinicoDb"));
         });
 
         // registrar consultas
