@@ -8,10 +8,10 @@ namespace Clinico.Aplicacion.DTOs.Solicitudes
 {
     public class FiltroAuditoriaSolicitud
     {
-        public Guid PacienteId { get; set; }
-        public Guid ProfesionalId { get; set; }
-        public Guid InternacionId { get; set; }
-        public Guid TratamientoId { get; set; }
+        public string UsuarioId { get; set; } = string.Empty;
+        public string Rol { get; set; } = string.Empty;
+        public string Entidad { get; set; } = string.Empty;
+        public Guid EntidadId { get; set; }
         public DateTime? FechaDesde { get; set; }
         public DateTime? FechaHasta { get; set; }
     }

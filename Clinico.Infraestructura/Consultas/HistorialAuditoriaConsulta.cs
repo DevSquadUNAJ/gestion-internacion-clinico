@@ -24,8 +24,26 @@ namespace Clinico.Infraestructura.Consultas
 
         public async Task<List<Auditoria>> ObtenerAuditoriasAsync(FiltroAuditoriaSolicitud filtros)
         {
-            // Falta implementar filtros
             var consulta = _contexto.Auditorias.AsNoTracking();
+
+            if (!string.IsNullOrEmpty(filtros.UsuarioId))
+                consulta = consulta.Where(x => x.UsuarioId == filtros.UsuarioId);
+
+            if (!string.IsNullOrEmpty(filtros.Rol))
+                consulta = consulta.Where(x => x.Rol == filtros.Rol);
+
+            if (!string.IsNullOrEmpty(filtros.Entidad))
+                consulta = consulta.Where(x => x.Entidad == filtros.Entidad);
+
+            if (filtros.EntidadId != Guid.Empty)
+                consulta = consulta.Where(x => x.EntidadId == filtros.EntidadId);
+
+            if (filtros.FechaDesde.HasValue)
+                consulta = consulta.Where(x => x.FechaHora >= filtros.FechaDesde.Value);
+
+            if (filtros.FechaHasta.HasValue)
+               consulta = consulta.Where(x => x.FechaHora <= filtros.FechaHasta.Value);
+
             return await consulta.ToListAsync();
         }
     }
