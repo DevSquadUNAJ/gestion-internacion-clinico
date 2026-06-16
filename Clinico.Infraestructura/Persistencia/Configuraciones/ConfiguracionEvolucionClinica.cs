@@ -1,7 +1,7 @@
-﻿using Clinico.Dominio.Entidades;
+﻿using System;
+using Clinico.Dominio.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 
 namespace Clinico.Infraestructura.Persistencia.Configuraciones
 {
@@ -17,10 +17,6 @@ namespace Clinico.Infraestructura.Persistencia.Configuraciones
                 .WithMany(h => h.EvolucionesClinicas)
                 .HasForeignKey(ec => ec.HistoriaClinicaId);
 
-            builder.HasOne(ec => ec.Medico)
-                .WithMany(m => m.EvolucionesClinicas)
-                .HasForeignKey(ec => ec.MedicoId);
-
             builder.Property(ec => ec.Observacion)
                 .HasMaxLength(4000)
                 .IsRequired();
@@ -33,7 +29,6 @@ namespace Clinico.Infraestructura.Persistencia.Configuraciones
                 {
                     Id = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
                     HistoriaClinicaId = Guid.Parse("aaaaaaaa-1111-1111-1111-aaaaaaaaaaaa"), // Historia Clínica 1
-                    MedicoId = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), // Dr. Salas
                     Observacion = "Paciente refiere alivio leve del dolor facial tras la primera dosis de Amoxicilina. Afebril. Continúa en observación.",
                     FechaHora = new DateTime(2026, 6, 16, 18, 0, 0, DateTimeKind.Utc)
                 }

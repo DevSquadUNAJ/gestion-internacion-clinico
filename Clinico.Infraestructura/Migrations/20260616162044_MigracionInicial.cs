@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Clinico.Infraestructura.Migrations
 {
     /// <inheritdoc />
-    public partial class InicializacionClinico : Migration
+    public partial class MigracionInicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,12 +18,12 @@ namespace Clinico.Infraestructura.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Rol = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Accion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Entidad = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UsuarioId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Rol = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Accion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Entidad = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     EntidadId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Descripcion = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     PayloadJson = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FechaHora = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -49,8 +51,8 @@ namespace Clinico.Infraestructura.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SectorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Legajo = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Nombre = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Legajo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,7 +64,7 @@ namespace Clinico.Infraestructura.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CantidadHoras = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -96,7 +98,7 @@ namespace Clinico.Infraestructura.Migrations
                     Presentacion = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Contraindicaciones = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EfectosAdversos = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ViaAdministracion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    ViaAdministracion = table.Column<int>(type: "int", nullable: false),
                     RequiereControl = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -123,12 +125,33 @@ namespace Clinico.Infraestructura.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Abreviatura = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Abreviatura = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UnidadesMedida", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EvolucionesClinicas",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    HistoriaClinicaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MedicoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FechaHora = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Observacion = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EvolucionesClinicas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EvolucionesClinicas_HistoriasClinicas_HistoriaClinicaId",
+                        column: x => x.HistoriaClinicaId,
+                        principalTable: "HistoriasClinicas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -159,33 +182,6 @@ namespace Clinico.Infraestructura.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Diagnosticos_Medicos_MedicoId",
-                        column: x => x.MedicoId,
-                        principalTable: "Medicos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EvolucionesClinicas",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    HistoriaClinicaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MedicoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FechaHora = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Observacion = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EvolucionesClinicas", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_EvolucionesClinicas_HistoriasClinicas_HistoriaClinicaId",
-                        column: x => x.HistoriaClinicaId,
-                        principalTable: "HistoriasClinicas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EvolucionesClinicas_Medicos_MedicoId",
                         column: x => x.MedicoId,
                         principalTable: "Medicos",
                         principalColumn: "Id",
@@ -243,9 +239,9 @@ namespace Clinico.Infraestructura.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TratamientoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AlertaDetectada = table.Column<bool>(type: "bit", nullable: false),
-                    MensajeIA = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MensajeIA = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     FueForzado = table.Column<bool>(type: "bit", nullable: false),
-                    JustificacionClinica = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    JustificacionClinica = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     FechaHora = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -290,6 +286,111 @@ namespace Clinico.Infraestructura.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Auditorias",
+                columns: new[] { "Id", "Accion", "Descripcion", "Entidad", "EntidadId", "FechaHora", "PayloadJson", "Rol", "UsuarioId" },
+                values: new object[] { new Guid("99999999-9999-9999-9999-999999999999"), "Crear", "Se registró un nuevo diagnóstico de Sinusitis aguda.", "Diagnostico", new Guid("11111111-dddd-dddd-dddd-111111111111"), new DateTime(2026, 6, 16, 10, 0, 0, 0, DateTimeKind.Utc), "{\"CodigoCie10\": \"J01.9\"}", "Medico", "22222222-2222-2222-2222-222222222222" });
+
+            migrationBuilder.InsertData(
+                table: "CatalogosCie10",
+                columns: new[] { "Codigo", "Categoria", "Descripcion" },
+                values: new object[,]
+                {
+                    { "I10", "Enfermedades del sistema circulatorio", "Hipertensión esencial (primaria)" },
+                    { "J01.9", "Enfermedades del sistema respiratorio", "Sinusitis aguda, no especificada" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Enfermeras",
+                columns: new[] { "Id", "Legajo", "Nombre", "SectorId" },
+                values: new object[,]
+                {
+                    { new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"), "ENF-1001", "Enf. Rodrigo Godoy", new Guid("99999999-9999-9999-9999-999999999999") },
+                    { new Guid("eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee"), "ENF-1002", "Enf. Matías Silva", new Guid("99999999-9999-9999-9999-999999999999") }
+                });
+
+            migrationBuilder.InsertData(
+                table: "FrecuenciasAdministracion",
+                columns: new[] { "Id", "CantidadHoras", "Descripcion" },
+                values: new object[,]
+                {
+                    { new Guid("33333333-6666-6666-6666-333333333333"), 8, "Cada 8 horas" },
+                    { new Guid("44444444-6666-6666-6666-444444444444"), 12, "Cada 12 horas" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "HistoriasClinicas",
+                columns: new[] { "Id", "Alergias", "Antecedentes", "GrupoSanguineo", "ObservacionesGenerales", "PacienteId" },
+                values: new object[,]
+                {
+                    { new Guid("aaaaaaaa-1111-1111-1111-aaaaaaaaaaaa"), "Penicilina", "Hipertensión controlada", "A+", "Paciente ingresa por guardia clínica.", new Guid("11111111-aaaa-aaaa-aaaa-111111111111") },
+                    { new Guid("bbbbbbbb-2222-2222-2222-bbbbbbbbbbbb"), "Ninguna conocida", "Asma en la infancia", "O-", "Paciente derivado de consultorios externos.", new Guid("22222222-bbbb-bbbb-bbbb-222222222222") }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Medicamentos",
+                columns: new[] { "Id", "Contraindicaciones", "DrogaGenerica", "EfectosAdversos", "NombreComercial", "Presentacion", "RequiereControl", "ViaAdministracion" },
+                values: new object[,]
+                {
+                    { new Guid("cccccccc-3333-3333-3333-cccccccccccc"), null, "Amoxicilina", null, "Amoxidal 500", "Comprimidos", false, 1 },
+                    { new Guid("dddddddd-4444-4444-4444-dddddddddddd"), null, "Ibuprofeno", null, "Ibuprofeno 600", "Comprimidos recubiertos", false, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Medicos",
+                columns: new[] { "Id", "Especialidad", "Matricula", "Nombre" },
+                values: new object[,]
+                {
+                    { new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), "Clínica Médica", "MN-123456", "Dr. Alejandro Salas" },
+                    { new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), "Terapia Intensiva", "MN-654321", "Dr. Yonatan Rojas" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "UnidadesMedida",
+                columns: new[] { "Id", "Abreviatura", "Nombre" },
+                values: new object[,]
+                {
+                    { new Guid("11111111-5555-5555-5555-111111111111"), "mg", "Miligramos" },
+                    { new Guid("22222222-5555-5555-5555-222222222222"), "ml", "Mililitros" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Diagnosticos",
+                columns: new[] { "Id", "CodigoCie10", "FechaHora", "HistoriaClinicaId", "MedicoId", "Observaciones" },
+                values: new object[,]
+                {
+                    { new Guid("11111111-dddd-dddd-dddd-111111111111"), "J01.9", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("aaaaaaaa-1111-1111-1111-aaaaaaaaaaaa"), new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), "Paciente presenta cuadro de congestión y dolor facial agudo." },
+                    { new Guid("22222222-dddd-dddd-dddd-222222222222"), "I10", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("bbbbbbbb-2222-2222-2222-bbbbbbbbbbbb"), new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), "Presión arterial elevada en múltiples tomas. Requiere inicio de tratamiento." }
+                });
+
+            migrationBuilder.InsertData(
+                table: "EvolucionesClinicas",
+                columns: new[] { "Id", "FechaHora", "HistoriaClinicaId", "MedicoId", "Observacion" },
+                values: new object[] { new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), new DateTime(2026, 6, 16, 18, 0, 0, 0, DateTimeKind.Utc), new Guid("aaaaaaaa-1111-1111-1111-aaaaaaaaaaaa"), new Guid("00000000-0000-0000-0000-000000000000"), "Paciente refiere alivio leve del dolor facial tras la primera dosis de Amoxicilina. Afebril. Continúa en observación." });
+
+            migrationBuilder.InsertData(
+                table: "Tratamientos",
+                columns: new[] { "Id", "DiagnosticoId", "Dosis", "Estado", "FechaFin", "FechaInicio", "FrecuenciaAdministracionId", "MedicamentoId", "Observaciones", "UnidadMedidaId" },
+                values: new object[,]
+                {
+                    { new Guid("55555555-7777-7777-7777-555555555555"), new Guid("11111111-dddd-dddd-dddd-111111111111"), 500m, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("33333333-6666-6666-6666-333333333333"), new Guid("cccccccc-3333-3333-3333-cccccccccccc"), null, new Guid("11111111-5555-5555-5555-111111111111") },
+                    { new Guid("66666666-7777-7777-7777-666666666666"), new Guid("22222222-dddd-dddd-dddd-222222222222"), 600m, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("44444444-6666-6666-6666-444444444444"), new Guid("dddddddd-4444-4444-4444-dddddddddddd"), null, new Guid("11111111-5555-5555-5555-111111111111") }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AuditoriasIA",
+                columns: new[] { "Id", "AlertaDetectada", "FechaHora", "FueForzado", "JustificacionClinica", "MensajeIA", "TratamientoId" },
+                values: new object[] { new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), true, new DateTime(2026, 6, 16, 10, 30, 0, 0, DateTimeKind.Utc), true, "El paciente presenta dolor agudo inmanejable. Se administrará dosis baja y se monitoreará la presión arterial cada 8 horas.", "⚠️ Precaución: El uso de AINEs (Ibuprofeno) puede aumentar la presión arterial en pacientes hipertensos.", new Guid("66666666-7777-7777-7777-666666666666") });
+
+            migrationBuilder.InsertData(
+                table: "TratamientosDosis",
+                columns: new[] { "Id", "EnfermeraId", "Estado", "FechaDelSistema", "FechaProgramada", "FechaSuministro", "MotivoOmision", "Observaciones", "TratamientoId" },
+                values: new object[,]
+                {
+                    { new Guid("77777777-8888-8888-8888-777777777777"), new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
+                    { new Guid("88888888-8888-8888-8888-888888888888"), new Guid("eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee"), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AuditoriasIA_TratamientoId",
                 table: "AuditoriasIA",
@@ -311,14 +412,15 @@ namespace Clinico.Infraestructura.Migrations
                 column: "MedicoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Enfermeras_Legajo",
+                table: "Enfermeras",
+                column: "Legajo",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EvolucionesClinicas_HistoriaClinicaId",
                 table: "EvolucionesClinicas",
                 column: "HistoriaClinicaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EvolucionesClinicas_MedicoId",
-                table: "EvolucionesClinicas",
-                column: "MedicoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Medicos_Matricula",

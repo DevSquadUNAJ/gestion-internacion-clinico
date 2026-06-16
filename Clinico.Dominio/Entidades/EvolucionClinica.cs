@@ -14,7 +14,5 @@ namespace Clinico.Dominio.Entidades
         public string Observacion { get; set; } = string.Empty;
 
         public HistoriaClinica HistoriaClinica { get; set; } = null!;
-
-        public Medico Medico { get; set; } = null!;
     }
 }

@@ -13,11 +13,9 @@ namespace Clinico.Infraestructura.Persistencia.Configuraciones
 
             builder.HasKey(aia => aia.Id);
 
-            // Asumimos que Tratamiento no tiene una colección explícita de AuditoriasIA en su clase,
-            // así que el .WithMany() queda vacío, lo cual es perfectamente válido en EF Core.
             builder.HasOne(aia => aia.Tratamiento)
-                .WithMany()
-                .HasForeignKey(aia => aia.TratamientoId);
+                   .WithMany(t => t.AuditoriasIA)
+                   .HasForeignKey(aia => aia.TratamientoId);
 
             builder.Property(aia => aia.MensajeIA)
                 .HasMaxLength(500)
