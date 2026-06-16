@@ -25,7 +25,7 @@ namespace Clinico.Infraestructura.Persistencia.Configuraciones
                 .IsRequired();
 
             builder.Property(m => m.ViaAdministracion)
-                .HasMaxLength(100)
+                .HasConversion<int>()
                 .IsRequired();
         }
     }
