@@ -1,36 +1,30 @@
 ﻿using Clinico.Dominio.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Clinico.Infraestructura.Persistencia.Configuraciones
 {
-    public class MedicamentoConfiguration
-        : IEntityTypeConfiguration<Medicamento>
+    public class ConfiguracionMedicamento : IEntityTypeConfiguration<Medicamento>
     {
         public void Configure(EntityTypeBuilder<Medicamento> builder)
         {
             builder.ToTable("Medicamentos");
 
-            builder.HasKey(x => x.Id);
+            builder.HasKey(m => m.Id);
 
-            builder.Property(x => x.NombreComercial)
+            builder.Property(m => m.NombreComercial)
                 .HasMaxLength(200)
                 .IsRequired();
 
-            builder.Property(x => x.DrogaGenerica)
+            builder.Property(m => m.DrogaGenerica)
                 .HasMaxLength(200)
                 .IsRequired();
 
-            builder.Property(x => x.Presentacion)
+            builder.Property(m => m.Presentacion)
                 .HasMaxLength(150)
                 .IsRequired();
 
-            builder.Property(x => x.ViaAdministracion)
+            builder.Property(m => m.ViaAdministracion)
                 .HasMaxLength(100)
                 .IsRequired();
         }

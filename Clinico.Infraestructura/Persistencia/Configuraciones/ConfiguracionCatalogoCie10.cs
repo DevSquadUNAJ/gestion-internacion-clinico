@@ -1,31 +1,25 @@
 ﻿using Clinico.Dominio.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Clinico.Infraestructura.Persistencia.Configuraciones
 {
-    public class CatalogoCie10Configuration
-        : IEntityTypeConfiguration<CatalogoCie10>
+    public class ConfiguracionCatalogoCie10 : IEntityTypeConfiguration<CatalogoCie10>
     {
         public void Configure(EntityTypeBuilder<CatalogoCie10> builder)
         {
             builder.ToTable("CatalogosCie10");
 
-            builder.HasKey(x => x.Codigo);
+            builder.HasKey(c => c.Codigo);
 
-            builder.Property(x => x.Codigo)
+            builder.Property(c => c.Codigo)
                 .HasMaxLength(20);
 
-            builder.Property(x => x.Descripcion)
+            builder.Property(c => c.Descripcion)
                 .HasMaxLength(500)
                 .IsRequired();
 
-            builder.Property(x => x.Categoria)
+            builder.Property(c => c.Categoria)
                 .HasMaxLength(100);
         }
     }
