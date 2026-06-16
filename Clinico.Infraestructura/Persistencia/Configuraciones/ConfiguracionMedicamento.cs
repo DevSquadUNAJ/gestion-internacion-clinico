@@ -1,6 +1,8 @@
-﻿using Clinico.Dominio.Entidades;
+﻿using Clinico.Dominio.Constantes;
+using Clinico.Dominio.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace Clinico.Infraestructura.Persistencia.Configuraciones
 {
@@ -27,6 +29,25 @@ namespace Clinico.Infraestructura.Persistencia.Configuraciones
             builder.Property(m => m.ViaAdministracion)
                 .HasConversion<int>()
                 .IsRequired();
+
+            builder.HasData(
+                new Medicamento
+                {
+                    Id = Guid.Parse("cccccccc-3333-3333-3333-cccccccccccc"),
+                    NombreComercial = "Amoxidal 500",
+                    DrogaGenerica = "Amoxicilina",
+                    Presentacion = "Comprimidos",
+                    ViaAdministracion = ViaAdministracion.Oral
+                },
+                new Medicamento
+                {
+                    Id = Guid.Parse("dddddddd-4444-4444-4444-dddddddddddd"),
+                    NombreComercial = "Ibuprofeno 600",
+                    DrogaGenerica = "Ibuprofeno",
+                    Presentacion = "Comprimidos recubiertos",
+                    ViaAdministracion = ViaAdministracion.Oral
+                }
+            );
         }
     }
 }
