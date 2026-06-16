@@ -1,12 +1,9 @@
-﻿using System;
+﻿using Clinico.Dominio.Base;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Clinico.Dominio.Entidades
 {
-    public class FrecuenciaAdministracion : EntityBase
+    public class FrecuenciaAdministracion : EntidadBase
     {
         public string Descripcion { get; set; } = string.Empty;
 

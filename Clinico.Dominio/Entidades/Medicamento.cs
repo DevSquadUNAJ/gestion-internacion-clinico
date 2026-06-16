@@ -1,9 +1,10 @@
-﻿using Clinico.Dominio.Constantes;
+﻿using Clinico.Dominio.Base;
+using Clinico.Dominio.Constantes;
 using System.Collections.Generic;
 
 namespace Clinico.Dominio.Entidades
 {
-    public class Medicamento : EntityBase
+    public class Medicamento : EntidadBase
     {
         public string NombreComercial { get; set; } = string.Empty;
 
