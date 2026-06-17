@@ -1,5 +1,6 @@
 ﻿using Clinico.Aplicacion.DTOs.Respuestas;
 using Clinico.Aplicacion.Interfaces.IMapeadores;
+using Clinico.Dominio.Constantes;
 using Clinico.Dominio.Entidades;
 using System;
 using System.Collections.Generic;

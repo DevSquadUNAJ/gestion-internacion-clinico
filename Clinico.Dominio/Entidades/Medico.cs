@@ -1,12 +1,9 @@
-﻿using System;
+﻿using Clinico.Dominio.Base;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Clinico.Dominio.Entidades
 {
-    public class Medico : EntityBase
+    public class Medico : EntidadBase
     {
         public string Nombre { get; set; } = string.Empty;
 
@@ -15,7 +12,5 @@ namespace Clinico.Dominio.Entidades
         public string Especialidad { get; set; } = string.Empty;
 
         public ICollection<Diagnostico> Diagnosticos { get; set; } = new List<Diagnostico>();
-
-        public ICollection<EvolucionClinica> EvolucionesClinicas { get; set; } = new List<EvolucionClinica>();
     }
 }

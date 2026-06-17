@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Clinico.Dominio.Base;
+using System;
 
 namespace Clinico.Dominio.Entidades
 {
-    public class EvolucionClinica : EntityBase
+    public class EvolucionClinica : EntidadBase
     {
         public Guid HistoriaClinicaId { get; set; }
 
@@ -17,7 +14,5 @@ namespace Clinico.Dominio.Entidades
         public string Observacion { get; set; } = string.Empty;
 
         public HistoriaClinica HistoriaClinica { get; set; } = null!;
-
-        public Medico Medico { get; set; } = null!;
     }
 }

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Clinico.Dominio.Base;
+using Clinico.Dominio.Constantes;
+using System;
 
 namespace Clinico.Dominio.Entidades
 {
-    public class TratamientoDosis : EntityBase
+    public class TratamientoDosis : EntidadBase
     {
         public Guid TratamientoId { get; set; }
 

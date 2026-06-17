@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Clinico.Dominio.Base;
+using Clinico.Dominio.Constantes;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Clinico.Dominio.Entidades
 {
-    public class Medicamento : EntityBase
+    public class Medicamento : EntidadBase
     {
         public string NombreComercial { get; set; } = string.Empty;
 
@@ -18,7 +16,7 @@ namespace Clinico.Dominio.Entidades
 
         public string? EfectosAdversos { get; set; }
 
-        public string ViaAdministracion { get; set; } = string.Empty;
+        public ViaAdministracion ViaAdministracion { get; set; }
 
         public bool RequiereControl { get; set; }
 
