@@ -1,7 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Clinico.Aplicacion.Interfaces.IExternos;
+using Clinico.Infraestructura.Persistencia;
+using Clinico.Infraestructura.Refit;
+using Clinico.Infraestructura.Refit.Handlers;
+using Clinico.Infraestructura.ServiciosExternos;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Clinico.Infraestructura.Persistencia;
+using Refit;
+using System;
 
 namespace Clinico.Infraestructura;
 
@@ -17,6 +23,22 @@ public static class DependencyInjection
             options.UseSqlServer(
                 configuration.GetConnectionString("ClinicoDb"));
         });
+
+        // ==========================================
+        // CONFIGURACIÓN DE REFIT Y SERVICIOS EXTERNOS
+        // ==========================================
+
+        // Registramos el handler que inyectará el Token (usa ITokenUsuarioActual internamente)
+        services.AddTransient<TokenDelegatingHandler>();
+
+        var urlAdmision = configuration.GetValue<string>("UrlsExternas:Admision")
+                          ?? throw new ArgumentNullException("La URL de Admision no esta configurada.");
+
+        services.AddRefitClient<IAdmisionApi>()
+            .ConfigureHttpClient(c => c.BaseAddress = new Uri(urlAdmision))
+            .AddHttpMessageHandler<TokenDelegatingHandler>();
+
+        services.AddScoped<IAdmisionServicio, AdmisionServicio>();
 
         return services;
     }

@@ -144,6 +144,10 @@ namespace Clinico.API
                 });
             });
 
+            // Registrar servicios web para obtener el token
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddScoped<Aplicacion.Interfaces.ISeguridad.ITokenUsuarioActual, Servicios.TokenUsuarioActual>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
