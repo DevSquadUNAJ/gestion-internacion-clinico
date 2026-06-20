@@ -1,6 +1,8 @@
 ﻿using Clinico.Aplicacion.DTOs.Respuestas;
 using Clinico.Aplicacion.DTOs.Solicitudes;
 using Clinico.Aplicacion.Interfaces.ICasosDeUso;
+using Clinico.Application.DTOs.Respuestas;
+
 //using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,10 +27,10 @@ public class DiagnosticosController : ControllerBase
 
     [HttpPost]
     [ProducesResponseType(typeof(RegistrarDiagnosticoRespuesta),StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<RegistrarDiagnosticoRespuesta>>RegistrarDiagnostico([FromBody] RegistrarDiagnosticoSolicitud solicitud)
     {
         var respuesta =await _registrarDiagnosticoCasoDeUso.EjecutarAsync(solicitud);
