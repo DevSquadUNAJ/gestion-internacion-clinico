@@ -38,10 +38,15 @@ public class ManejadorGlobalExcepcionesMiddleware
             _logger.LogWarning("Bad Request: {Mensaje}", ex.Message);
             await HandleExceptionAsync(context, ex, HttpStatusCode.BadRequest);
         }
+        catch (ExceptionUnauthorized ex)
+        {
+            _logger.LogWarning("Unauthorized: {Mensaje}", ex.Message);
+            await HandleExceptionAsync(context, ex, HttpStatusCode.Unauthorized);
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Ha ocurrido un error crítico no controlado en la API.");
-            await HandleExceptionAsync(context,ex, HttpStatusCode.InternalServerError);
+            await HandleExceptionAsync(context, ex, HttpStatusCode.InternalServerError);
         }
     }
 
