@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Clinico.Aplicacion.Interfaces.IConsultas
 {
-    public interface IGetNursingDashboardQuery
+    public interface IObtenerEnfermeraPanelDeControlConsulta
     {
-        Task<IReadOnlyCollection<NursingDashboardItemDto>>
+        Task<IReadOnlyCollection<EnfermeraPanelDeControlObjetoDto>>
             GetPendingBySectorAsync(
                 Guid sectorId,
                 CancellationToken cancellationToken);

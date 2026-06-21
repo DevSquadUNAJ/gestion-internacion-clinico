@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Clinico.Aplicacion.Excepciones
 {
-    public sealed class NurseNotFoundException : Exception
+    public sealed class EnfermeraNotFoundException : Exception
     {
-        public NurseNotFoundException(Guid nurseId)
+        public EnfermeraNotFoundException(Guid nurseId)
             : base($"Nurse '{nurseId}' was not found.")
         {
         }

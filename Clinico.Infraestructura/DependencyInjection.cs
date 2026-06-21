@@ -21,8 +21,8 @@ public static class DependencyInjection
         });
 
         // registrar consultas
-        services.AddScoped<IGetNurseQuery, GetNurseQuery>();
-        services.AddScoped<IGetNursingDashboardQuery, GetNursingDashboardQuery>();
+        services.AddScoped<IObtenerEnfermeraConsulta, ObtenerEnfermeraConsulta>();
+        services.AddScoped<IObtenerEnfermeraPanelDeControlConsulta, GetNursingDashboardQuery>();
         return services;
     }
 }

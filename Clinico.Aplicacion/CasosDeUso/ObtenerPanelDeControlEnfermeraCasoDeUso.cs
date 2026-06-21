@@ -11,21 +11,21 @@ using System.Threading.Tasks;
 
 namespace Clinico.Aplicacion.CasosDeUso
 {
-    public sealed class GetNursingDashboardUseCase
+    public sealed class ObtenerPanelDeControlEnfermeraCasoDeUso
         : IGetNursingDashboardUseCase
     {
-        private readonly IGetNurseQuery _nurseQuery;
-        private readonly IGetNursingDashboardQuery _dashboardQuery;
+        private readonly IObtenerEnfermeraConsulta _nurseQuery;
+        private readonly IObtenerEnfermeraPanelDeControlConsulta _dashboardQuery;
 
-        public GetNursingDashboardUseCase(
-            IGetNurseQuery nurseQuery,
-            IGetNursingDashboardQuery dashboardQuery)
+        public ObtenerPanelDeControlEnfermeraCasoDeUso(
+            IObtenerEnfermeraConsulta nurseQuery,
+            IObtenerEnfermeraPanelDeControlConsulta dashboardQuery)
         {
             _nurseQuery = nurseQuery;
             _dashboardQuery = dashboardQuery;
         }
 
-        public async Task<IReadOnlyCollection<NursingDashboardItemResponse>>
+        public async Task<IReadOnlyCollection<EnfermeraPanelDeControlObjetoRespuesta>>
             ExecuteAsync(
                 Guid nurseId,
                 CancellationToken cancellationToken)
@@ -36,7 +36,7 @@ namespace Clinico.Aplicacion.CasosDeUso
                     cancellationToken);
 
             if (nurse is null)
-                throw new NurseNotFoundException(nurseId);
+                throw new EnfermeraNotFoundException(nurseId);
 
             var pendingDoses =
                 await _dashboardQuery.GetPendingBySectorAsync(
@@ -44,7 +44,7 @@ namespace Clinico.Aplicacion.CasosDeUso
                     cancellationToken);
 
             return pendingDoses
-                .Select(d => new NursingDashboardItemResponse(
+                .Select(d => new EnfermeraPanelDeControlObjetoRespuesta(
                     d.TreatmentDoseId,
                     d.PatientName,
                     d.MedicationName,

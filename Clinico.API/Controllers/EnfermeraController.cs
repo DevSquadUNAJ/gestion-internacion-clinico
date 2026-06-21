@@ -11,13 +11,13 @@ namespace Clinico.API.Controllers
 {
     [ApiController]
     [Route("api/nursing")]
-    public sealed class NursingController : ControllerBase
+    public sealed class EnfermeraController : ControllerBase
     {
         private readonly IGetNursingDashboardUseCase _useCase;
         private readonly IRegistrarAdministracionMedicacionCasoDeUso _casoDeUso;
         private readonly IRegistrarOmisionMedicacionCasoDeUso _registrarOmisionCasoDeUso;
 
-        public NursingController(
+        public EnfermeraController(
             IGetNursingDashboardUseCase useCase,
             IRegistrarAdministracionMedicacionCasoDeUso casoDeUso,
             IRegistrarOmisionMedicacionCasoDeUso registrarOmisionCasoDeUso)

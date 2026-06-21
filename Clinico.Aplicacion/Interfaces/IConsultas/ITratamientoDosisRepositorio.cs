@@ -8,9 +8,9 @@ using Clinico.Aplicacion.DTOs;
 
 namespace Clinico.Aplicacion.Interfaces.IConsultas
 {
-    public interface ITreatmentDoseRepository
+    public interface ITratamientoDosisRepositorio
     {
-        Task<IReadOnlyCollection<NursingDashboardItemDto>>
+        Task<IReadOnlyCollection<EnfermeraPanelDeControlObjetoDto>>
             GetPendingBySectorAsync(
                 Guid sectorId,
                 CancellationToken cancellationToken);

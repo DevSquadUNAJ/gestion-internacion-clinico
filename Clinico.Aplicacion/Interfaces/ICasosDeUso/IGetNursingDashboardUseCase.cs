@@ -10,7 +10,7 @@ namespace Clinico.Aplicacion.Interfaces.ICasosDeUso
 {
     public interface IGetNursingDashboardUseCase
     {
-        Task<IReadOnlyCollection<NursingDashboardItemResponse>>
+        Task<IReadOnlyCollection<EnfermeraPanelDeControlObjetoRespuesta>>
             ExecuteAsync(Guid nurseId,
             CancellationToken cancellationToken);
     }

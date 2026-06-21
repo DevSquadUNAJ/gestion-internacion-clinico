@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Clinico.Infraestructura.Consultas;
 
 public sealed class GetNursingDashboardQuery
-    : IGetNursingDashboardQuery
+    : IObtenerEnfermeraPanelDeControlConsulta
 {
     private readonly ContextoBaseDeDatos _context;
 
@@ -22,7 +22,7 @@ public sealed class GetNursingDashboardQuery
         _context = context;
     }
 
-    public async Task<IReadOnlyCollection<NursingDashboardItemDto>>
+    public async Task<IReadOnlyCollection<EnfermeraPanelDeControlObjetoDto>>
         GetPendingBySectorAsync(
             Guid sectorId,
             CancellationToken cancellationToken)
@@ -34,7 +34,7 @@ public sealed class GetNursingDashboardQuery
                 .ThenInclude(t => t.Diagnostico)
                     .ThenInclude(d => d.HistoriaClinica)
             .Where(td => td.Estado == EstadoDosis.Pendiente)
-            .Select(td => new NursingDashboardItemDto(
+            .Select(td => new EnfermeraPanelDeControlObjetoDto(
                 td.Id,
                 td.Tratamiento.Diagnostico.HistoriaClinica.PacienteId.ToString(),
                 td.Tratamiento.Medicamento.NombreComercial,

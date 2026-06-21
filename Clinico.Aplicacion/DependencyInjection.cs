@@ -9,7 +9,7 @@ public static class DependencyInjection
     public static IServiceCollection AddAplicacion(
         this IServiceCollection services)
     {
-        services.AddScoped<IGetNursingDashboardUseCase, GetNursingDashboardUseCase>();
+        services.AddScoped<IGetNursingDashboardUseCase, ObtenerPanelDeControlEnfermeraCasoDeUso>();
         services.AddScoped<IRegistrarAdministracionMedicacionCasoDeUso, RegistrarAdministracionMedicacionCasoDeUso>();
         services.AddScoped<IRegistrarOmisionMedicacionCasoDeUso, RegistrarOmisionMedicacionCasoDeUso>();
         

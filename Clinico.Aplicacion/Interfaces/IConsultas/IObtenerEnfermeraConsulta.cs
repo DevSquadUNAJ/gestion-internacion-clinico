@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Clinico.Aplicacion.Interfaces.IConsultas
 {
-    public interface IGetNurseQuery
+    public interface IObtenerEnfermeraConsulta
     {
         Task<Enfermera?> GetByIdAsync(
             Guid nurseId,

@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Clinico.Infraestructura.Consultas
 {
-    public sealed class GetNurseQuery : IGetNurseQuery
+    public sealed class ObtenerEnfermeraConsulta : IObtenerEnfermeraConsulta
     {
         private readonly ContextoBaseDeDatos _context;
 
-        public GetNurseQuery(ContextoBaseDeDatos context)
+        public ObtenerEnfermeraConsulta(ContextoBaseDeDatos context)
         {
             _context = context;
         }

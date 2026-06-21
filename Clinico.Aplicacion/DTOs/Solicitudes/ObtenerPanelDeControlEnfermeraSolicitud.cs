@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Clinico.Aplicacion.DTOs.Solicitudes
 {
-    public sealed record GetNursingDashboardRequest(
+    public sealed record ObtenerPanelDeControlEnfermeraSolicitud(
         Guid NurseId
     );
 }

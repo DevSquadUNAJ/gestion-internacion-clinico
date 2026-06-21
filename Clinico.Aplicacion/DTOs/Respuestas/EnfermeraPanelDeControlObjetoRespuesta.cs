@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Clinico.Aplicacion.DTOs.Respuestas
 {
-    public sealed record NursingDashboardItemResponse
+    public sealed record EnfermeraPanelDeControlObjetoRespuesta
     (
         Guid TreatmentDoseId,
         string Patient,
