@@ -23,6 +23,7 @@ namespace Clinico.Infraestructura.Consultas
         {
             var consulta = _contexto.Auditorias.AsNoTracking();
 
+            // Filtros
             if (!string.IsNullOrEmpty(filtros.UsuarioId))
                 consulta = consulta.Where(x => x.UsuarioId == filtros.UsuarioId);
 
@@ -40,6 +41,10 @@ namespace Clinico.Infraestructura.Consultas
 
             if (filtros.FechaHasta.HasValue)
                 consulta = consulta.Where(x => x.FechaHora <= filtros.FechaHasta.Value);
+
+            // Paginación
+            int skip = (filtros.Page - 1) * filtros.Limit;
+            consulta = consulta.Skip(skip).Take(filtros.Limit);
 
             return await consulta.OrderByDescending(x => x.FechaHora).ToListAsync();
         }

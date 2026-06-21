@@ -26,6 +26,7 @@ namespace Clinico.API.Controllers
         [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ObtenerHistorialAuditoriaRespuesta>> ObtenerHistorial([FromQuery] FiltroAuditoriaSolicitud filtros)
         {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
             var resultado = await _obtenerHistorialAuditoriaCasoDeUso.EjecutarAsync(filtros);
             return Ok(resultado);
         }
