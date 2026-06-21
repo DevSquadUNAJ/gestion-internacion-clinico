@@ -6,7 +6,6 @@ using Clinico.Infraestructura.ServiciosExternos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Clinico.Infraestructura.Persistencia;
 using Clinico.Aplicacion.Interfaces.IConsultas;
 using Clinico.Infraestructura.Consultas;
 using Refit;
@@ -30,7 +29,7 @@ public static class DependencyInjection
 
         // registrar consultas
         services.AddScoped<IObtenerEnfermeraConsulta, ObtenerEnfermeraConsulta>();
-        services.AddScoped<IObtenerEnfermeraPanelDeControlConsulta, GetNursingDashboardQuery>();
+        services.AddScoped<IObtenerEnfermeraPanelDeControlConsulta, ObtenerEnfermeraPanelDeControlConsulta>();
 
 
         // ==========================================

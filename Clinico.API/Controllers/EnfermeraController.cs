@@ -13,12 +13,12 @@ namespace Clinico.API.Controllers
     [Route("api/nursing")]
     public sealed class EnfermeraController : ControllerBase
     {
-        private readonly IGetNursingDashboardUseCase _useCase;
+        private readonly IObtenerEnfermeraPanelDeControlCasoDeUso _useCase;
         private readonly IRegistrarAdministracionMedicacionCasoDeUso _casoDeUso;
         private readonly IRegistrarOmisionMedicacionCasoDeUso _registrarOmisionCasoDeUso;
 
         public EnfermeraController(
-            IGetNursingDashboardUseCase useCase,
+            IObtenerEnfermeraPanelDeControlCasoDeUso useCase,
             IRegistrarAdministracionMedicacionCasoDeUso casoDeUso,
             IRegistrarOmisionMedicacionCasoDeUso registrarOmisionCasoDeUso)
         {
@@ -28,7 +28,7 @@ namespace Clinico.API.Controllers
         }
 
         [HttpGet("dashboard")]
-        public async Task<IActionResult> GetDashboard(
+        public async Task<IActionResult> ObtenerPanelDeControl(
             CancellationToken cancellationToken)
         {
            /* var nurseId =
@@ -36,7 +36,7 @@ namespace Clinico.API.Controllers
            var nurseId = Guid.Parse("11111111-1111-1111-1111-111111111111");
 
             var result =
-                await _useCase.ExecuteAsync(
+                await _useCase.EjecutarAsync(
                     nurseId,
                     cancellationToken);
 

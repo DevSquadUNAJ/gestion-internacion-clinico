@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Clinico.Aplicacion.CasosDeUso
 {
     public sealed class ObtenerPanelDeControlEnfermeraCasoDeUso
-        : IGetNursingDashboardUseCase
+        : IObtenerEnfermeraPanelDeControlCasoDeUso
     {
         private readonly IObtenerEnfermeraConsulta _nurseQuery;
         private readonly IObtenerEnfermeraPanelDeControlConsulta _dashboardQuery;
@@ -25,13 +25,13 @@ namespace Clinico.Aplicacion.CasosDeUso
             _dashboardQuery = dashboardQuery;
         }
 
-        public async Task<IReadOnlyCollection<EnfermeraPanelDeControlObjetoRespuesta>>
-            ExecuteAsync(
+        public async Task<IReadOnlyCollection<EnfermeraPanelDeControlRespuesta>>
+            EjecutarAsync(
                 Guid nurseId,
                 CancellationToken cancellationToken)
         {
             var nurse =
-                await _nurseQuery.GetByIdAsync(
+                await _nurseQuery.ObtenerPorIdAsync(
                     nurseId,
                     cancellationToken);
 
@@ -39,12 +39,12 @@ namespace Clinico.Aplicacion.CasosDeUso
                 throw new EnfermeraNotFoundException(nurseId);
 
             var pendingDoses =
-                await _dashboardQuery.GetPendingBySectorAsync(
+                await _dashboardQuery.ObtenerSectorPendienteAsync(
                     nurse.SectorId,
                     cancellationToken);
 
             return pendingDoses
-                .Select(d => new EnfermeraPanelDeControlObjetoRespuesta(
+                .Select(d => new EnfermeraPanelDeControlRespuesta(
                     d.TreatmentDoseId,
                     d.PatientName,
                     d.MedicationName,

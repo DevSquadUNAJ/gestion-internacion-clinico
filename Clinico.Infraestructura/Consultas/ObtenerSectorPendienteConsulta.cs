@@ -23,8 +23,8 @@ public sealed class GetNursingDashboardQuery
         _context = context;
     }
 
-    public async Task<IReadOnlyCollection<EnfermeraPanelDeControlObjetoDto>>
-        GetPendingBySectorAsync(
+    public async Task<IReadOnlyCollection<EnfermeraPanelDeControlDto>>
+        ObtenerSectorPendienteAsync(
             Guid sectorId,
             CancellationToken cancellationToken)
     {
@@ -35,7 +35,7 @@ public sealed class GetNursingDashboardQuery
                 .ThenInclude(t => t.Diagnostico)
                     .ThenInclude(d => d.HistoriaClinica)
             .Where(td => td.Estado == EstadoDosis.Pendiente)
-            .Select(td => new EnfermeraPanelDeControlObjetoDto(
+            .Select(td => new EnfermeraPanelDeControlDto(
                 td.Id,
                 td.Tratamiento.Diagnostico.HistoriaClinica.PacienteId.ToString(),
                 td.Tratamiento.Medicamento.NombreComercial,

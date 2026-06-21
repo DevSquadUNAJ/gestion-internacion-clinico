@@ -17,7 +17,7 @@ namespace Clinico.Infraestructura.Consultas
             _context = context;
         }
 
-        public async Task<Enfermera?> GetByIdAsync(
+        public async Task<Enfermera?> ObtenerPorIdAsync(
             Guid nurseId,
             CancellationToken cancellationToken)
         {

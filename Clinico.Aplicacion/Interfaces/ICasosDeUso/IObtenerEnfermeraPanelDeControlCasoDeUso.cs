@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Clinico.Aplicacion.Interfaces.ICasosDeUso
 {
-    public interface IGetNursingDashboardUseCase
+    public interface IObtenerEnfermeraPanelDeControlCasoDeUso
     {
-        Task<IReadOnlyCollection<EnfermeraPanelDeControlObjetoRespuesta>>
-            ExecuteAsync(Guid nurseId,
+        Task<IReadOnlyCollection<EnfermeraPanelDeControlRespuesta>>
+            EjecutarAsync(Guid nurseId,
             CancellationToken cancellationToken);
     }
 }

@@ -8,8 +8,8 @@ namespace Clinico.Aplicacion.Interfaces.IConsultas
 {
     public interface IObtenerEnfermeraPanelDeControlConsulta
     {
-        Task<IReadOnlyCollection<EnfermeraPanelDeControlObjetoDto>>
-            GetPendingBySectorAsync(
+        Task<IReadOnlyCollection<EnfermeraPanelDeControlDto>>
+            ObtenerSectorPendienteAsync(
                 Guid sectorId,
                 CancellationToken cancellationToken);
     }

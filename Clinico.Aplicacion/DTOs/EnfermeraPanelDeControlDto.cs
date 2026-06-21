@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Clinico.Aplicacion.DTOs
 {
-    public sealed record EnfermeraPanelDeControlObjetoDto(
+    public sealed record EnfermeraPanelDeControlDto(
         Guid TreatmentDoseId,
         string PatientName,
         string MedicationName,

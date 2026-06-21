@@ -10,7 +10,7 @@ namespace Clinico.Aplicacion.Interfaces.IConsultas
 {
     public interface IObtenerEnfermeraConsulta
     {
-        Task<Enfermera?> GetByIdAsync(
+        Task<Enfermera?> ObtenerPorIdAsync(
             Guid nurseId,
             CancellationToken cancellationToken);
     }
