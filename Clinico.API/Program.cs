@@ -111,6 +111,8 @@ namespace Clinico.API
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
 
+            // Forzar que todas las URLs generadas y expuestas en Swagger sean en minúsculas
+            builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
             // Add services to the container.
             builder.Services.AddControllers();
@@ -149,6 +151,19 @@ namespace Clinico.API
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddScoped<Aplicacion.Interfaces.ISeguridad.ITokenUsuarioActual, Servicios.TokenUsuarioActual>();
 
+            // ==========================================
+            // SEGURIDAD: CORS (Cross-Origin Resource Sharing)
+            // ==========================================
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -161,6 +176,7 @@ namespace Clinico.API
             app.UseMiddleware<Middlewares.ManejadorGlobalExcepcionesMiddleware>();
 
             app.UseHttpsRedirection();
+            app.UseCors("CorsPolicy");
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
