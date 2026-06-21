@@ -1,6 +1,7 @@
 ﻿using Clinico.Aplicacion.DTOs;
 using Clinico.Aplicacion.Interfaces.IConsultas;
 using Clinico.Dominio.Entidades;
+using Clinico.Dominio.Constantes;   
 using Clinico.Infraestructura.Persistencia;
 using Microsoft.EntityFrameworkCore;
 using System;

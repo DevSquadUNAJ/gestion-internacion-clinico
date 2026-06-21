@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Clinico.Dominio.Entidades;
 using Microsoft.EntityFrameworkCore;
-using Clinico.Dominio.Entidades;
 
 namespace Clinico.Infraestructura.Persistencia
 {
@@ -16,7 +11,6 @@ namespace Clinico.Infraestructura.Persistencia
             : base(options)
         {
         }
-        // Agregando DbSet para cada entidad
         public DbSet<HistoriaClinica> HistoriasClinicas => Set<HistoriaClinica>();
         public DbSet<Diagnostico> Diagnosticos => Set<Diagnostico>();
         public DbSet<EvolucionClinica> EvolucionesClinicas => Set<EvolucionClinica>();
@@ -27,7 +21,6 @@ namespace Clinico.Infraestructura.Persistencia
         public DbSet<UnidadMedida> UnidadesMedida => Set<UnidadMedida>();
         public DbSet<FrecuenciaAdministracion> FrecuenciasAdministracion => Set<FrecuenciaAdministracion>();
         public DbSet<Enfermera> Enfermeras => Set<Enfermera>();
-        /*public DbSet<Sector> Sectores => Set<Sector>();*/
         public DbSet<TratamientoDosis> TratamientosDosis => Set<TratamientoDosis>();
         public DbSet<AuditoriaIA> AuditoriasIA => Set<AuditoriaIA>();
         public DbSet<Auditoria> Auditorias => Set<Auditoria>();

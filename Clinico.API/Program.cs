@@ -61,6 +61,7 @@ namespace Clinico.API
             // ==========================================
             builder.Services.AddScoped<IDiagnosticoComando, DiagnosticoComando>();
             builder.Services.AddScoped<IRegistrarDiagnosticoCasoDeUso, RegistrarDiagnosticoCasoDeUso>();
+            builder.Services.AddSingleton<IRegistrarDiagnosticoMapeador, RegistrarDiagnosticoMapeador>();
 
             // ==========================================
             // 7. DOMINIO: Evolucion Clinica
@@ -144,6 +145,10 @@ namespace Clinico.API
                     }
                 });
             });
+
+            // Registrar servicios web para obtener el token
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddScoped<Aplicacion.Interfaces.ISeguridad.ITokenUsuarioActual, Servicios.TokenUsuarioActual>();
 
             var app = builder.Build();
 

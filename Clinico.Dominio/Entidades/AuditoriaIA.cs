@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Clinico.Dominio.Base;
+using System;
 
 namespace Clinico.Dominio.Entidades
 {
-    public class AuditoriaIA : EntityBase
+    public class AuditoriaIA : EntidadBase
     {
         public Guid TratamientoId { get; set; }
 

@@ -30,14 +30,17 @@ namespace Clinico.Infraestructura.Migrations
 
                     b.Property<string>("Accion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Entidad")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<Guid>("EntidadId")
                         .HasColumnType("uniqueidentifier");
@@ -50,15 +53,31 @@ namespace Clinico.Infraestructura.Migrations
 
                     b.Property<string>("Rol")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("UsuarioId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Auditorias");
+                    b.ToTable("Auditorias", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("99999999-9999-9999-9999-999999999999"),
+                            Accion = "Crear",
+                            Descripcion = "Se registró un nuevo diagnóstico de Sinusitis aguda.",
+                            Entidad = "Diagnostico",
+                            EntidadId = new Guid("11111111-dddd-dddd-dddd-111111111111"),
+                            FechaHora = new DateTime(2026, 6, 16, 10, 0, 0, 0, DateTimeKind.Utc),
+                            PayloadJson = "{\"CodigoCie10\": \"J01.9\"}",
+                            Rol = "Medico",
+                            UsuarioId = "22222222-2222-2222-2222-222222222222"
+                        });
                 });
 
             modelBuilder.Entity("Clinico.Dominio.Entidades.AuditoriaIA", b =>
@@ -77,11 +96,13 @@ namespace Clinico.Infraestructura.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("JustificacionClinica")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("MensajeIA")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<Guid>("TratamientoId")
                         .HasColumnType("uniqueidentifier");
@@ -90,7 +111,19 @@ namespace Clinico.Infraestructura.Migrations
 
                     b.HasIndex("TratamientoId");
 
-                    b.ToTable("AuditoriasIA");
+                    b.ToTable("AuditoriasIA", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                            AlertaDetectada = true,
+                            FechaHora = new DateTime(2026, 6, 16, 10, 30, 0, 0, DateTimeKind.Utc),
+                            FueForzado = true,
+                            JustificacionClinica = "El paciente presenta dolor agudo inmanejable. Se administrará dosis baja y se monitoreará la presión arterial cada 8 horas.",
+                            MensajeIA = "⚠️ Precaución: El uso de AINEs (Ibuprofeno) puede aumentar la presión arterial en pacientes hipertensos.",
+                            TratamientoId = new Guid("66666666-7777-7777-7777-666666666666")
+                        });
                 });
 
             modelBuilder.Entity("Clinico.Dominio.Entidades.CatalogoCie10", b =>
@@ -112,6 +145,20 @@ namespace Clinico.Infraestructura.Migrations
                     b.HasKey("Codigo");
 
                     b.ToTable("CatalogosCie10", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Codigo = "J01.9",
+                            Categoria = "Enfermedades del sistema respiratorio",
+                            Descripcion = "Sinusitis aguda, no especificada"
+                        },
+                        new
+                        {
+                            Codigo = "I10",
+                            Categoria = "Enfermedades del sistema circulatorio",
+                            Descripcion = "Hipertensión esencial (primaria)"
+                        });
                 });
 
             modelBuilder.Entity("Clinico.Dominio.Entidades.Diagnostico", b =>
@@ -146,6 +193,26 @@ namespace Clinico.Infraestructura.Migrations
                     b.HasIndex("MedicoId");
 
                     b.ToTable("Diagnosticos", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("11111111-dddd-dddd-dddd-111111111111"),
+                            CodigoCie10 = "J01.9",
+                            FechaHora = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HistoriaClinicaId = new Guid("aaaaaaaa-1111-1111-1111-aaaaaaaaaaaa"),
+                            MedicoId = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
+                            Observaciones = "Paciente presenta cuadro de congestión y dolor facial agudo."
+                        },
+                        new
+                        {
+                            Id = new Guid("22222222-dddd-dddd-dddd-222222222222"),
+                            CodigoCie10 = "I10",
+                            FechaHora = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HistoriaClinicaId = new Guid("bbbbbbbb-2222-2222-2222-bbbbbbbbbbbb"),
+                            MedicoId = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"),
+                            Observaciones = "Presión arterial elevada en múltiples tomas. Requiere inicio de tratamiento."
+                        });
                 });
 
             modelBuilder.Entity("Clinico.Dominio.Entidades.Enfermera", b =>
@@ -156,18 +223,39 @@ namespace Clinico.Infraestructura.Migrations
 
                     b.Property<string>("Legajo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<Guid>("SectorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Enfermeras");
+                    b.HasIndex("Legajo")
+                        .IsUnique();
+
+                    b.ToTable("Enfermeras", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"),
+                            Legajo = "ENF-1001",
+                            Nombre = "Enf. Rodrigo Godoy",
+                            SectorId = new Guid("99999999-9999-9999-9999-999999999999")
+                        },
+                        new
+                        {
+                            Id = new Guid("eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee"),
+                            Legajo = "ENF-1002",
+                            Nombre = "Enf. Matías Silva",
+                            SectorId = new Guid("99999999-9999-9999-9999-999999999999")
+                        });
                 });
 
             modelBuilder.Entity("Clinico.Dominio.Entidades.EvolucionClinica", b =>
@@ -187,15 +275,24 @@ namespace Clinico.Infraestructura.Migrations
 
                     b.Property<string>("Observacion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("HistoriaClinicaId");
 
-                    b.HasIndex("MedicoId");
+                    b.ToTable("EvolucionesClinicas", (string)null);
 
-                    b.ToTable("EvolucionesClinicas");
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
+                            FechaHora = new DateTime(2026, 6, 16, 18, 0, 0, 0, DateTimeKind.Utc),
+                            HistoriaClinicaId = new Guid("aaaaaaaa-1111-1111-1111-aaaaaaaaaaaa"),
+                            MedicoId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Observacion = "Paciente refiere alivio leve del dolor facial tras la primera dosis de Amoxicilina. Afebril. Continúa en observación."
+                        });
                 });
 
             modelBuilder.Entity("Clinico.Dominio.Entidades.FrecuenciaAdministracion", b =>
@@ -209,11 +306,26 @@ namespace Clinico.Infraestructura.Migrations
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("FrecuenciasAdministracion");
+                    b.ToTable("FrecuenciasAdministracion", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("33333333-6666-6666-6666-333333333333"),
+                            CantidadHoras = 8,
+                            Descripcion = "Cada 8 horas"
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-6666-6666-6666-444444444444"),
+                            CantidadHoras = 12,
+                            Descripcion = "Cada 12 horas"
+                        });
                 });
 
             modelBuilder.Entity("Clinico.Dominio.Entidades.HistoriaClinica", b =>
@@ -245,6 +357,26 @@ namespace Clinico.Infraestructura.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("HistoriasClinicas", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("aaaaaaaa-1111-1111-1111-aaaaaaaaaaaa"),
+                            Alergias = "Penicilina",
+                            Antecedentes = "Hipertensión controlada",
+                            GrupoSanguineo = "A+",
+                            ObservacionesGenerales = "Paciente ingresa por guardia clínica.",
+                            PacienteId = new Guid("11111111-aaaa-aaaa-aaaa-111111111111")
+                        },
+                        new
+                        {
+                            Id = new Guid("bbbbbbbb-2222-2222-2222-bbbbbbbbbbbb"),
+                            Alergias = "Ninguna conocida",
+                            Antecedentes = "Asma en la infancia",
+                            GrupoSanguineo = "O-",
+                            ObservacionesGenerales = "Paciente derivado de consultorios externos.",
+                            PacienteId = new Guid("22222222-bbbb-bbbb-bbbb-222222222222")
+                        });
                 });
 
             modelBuilder.Entity("Clinico.Dominio.Entidades.Medicamento", b =>
@@ -277,14 +409,32 @@ namespace Clinico.Infraestructura.Migrations
                     b.Property<bool>("RequiereControl")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ViaAdministracion")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<int>("ViaAdministracion")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("Medicamentos", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("cccccccc-3333-3333-3333-cccccccccccc"),
+                            DrogaGenerica = "Amoxicilina",
+                            NombreComercial = "Amoxidal 500",
+                            Presentacion = "Comprimidos",
+                            RequiereControl = false,
+                            ViaAdministracion = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("dddddddd-4444-4444-4444-dddddddddddd"),
+                            DrogaGenerica = "Ibuprofeno",
+                            NombreComercial = "Ibuprofeno 600",
+                            Presentacion = "Comprimidos recubiertos",
+                            RequiereControl = false,
+                            ViaAdministracion = 1
+                        });
                 });
 
             modelBuilder.Entity("Clinico.Dominio.Entidades.Medico", b =>
@@ -314,6 +464,22 @@ namespace Clinico.Infraestructura.Migrations
                         .IsUnique();
 
                     b.ToTable("Medicos", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
+                            Especialidad = "Clínica Médica",
+                            Matricula = "MN-123456",
+                            Nombre = "Dr. Alejandro Salas"
+                        },
+                        new
+                        {
+                            Id = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"),
+                            Especialidad = "Terapia Intensiva",
+                            Matricula = "MN-654321",
+                            Nombre = "Dr. Yonatan Rojas"
+                        });
                 });
 
             modelBuilder.Entity("Clinico.Dominio.Entidades.Tratamiento", b =>
@@ -361,6 +527,32 @@ namespace Clinico.Infraestructura.Migrations
                     b.HasIndex("UnidadMedidaId");
 
                     b.ToTable("Tratamientos", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("55555555-7777-7777-7777-555555555555"),
+                            DiagnosticoId = new Guid("11111111-dddd-dddd-dddd-111111111111"),
+                            Dosis = 500m,
+                            Estado = 1,
+                            FechaFin = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaInicio = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FrecuenciaAdministracionId = new Guid("33333333-6666-6666-6666-333333333333"),
+                            MedicamentoId = new Guid("cccccccc-3333-3333-3333-cccccccccccc"),
+                            UnidadMedidaId = new Guid("11111111-5555-5555-5555-111111111111")
+                        },
+                        new
+                        {
+                            Id = new Guid("66666666-7777-7777-7777-666666666666"),
+                            DiagnosticoId = new Guid("22222222-dddd-dddd-dddd-222222222222"),
+                            Dosis = 600m,
+                            Estado = 1,
+                            FechaFin = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaInicio = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FrecuenciaAdministracionId = new Guid("44444444-6666-6666-6666-444444444444"),
+                            MedicamentoId = new Guid("dddddddd-4444-4444-4444-dddddddddddd"),
+                            UnidadMedidaId = new Guid("11111111-5555-5555-5555-111111111111")
+                        });
                 });
 
             modelBuilder.Entity("Clinico.Dominio.Entidades.TratamientoDosis", b =>
@@ -400,6 +592,26 @@ namespace Clinico.Infraestructura.Migrations
                     b.HasIndex("TratamientoId");
 
                     b.ToTable("TratamientosDosis", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("77777777-8888-8888-8888-777777777777"),
+                            EnfermeraId = new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"),
+                            Estado = 1,
+                            FechaDelSistema = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaProgramada = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
+                        },
+                        new
+                        {
+                            Id = new Guid("88888888-8888-8888-8888-888888888888"),
+                            EnfermeraId = new Guid("eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee"),
+                            Estado = 1,
+                            FechaDelSistema = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaProgramada = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
+                        });
                 });
 
             modelBuilder.Entity("Clinico.Dominio.Entidades.UnidadMedida", b =>
@@ -410,15 +622,31 @@ namespace Clinico.Infraestructura.Migrations
 
                     b.Property<string>("Abreviatura")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("UnidadesMedida");
+                    b.ToTable("UnidadesMedida", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("11111111-5555-5555-5555-111111111111"),
+                            Abreviatura = "mg",
+                            Nombre = "Miligramos"
+                        },
+                        new
+                        {
+                            Id = new Guid("22222222-5555-5555-5555-222222222222"),
+                            Abreviatura = "ml",
+                            Nombre = "Mililitros"
+                        });
                 });
 
             modelBuilder.Entity("Clinico.Dominio.Entidades.AuditoriaIA", b =>
@@ -467,15 +695,7 @@ namespace Clinico.Infraestructura.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Clinico.Dominio.Entidades.Medico", "Medico")
-                        .WithMany("EvolucionesClinicas")
-                        .HasForeignKey("MedicoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("HistoriaClinica");
-
-                    b.Navigation("Medico");
                 });
 
             modelBuilder.Entity("Clinico.Dominio.Entidades.Tratamiento", b =>
@@ -567,8 +787,6 @@ namespace Clinico.Infraestructura.Migrations
             modelBuilder.Entity("Clinico.Dominio.Entidades.Medico", b =>
                 {
                     b.Navigation("Diagnosticos");
-
-                    b.Navigation("EvolucionesClinicas");
                 });
 
             modelBuilder.Entity("Clinico.Dominio.Entidades.Tratamiento", b =>

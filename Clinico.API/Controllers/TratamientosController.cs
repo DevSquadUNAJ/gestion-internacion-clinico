@@ -3,6 +3,7 @@ using Clinico.Aplicacion.DTOs.Respuestas;
 using Clinico.Aplicacion.DTOs.Solicitudes;
 using Clinico.Aplicacion.Excepciones;
 using Clinico.Aplicacion.Interfaces.ICasosDeUso;
+using Clinico.Application.DTOs.Respuestas;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -26,8 +27,10 @@ public class TratamientosController : ControllerBase
 
     [HttpPut("{Id}")]
     [ProducesResponseType(typeof(ModificarTratamientoRespuesta),StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ExceptionBadRequest), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ExceptionNotFound), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ModificarTratamientoRespuesta>> Modificar(Guid Id, [FromBody] ModificarTratamientoSolicitud solicitud)
     {
         var respuesta = await _modificarTratamientoCasoDeUso.EjecutarAsync(Id, solicitud);

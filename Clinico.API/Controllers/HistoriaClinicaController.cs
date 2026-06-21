@@ -1,6 +1,7 @@
 ﻿using Clinico.Aplicacion.DTOs.Respuestas;
 using Clinico.Aplicacion.Excepciones;
 using Clinico.Aplicacion.Interfaces.ICasosDeUso;
+using Clinico.Application.DTOs.Respuestas;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,8 +21,8 @@ namespace Clinico.API.Controllers
 
         [HttpGet("paciente/{Id}")]
         [ProducesResponseType(typeof(ObtenerHistoriaClinicaRespuesta), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ObtenerHistoriaClinicaRespuesta>> ObtenerPorPaciente(Guid Id)
         {
             var resultado = await _obtenerHistoriaClinicaCasoDeUso.EjecutarAsync(Id);

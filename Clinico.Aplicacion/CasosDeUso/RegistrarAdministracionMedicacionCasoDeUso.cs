@@ -3,6 +3,7 @@ using Clinico.Aplicacion.Interfaces.ICasosDeUso;
 using Clinico.Aplicacion.Interfaces.IComandos;
 using Clinico.Aplicacion.Interfaces.IConsultas;
 using Clinico.Dominio.Entidades;
+using Clinico.Dominio.Constantes;
 using System;
 using System.Collections.Generic;
 using System.Linq;

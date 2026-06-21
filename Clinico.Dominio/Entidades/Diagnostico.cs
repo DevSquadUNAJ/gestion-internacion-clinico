@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Clinico.Dominio.Base;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Clinico.Dominio.Entidades
 {
-    public class Diagnostico : EntityBase
+    public class Diagnostico : EntidadBase
     {
         public Guid HistoriaClinicaId { get; set; }
 
