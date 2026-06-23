@@ -19,13 +19,13 @@ namespace Clinico.API
             var builder = WebApplication.CreateBuilder(args);
 
             // ==========================================
-            // 1. INYECCIÓN DE DEPENDENCIAS (CAPAS)
+            // 1. INYECCI�N DE DEPENDENCIAS (CAPAS)
             // ==========================================
             builder.Services.AddAplicacion();
             builder.Services.AddInfraestructura(builder.Configuration);
 
             // ==========================================
-            // 2. CONFIGURACIÓN DE AUTENTICACIÓN JWT
+            // 2. CONFIGURACI�N DE AUTENTICACI�N JWT
             // ==========================================
             var configuracionJwt = builder.Configuration.GetSection("Jwt");
             var claveSecreta = Encoding.UTF8.GetBytes(configuracionJwt["Key"]!);
@@ -77,7 +77,7 @@ namespace Clinico.API
                     Scheme = "bearer",
                     BearerFormat = "JWT",
                     In = ParameterLocation.Header,
-                    Description = "Pega tu token JWT directamente aquí. (Nota: NO escribas la palabra 'Bearer')."
+                    Description = "Pega tu token JWT directamente aqu�. (Nota: NO escribas la palabra 'Bearer')."
                 });
 
                 opciones.AddSecurityRequirement(new OpenApiSecurityRequirement
