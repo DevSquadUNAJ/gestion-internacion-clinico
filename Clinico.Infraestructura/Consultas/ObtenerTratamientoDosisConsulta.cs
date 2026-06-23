@@ -3,22 +3,16 @@ using Clinico.Dominio.Entidades;
 using Clinico.Infraestructura.Persistencia;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Clinico.Infraestructura.Consultas
 {
-
-    public sealed class ObtenerTratamientoDosisConsulta
-        : IObtenerTratamientoDosisConsulta
+    public sealed class ObtenerTratamientoDosisConsulta : IObtenerTratamientoDosisConsulta
     {
         private readonly ContextoBaseDeDatos _contexto;
 
-        public ObtenerTratamientoDosisConsulta(
-            ContextoBaseDeDatos contexto)
+        public ObtenerTratamientoDosisConsulta(ContextoBaseDeDatos contexto)
         {
             _contexto = contexto;
         }
@@ -27,6 +21,7 @@ namespace Clinico.Infraestructura.Consultas
             Guid dosisId,
             CancellationToken cancellationToken)
         {
+            // SIN AsNoTracking() porque esta entidad luego mutará su estado y se actualizará en BD
             return await _contexto.TratamientosDosis
                 .FirstOrDefaultAsync(
                     d => d.Id == dosisId,

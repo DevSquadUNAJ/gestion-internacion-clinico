@@ -10,20 +10,21 @@ namespace Clinico.Infraestructura.Consultas
 {
     public sealed class ObtenerEnfermeraConsulta : IObtenerEnfermeraConsulta
     {
-        private readonly ContextoBaseDeDatos _context;
+        private readonly ContextoBaseDeDatos _contexto;
 
-        public ObtenerEnfermeraConsulta(ContextoBaseDeDatos context)
+        public ObtenerEnfermeraConsulta(ContextoBaseDeDatos contexto)
         {
-            _context = context;
+            _contexto = contexto;
         }
 
         public async Task<Enfermera?> ObtenerPorIdAsync(
-            Guid nurseId,
+            Guid enfermeraId,
             CancellationToken cancellationToken)
         {
-            return await _context.Enfermeras
+            return await _contexto.Enfermeras
+                .AsNoTracking()
                 .FirstOrDefaultAsync(
-                    e => e.Id == nurseId,
+                    e => e.Id == enfermeraId,
                     cancellationToken);
         }
     }

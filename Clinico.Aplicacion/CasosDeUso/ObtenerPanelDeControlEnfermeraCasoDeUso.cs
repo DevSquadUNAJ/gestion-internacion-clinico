@@ -27,32 +27,25 @@ namespace Clinico.Aplicacion.CasosDeUso
             _dosisConsulta = dosisConsulta;
         }
 
-        // Soluciona el Error 1: Agregamos IReadOnlyCollection y el CancellationToken
-        public async Task<IReadOnlyCollection<EnfermeraPanelDeControlRespuesta>> EjecutarAsync(
+        public async Task<IEnumerable<EnfermeraPanelDeControlRespuesta>> EjecutarAsync(
             Guid enfermeraId,
             CancellationToken cancellationToken)
         {
-            // Soluciona el Error 2: Le pasamos el cancellationToken a la consulta de la enfermera
             var enfermera = await _enfermeraConsulta.ObtenerPorIdAsync(enfermeraId, cancellationToken);
 
             if (enfermera is null)
                 throw new ExceptionNotFound("La enfermera indicada no existe.");
 
-            // MAGIA REFIT: Le preguntamos a Admisión por las camas de ese sector
             var camasDelSector = await _admisionServicio.ObtenerCamasPorSectorAsync(enfermera.SectorId);
 
-            // Filtramos solo las camas que tienen un paciente acostado ahí
             var camasOcupadas = camasDelSector.Where(c => c.PacienteId.HasValue).ToList();
             var pacientesIds = camasOcupadas.Select(c => c.PacienteId!.Value).ToList();
 
-            // Si el sector está vacío, el tablero no tiene nada pendiente
             if (!pacientesIds.Any())
                 return new List<EnfermeraPanelDeControlRespuesta>();
 
-            // Buscamos las dosis pendientes SÓLO para los pacientes de ese sector
             var dosisPendientes = await _dosisConsulta.ObtenerPendientesPorPacientesAsync(pacientesIds);
 
-            // Cruzamos los datos y mapeamos
             return dosisPendientes.Select(d =>
             {
                 var pacienteId = d.Tratamiento.Diagnostico.HistoriaClinica.PacienteId;
@@ -69,8 +62,7 @@ namespace Clinico.Aplicacion.CasosDeUso
                 };
             })
             .OrderByDescending(x => x.Prioridad == "Alta")
-            .ThenBy(x => x.FechaProgramada)
-            .ToList(); // <-- Soluciona el Error 1: Convierte el IEnumerable a una lista para cumplir con IReadOnlyCollection
+            .ThenBy(x => x.FechaProgramada);
         }
     }
 }
