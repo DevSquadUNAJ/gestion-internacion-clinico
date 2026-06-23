@@ -1,4 +1,8 @@
-﻿using Clinico.Aplicacion.Interfaces.IExternos;
+﻿using Clinico.Aplicacion.CasosDeUso;
+using Clinico.Aplicacion.Interfaces.ICasosDeUso;
+using Clinico.Aplicacion.Interfaces.IConsultas;
+using Clinico.Aplicacion.Interfaces.IExternos;
+using Clinico.Infraestructura.Consultas;
 using Clinico.Infraestructura.Persistencia;
 using Clinico.Infraestructura.Refit;
 using Clinico.Infraestructura.Refit.Handlers;
@@ -6,8 +10,6 @@ using Clinico.Infraestructura.ServiciosExternos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Clinico.Aplicacion.Interfaces.IConsultas;
-using Clinico.Infraestructura.Consultas;
 using Refit;
 using System;
 
@@ -27,9 +29,8 @@ public static class DependencyInjection
         });
 
 
-        // registrar consultas
-        services.AddScoped<IObtenerEnfermeraConsulta, ObtenerEnfermeraConsulta>();
-        services.AddScoped<IObtenerEnfermeraPanelDeControlConsulta, ObtenerEnfermeraPanelDeControlConsulta>();
+
+        
 
 
         // ==========================================

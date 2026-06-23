@@ -81,6 +81,16 @@ namespace Clinico.API
             builder.Services.AddScoped<IObtenerSeguimientoTratamientoCasoDeUso, ObtenerSeguimientoTratamientoCasoDeUso>();
 
             // ==========================================
+            // 8. DOMINIO: Enferemera
+            // ==========================================
+            builder.Services.AddScoped<IObtenerEnfermeraPanelDeControlCasoDeUso, ObtenerPanelDeControlEnfermeraCasoDeUso>();
+            builder.Services.AddScoped<IRegistrarAdministracionMedicacionCasoDeUso, RegistrarAdministracionMedicacionCasoDeUso>();
+            builder.Services.AddScoped<IRegistrarOmisionMedicacionCasoDeUso, RegistrarOmisionMedicacionCasoDeUso>();
+            builder.Services.AddScoped<IObtenerEnfermeraConsulta, ObtenerEnfermeraConsulta>();
+            builder.Services.AddScoped<ITratamientoDosisConsulta, TratamientoDosisConsulta>();
+            builder.Services.AddScoped<IObtenerTratamientoDosisConsulta, ObtenerTratamientoDosisConsulta>();
+
+            // ==========================================
             // 8. DOMINIO: Auditoría
             // ==========================================
             builder.Services.AddScoped<IObtenerHistorialAuditoriaCasoDeUso, ObtenerHistorialAuditoriaCasoDeUso>();

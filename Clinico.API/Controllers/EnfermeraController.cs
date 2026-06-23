@@ -1,6 +1,4 @@
-﻿using Clinico.Aplicacion.CasosDeUso;
-using Clinico.Aplicacion.DTOs.Respuestas;
-using Clinico.Aplicacion.DTOs.Solicitudes;
+﻿using Clinico.Aplicacion.DTOs.Solicitudes;
 using Clinico.Aplicacion.Interfaces.ICasosDeUso;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,74 +8,62 @@ using System.Threading.Tasks;
 namespace Clinico.API.Controllers
 {
     [ApiController]
-    [Route("api/nursing")]
-    public sealed class EnfermeraController : ControllerBase
+    [Route("api/enfermeras")]
+    public class EnfermerasController : ControllerBase
     {
-        private readonly IObtenerEnfermeraPanelDeControlCasoDeUso _useCase;
-        private readonly IRegistrarAdministracionMedicacionCasoDeUso _casoDeUso;
+        private readonly IObtenerEnfermeraPanelDeControlCasoDeUso _obtenerPanelCasoDeUso;
+        private readonly IRegistrarAdministracionMedicacionCasoDeUso _registrarAdministracionCasoDeUso;
         private readonly IRegistrarOmisionMedicacionCasoDeUso _registrarOmisionCasoDeUso;
 
-        public EnfermeraController(
-            IObtenerEnfermeraPanelDeControlCasoDeUso useCase,
-            IRegistrarAdministracionMedicacionCasoDeUso casoDeUso,
+        public EnfermerasController(
+            IObtenerEnfermeraPanelDeControlCasoDeUso obtenerPanelCasoDeUso,
+            IRegistrarAdministracionMedicacionCasoDeUso registrarAdministracionCasoDeUso,
             IRegistrarOmisionMedicacionCasoDeUso registrarOmisionCasoDeUso)
         {
-            _useCase = useCase;
-            _casoDeUso = casoDeUso;
+            _obtenerPanelCasoDeUso = obtenerPanelCasoDeUso;
+            _registrarAdministracionCasoDeUso = registrarAdministracionCasoDeUso;
             _registrarOmisionCasoDeUso = registrarOmisionCasoDeUso;
         }
 
-        [HttpGet("dashboard")]
+        [HttpGet("{id:guid}/panel")]
         public async Task<IActionResult> ObtenerPanelDeControl(
+            [FromRoute] Guid id,
             CancellationToken cancellationToken)
         {
-           /* var nurseId =
-                User.GetUserId();*/
-           var nurseId = Guid.Parse("11111111-1111-1111-1111-111111111111");
-
-            var result =
-                await _useCase.EjecutarAsync(
-                    nurseId,
-                    cancellationToken);
-
-            return Ok(result);
+            var resultado = await _obtenerPanelCasoDeUso.EjecutarAsync(id, cancellationToken);
+            return Ok(resultado);
         }
-        [HttpPut("dosis/{dosisId:guid}/administracion")]
+
+        [HttpPut("{enfermeraId:guid}/dosis/{dosisId:guid}/administracion")]
         public async Task<IActionResult> RegistrarAdministracion(
-        Guid dosisId,
-        RegistrarAdministracionMedicacionSolicitud solicitud,
-        CancellationToken cancellationToken)
-            {
-                // Temporal hasta integrar Seguridad
-                var enfermeraId = Guid.Parse(
-                    "GUID_DE_ENFERMERA");
+            [FromRoute] Guid enfermeraId,
+            [FromRoute] Guid dosisId,
+            [FromBody] RegistrarAdministracionMedicacionSolicitud solicitud,
+            CancellationToken cancellationToken)
+        {
+            await _registrarAdministracionCasoDeUso.EjecutarAsync(
+                dosisId,
+                enfermeraId,
+                solicitud,
+                cancellationToken);
 
-                await _casoDeUso.EjecutarAsync(
-                    dosisId,
-                    enfermeraId,
-                    solicitud,
-                    cancellationToken);
+            return NoContent();
+        }
 
-                return NoContent();
-            }
-
-        [HttpPut("dosis/{dosisId:guid}/omision")]
+        [HttpPut("{enfermeraId:guid}/dosis/{dosisId:guid}/omision")]
         public async Task<IActionResult> RegistrarOmision(
-        Guid dosisId,
-        RegistrarOmisionMedicacionSolicitud solicitud,
-        CancellationToken cancellationToken)
-            {
-                // Temporal hasta integrar Seguridad
-                var enfermeraId = Guid.Parse(
-                    "GUID_DE_ENFERMERA");
+            [FromRoute] Guid enfermeraId,
+            [FromRoute] Guid dosisId,
+            [FromBody] RegistrarOmisionMedicacionSolicitud solicitud,
+            CancellationToken cancellationToken)
+        {
+            await _registrarOmisionCasoDeUso.EjecutarAsync(
+                dosisId,
+                enfermeraId,
+                solicitud,
+                cancellationToken);
 
-                await _registrarOmisionCasoDeUso.EjecutarAsync(
-                    dosisId,
-                    enfermeraId,
-                    solicitud,
-                    cancellationToken);
-
-                return NoContent();
-            }
+            return NoContent();
+        }
     }
 }

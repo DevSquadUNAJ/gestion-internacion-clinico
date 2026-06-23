@@ -6,7 +6,7 @@ namespace Clinico.Aplicacion.DTOs.Respuestas.Admision
     {
         public Guid CamaId { get; set; }
         public int Numero { get; set; }
-        public int Estado { get; set; }
+        public string Estado { get; set; } = string.Empty;
         public Guid? PacienteId { get; set; }
         public string? PacienteAsignado { get; set; }
     }
