@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Clinico.Aplicacion.DTOs.Solicitudes
+﻿namespace Clinico.Aplicacion.DTOs.Solicitudes
 {
-    public sealed record RegistrarOmisionMedicacionSolicitud(
-        string Motivo,
-        string? Observaciones
-    );
+    public class RegistrarOmisionMedicacionSolicitud
+    {
+        public string? Motivo { get; set; }
+        public string? Observaciones { get; set; }
+    }
 }

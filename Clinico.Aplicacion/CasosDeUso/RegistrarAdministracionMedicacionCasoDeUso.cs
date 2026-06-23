@@ -1,4 +1,5 @@
 ﻿using Clinico.Aplicacion.DTOs.Solicitudes;
+using Clinico.Aplicacion.Excepciones; // Importante para nuestras excepciones
 using Clinico.Aplicacion.Interfaces.ICasosDeUso;
 using Clinico.Aplicacion.Interfaces.IComandos;
 using Clinico.Aplicacion.Interfaces.IConsultas;
@@ -6,27 +7,22 @@ using Clinico.Dominio.Entidades;
 using Clinico.Dominio.Constantes;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Clinico.Aplicacion.CasosDeUso
 {
-
-    public sealed class RegistrarAdministracionMedicacionCasoDeUso
-        : IRegistrarAdministracionMedicacionCasoDeUso
+    public sealed class RegistrarAdministracionMedicacionCasoDeUso : IRegistrarAdministracionMedicacionCasoDeUso
     {
-        private readonly IObtenerTratamientoDosisConsulta _consulta;
-       
-        private readonly ITratamientoDosisComando _tratamientoDosisComando;
+        private readonly IObtenerTratamientoDosisConsulta _dosisConsulta;
+        private readonly ITratamientoDosisComando _dosisComando;
 
         public RegistrarAdministracionMedicacionCasoDeUso(
-            IObtenerTratamientoDosisConsulta consulta,
-            ITratamientoDosisComando tratamientoDosisComando)
+            IObtenerTratamientoDosisConsulta dosisConsulta,
+            ITratamientoDosisComando dosisComando)
         {
-            _consulta = consulta;
-            _tratamientoDosisComando = tratamientoDosisComando;
+            _dosisConsulta = dosisConsulta;
+            _dosisComando = dosisComando;
         }
 
         public async Task EjecutarAsync(
@@ -35,35 +31,27 @@ namespace Clinico.Aplicacion.CasosDeUso
             RegistrarAdministracionMedicacionSolicitud solicitud,
             CancellationToken cancellationToken)
         {
-            var dosis = await _consulta.ObtenerPorIdAsync(
-                dosisId,
-                cancellationToken);
+            var dosis = await _dosisConsulta.ObtenerPorIdAsync(dosisId, cancellationToken);
 
             if (dosis is null)
-                throw new Exception("La dosis no existe.");
+                throw new ExceptionNotFound("La dosis indicada no existe.");
 
             // Solo pueden administrarse dosis pendientes
             if (dosis.Estado != EstadoDosis.Pendiente)
-            {
-                throw new InvalidOperationException(
-                    "Solo pueden administrarse dosis pendientes.");
-            }
+                throw new ExceptionBadRequest("Solo pueden administrarse dosis que estén en estado pendiente.");
 
             // No puede administrarse dos veces
             if (dosis.FechaSuministro.HasValue)
-            {
-                throw new InvalidOperationException(
-                    "La dosis ya fue administrada.");
-            }
+                throw new ExceptionBadRequest("Esta dosis ya fue administrada previamente.");
 
-            dosis.FechaSuministro = solicitud.SuppliedAt;
+            // Limpiamos el Spanglish
+            dosis.FechaSuministro = solicitud.FechaSuministro;
             dosis.FechaDelSistema = DateTime.UtcNow;
             dosis.EnfermeraId = enfermeraId;
-            dosis.Observaciones = solicitud.Observations;
+            dosis.Observaciones = solicitud.Observaciones;
             dosis.Estado = EstadoDosis.Administrada;
 
-            await _tratamientoDosisComando.ActualizarAsync(
-                new List<TratamientoDosis> { dosis });
+            await _dosisComando.ActualizarAsync(new List<TratamientoDosis> { dosis });
         }
     }
 }
