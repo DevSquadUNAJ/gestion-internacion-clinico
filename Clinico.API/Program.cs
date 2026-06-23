@@ -1,17 +1,7 @@
-using Clinico.Aplicacion.CasosDeUso;
-using Clinico.Aplicacion.Interfaces.ICasosDeUso;
-using Clinico.Aplicacion.Interfaces.IComandos;
-using Clinico.Aplicacion.Interfaces.IConsultas;
-using Clinico.Aplicacion.Interfaces.IMapeadores;
-using Clinico.Aplicacion.Mapeadores;
-using Clinico.Infraestructura;
-using Clinico.Infraestructura.Comandos;
-using Clinico.Infraestructura.Consultas;
-using Clinico.Infraestructura.Persistencia;
 using Clinico.Aplicacion;
+using Clinico.Infraestructura;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -19,7 +9,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using System;
-
 
 namespace Clinico.API
 {
@@ -30,76 +19,13 @@ namespace Clinico.API
             var builder = WebApplication.CreateBuilder(args);
 
             // ==========================================
-            // 1. CONFIGURACIÓN BASE (Base de Datos)
+            // 1. INYECCIÓN DE DEPENDENCIAS (CAPAS)
             // ==========================================
+            builder.Services.AddAplicacion();
             builder.Services.AddInfraestructura(builder.Configuration);
 
             // ==========================================
-            // 2. DOMINIO: AUTH & USERS (Usuarios y Login)
-            // ==========================================
-
-
-            // ==========================================
-            // 3. DOMINIO: Historia Clinica
-            // ==========================================
-            builder.Services.AddScoped<IHistoriaClinicaConsulta, HistoriaClinicaConsulta>();
-            builder.Services.AddScoped<IHistoriaClinicaMapper, HistoriaClinicaMapper>();
-            builder.Services.AddScoped<IObtenerHistoriaClinicaCasoDeUso, ObtenerHistoriaClinicaCasoDeUso>();
-
-            // ==========================================
-            // 4. DOMINIO: Medico
-            // ==========================================
-            builder.Services.AddScoped<IMedicoConsulta, MedicoConsulta>();
-
-            // ==========================================
-            // 5. DOMINIO: Catalogo CIE-10
-            // ==========================================
-            builder.Services.AddScoped<ICatalogoCie10Consulta, CatalogoCie10Consulta>();
-
-            // ==========================================
-            // 6. DOMINIO: Diagnostico
-            // ==========================================
-            builder.Services.AddScoped<IDiagnosticoComando, DiagnosticoComando>();
-            builder.Services.AddScoped<IRegistrarDiagnosticoCasoDeUso, RegistrarDiagnosticoCasoDeUso>();
-            builder.Services.AddSingleton<IRegistrarDiagnosticoMapeador, RegistrarDiagnosticoMapeador>();
-
-            // ==========================================
-            // 7. DOMINIO: Evolucion Clinica
-            // ==========================================
-            builder.Services.AddScoped<IEvolucionClinicaComando, EvolucionClinicaComando>();
-            builder.Services.AddScoped<IRegistrarEvolucionClinicaCasoDeUso, RegistrarEvolucionClinicaCasoDeUso>();
-
-            // ==========================================
-            // 7. DOMINIO: Evolucion Clinica
-            // ==========================================
-            builder.Services.AddScoped<IModificarTratamientoCasoDeUso, ModificarTratamientoCasoDeUso>();
-            builder.Services.AddScoped<ITratamientoConsulta, TratamientoConsulta>();
-            builder.Services.AddScoped<IFrecuenciaAdministracionConsulta, FrecuenciaAdministracionConsulta>();
-            builder.Services.AddScoped<ITratamientoDosisConsulta, TratamientoDosisConsulta>();
-            builder.Services.AddScoped<ITratamientoComando, TratamientoComando>();
-            builder.Services.AddScoped<ITratamientoDosisComando, TratamientoDosisComando>();
-            builder.Services.AddScoped<IObtenerSeguimientoTratamientoCasoDeUso, ObtenerSeguimientoTratamientoCasoDeUso>();
-
-            // ==========================================
-            // 8. DOMINIO: Enferemera
-            // ==========================================
-            builder.Services.AddScoped<IObtenerEnfermeraPanelDeControlCasoDeUso, ObtenerPanelDeControlEnfermeraCasoDeUso>();
-            builder.Services.AddScoped<IRegistrarAdministracionMedicacionCasoDeUso, RegistrarAdministracionMedicacionCasoDeUso>();
-            builder.Services.AddScoped<IRegistrarOmisionMedicacionCasoDeUso, RegistrarOmisionMedicacionCasoDeUso>();
-            builder.Services.AddScoped<IObtenerEnfermeraConsulta, ObtenerEnfermeraConsulta>();
-            builder.Services.AddScoped<ITratamientoDosisConsulta, TratamientoDosisConsulta>();
-            builder.Services.AddScoped<IObtenerTratamientoDosisConsulta, ObtenerTratamientoDosisConsulta>();
-
-            // ==========================================
-            // 8. DOMINIO: Auditoría
-            // ==========================================
-            builder.Services.AddScoped<IObtenerHistorialAuditoriaCasoDeUso, ObtenerHistorialAuditoriaCasoDeUso>();
-            builder.Services.AddScoped<IHistorialAuditoriaConsulta, HistorialAuditoriaConsulta>();
-            builder.Services.AddScoped<IHistorialAuditoriaMapper, HistorialAuditoriaMapper>();
-
-
-            // ==========================================
-            // CONFIGURACIÓN DE AUTENTICACIÓN JWT
+            // 2. CONFIGURACIÓN DE AUTENTICACIÓN JWT
             // ==========================================
             var configuracionJwt = builder.Configuration.GetSection("Jwt");
             var claveSecreta = Encoding.UTF8.GetBytes(configuracionJwt["Key"]!);
@@ -119,15 +45,29 @@ namespace Clinico.API
                     };
                 });
 
+            // ==========================================
+            // 3. SEGURIDAD ADICIONAL Y SERVICIOS API
+            // ==========================================
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddScoped<Aplicacion.Interfaces.ISeguridad.ITokenUsuarioActual, Servicios.TokenUsuarioActual>();
+
+            // Configurar CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
+
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
 
-
-            // Add services to the container.
-            builder.Services.AddControllers();
-
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
+            // ==========================================
+            // 4. SWAGGER
+            // ==========================================
             builder.Services.AddSwaggerGen(opciones =>
             {
                 opciones.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -137,7 +77,7 @@ namespace Clinico.API
                     Scheme = "bearer",
                     BearerFormat = "JWT",
                     In = ParameterLocation.Header,
-                    Description = "Pega tu token JWT directamente aquí. (Nota: NO escribas la palabra 'Bearer', Swagger lo agregará por ti automáticamente)."
+                    Description = "Pega tu token JWT directamente aquí. (Nota: NO escribas la palabra 'Bearer')."
                 });
 
                 opciones.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -156,13 +96,11 @@ namespace Clinico.API
                 });
             });
 
-            // Registrar servicios web para obtener el token
-            builder.Services.AddHttpContextAccessor();
-            builder.Services.AddScoped<Aplicacion.Interfaces.ISeguridad.ITokenUsuarioActual, Servicios.TokenUsuarioActual>();
-
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            // ==========================================
+            // 5. PIPELINE HTTP (MIDDLEWARES)
+            // ==========================================
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -172,8 +110,12 @@ namespace Clinico.API
             app.UseMiddleware<Middlewares.ManejadorGlobalExcepcionesMiddleware>();
 
             app.UseHttpsRedirection();
+
+            app.UseCors("CorsPolicy");
+
             app.UseAuthentication();
             app.UseAuthorization();
+
             app.MapControllers();
 
             app.Run();

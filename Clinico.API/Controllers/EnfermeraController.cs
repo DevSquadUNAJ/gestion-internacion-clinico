@@ -1,7 +1,11 @@
-﻿using Clinico.Aplicacion.DTOs.Solicitudes;
+﻿using Clinico.Aplicacion.DTOs.Respuestas;
+using Clinico.Aplicacion.DTOs.Solicitudes;
 using Clinico.Aplicacion.Interfaces.ICasosDeUso;
+using Clinico.Application.DTOs.Respuestas;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,6 +30,11 @@ namespace Clinico.API.Controllers
         }
 
         [HttpGet("{id:guid}/panel")]
+        [ProducesResponseType(typeof(IEnumerable<EnfermeraPanelDeControlRespuesta>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> ObtenerPanelDeControl(
             [FromRoute] Guid id,
             CancellationToken cancellationToken)
@@ -35,6 +44,12 @@ namespace Clinico.API.Controllers
         }
 
         [HttpPut("{enfermeraId:guid}/dosis/{dosisId:guid}/administracion")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> RegistrarAdministracion(
             [FromRoute] Guid enfermeraId,
             [FromRoute] Guid dosisId,
@@ -51,6 +66,12 @@ namespace Clinico.API.Controllers
         }
 
         [HttpPut("{enfermeraId:guid}/dosis/{dosisId:guid}/omision")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> RegistrarOmision(
             [FromRoute] Guid enfermeraId,
             [FromRoute] Guid dosisId,
