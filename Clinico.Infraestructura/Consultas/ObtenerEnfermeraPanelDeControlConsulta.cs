@@ -1,14 +1,13 @@
 ﻿using Clinico.Aplicacion.DTOs;
-using Clinico.Aplicacion.DTOs.Respuestas;
 using Clinico.Aplicacion.Interfaces.IConsultas;
 using Clinico.Infraestructura.Persistencia;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace Clinico.Infraestructura.Consultas
 {

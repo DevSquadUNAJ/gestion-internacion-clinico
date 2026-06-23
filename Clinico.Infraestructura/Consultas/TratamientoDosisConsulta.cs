@@ -1,4 +1,5 @@
 ﻿using Clinico.Aplicacion.Interfaces.IConsultas;
+using Clinico.Dominio.Constantes;
 using Clinico.Dominio.Entidades;
 using Clinico.Infraestructura.Persistencia;
 using Microsoft.EntityFrameworkCore;
@@ -21,5 +22,19 @@ public class TratamientoDosisConsulta : ITratamientoDosisConsulta
     public async Task<List<TratamientoDosis>> ObtenerPorTratamientoAsync(Guid tratamientoId)
     {
         return await _context.TratamientosDosis.Where(td => td.TratamientoId == tratamientoId).ToListAsync();
+    }
+
+    public async Task<IEnumerable<TratamientoDosis>> ObtenerPendientesPorPacientesAsync(IEnumerable<Guid> pacientesIds)
+    {
+        return await _context.TratamientosDosis
+            .Include(td => td.Tratamiento)
+                .ThenInclude(t => t.Medicamento)
+            .Include(td => td.Tratamiento)
+                .ThenInclude(t => t.Diagnostico)
+                    .ThenInclude(d => d.HistoriaClinica)
+            .Where(td => td.Estado == EstadoDosis.Pendiente
+                      && pacientesIds.Contains(td.Tratamiento.Diagnostico.HistoriaClinica.PacienteId))
+            .AsNoTracking()
+            .ToListAsync();
     }
 }
