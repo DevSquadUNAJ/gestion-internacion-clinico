@@ -6,4 +6,5 @@ namespace Clinico.Aplicacion.Interfaces.IComandos;
 public interface ITratamientoComando
 {
     Task ActualizarAsync(Tratamiento tratamiento);
+    Task AgregarAsync(Tratamiento tratamiento);
 }

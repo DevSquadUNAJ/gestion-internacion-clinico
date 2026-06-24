@@ -19,4 +19,9 @@ public class TratamientoComando : ITratamientoComando
         _context.Tratamientos.Update(tratamiento);
         await _context.SaveChangesAsync();
     }
+    public async Task AgregarAsync(Tratamiento tratamiento)
+    {
+        await _context.Tratamientos.AddAsync(tratamiento);
+        await _context.SaveChangesAsync();
+    }
 }

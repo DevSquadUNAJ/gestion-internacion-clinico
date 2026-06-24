@@ -1,4 +1,5 @@
 using Clinico.Aplicacion;
+using Clinico.Aplicacion.Interfaces.ISeguridad;
 using Clinico.Infraestructura;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -7,8 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Clinico.API
 {
@@ -16,16 +19,22 @@ namespace Clinico.API
     {
         public static void Main(string[] args)
         {
+            // ==========================================
+            // 0. DESACTIVAR MAPEO AUTOMÁTICO DE CLAIMS 
+            // (Aplicar en todos los microservicios)
+            // ==========================================
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
             var builder = WebApplication.CreateBuilder(args);
 
             // ==========================================
-            // 1. INYECCI�N DE DEPENDENCIAS (CAPAS)
+            // 1. INYECCIÓN DE DEPENDENCIAS (CAPAS)
             // ==========================================
             builder.Services.AddAplicacion();
             builder.Services.AddInfraestructura(builder.Configuration);
 
             // ==========================================
-            // 2. CONFIGURACI�N DE AUTENTICACI�N JWT
+            // 2. CONFIGURACIÓN DE AUTENTICACIÓN JWT
             // ==========================================
             var configuracionJwt = builder.Configuration.GetSection("Jwt");
             var claveSecreta = Encoding.UTF8.GetBytes(configuracionJwt["Key"]!);
@@ -33,6 +42,7 @@ namespace Clinico.API
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opciones =>
                 {
+                    opciones.MapInboundClaims = false; // refuerzo del Clear() de arriba
                     opciones.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
@@ -49,20 +59,26 @@ namespace Clinico.API
             // 3. SEGURIDAD ADICIONAL Y SERVICIOS API
             // ==========================================
             builder.Services.AddHttpContextAccessor();
-            builder.Services.AddScoped<Aplicacion.Interfaces.ISeguridad.ITokenUsuarioActual, Servicios.TokenUsuarioActual>();
+            builder.Services.AddScoped<ITokenUsuarioActual, Servicios.TokenUsuarioActual>();
+            builder.Services.AddScoped<IMedicoActualServicio, Servicios.MedicoActualServicio>(); 
 
-            // Configurar CORS
+            // CORS
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyOrigin()
-                          .AllowAnyHeader()
-                          .AllowAnyMethod();
+                    policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                 });
             });
 
-            builder.Services.AddControllers();
+            // Controllers + serialización de enums como string
+            builder.Services
+                .AddControllers()
+                .AddJsonOptions(opciones =>
+                {
+                    opciones.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
+
             builder.Services.AddEndpointsApiExplorer();
 
             // ==========================================
@@ -77,7 +93,7 @@ namespace Clinico.API
                     Scheme = "bearer",
                     BearerFormat = "JWT",
                     In = ParameterLocation.Header,
-                    Description = "Pega tu token JWT directamente aqu�. (Nota: NO escribas la palabra 'Bearer')."
+                    Description = "Pega tu token JWT directamente aquí. (Nota: NO escribas la palabra 'Bearer')."
                 });
 
                 opciones.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -99,7 +115,7 @@ namespace Clinico.API
             var app = builder.Build();
 
             // ==========================================
-            // 5. PIPELINE HTTP (MIDDLEWARES)
+            // 5. PIPELINE HTTP
             // ==========================================
             if (app.Environment.IsDevelopment())
             {
@@ -108,16 +124,11 @@ namespace Clinico.API
             }
 
             app.UseMiddleware<Middlewares.ManejadorGlobalExcepcionesMiddleware>();
-
             app.UseHttpsRedirection();
-
             app.UseCors("CorsPolicy");
-
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.MapControllers();
-
             app.Run();
         }
     }
