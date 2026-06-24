@@ -50,3 +50,134 @@ Get-ChildItem -Path . -Recurse -Directory | Where-Object { $_.Name -match $viejo
 git add .
 git commit -m "chore: renombrado de plantilla a proyecto real"
 git push origin main
+
+
+--------------------------------------------------------------------------
+Para mejorar tu `README.md`, es importante estructurarlo con una jerarquía clara, usar bloques de código para los comandos y resaltar las advertencias de seguridad. Aquí tienes una versión optimizada y profesional:
+
+---
+
+# 🤖 Validador Clínico IA — Guía de Configuración
+
+El **CU11 (Prescribir Tratamiento)** integra un validador de IA que analiza el contexto clínico del paciente para advertir sobre:
+
+* Alergias y contraindicaciones.
+* Interacciones medicamentosas.
+* Dosis inadecuadas.
+
+La arquitectura utiliza la interfaz `IValidadorClinicoIA`, permitiendo intercambiar el proveedor de IA modificando únicamente una configuración.
+
+---
+
+## 🎛️ Proveedores Disponibles
+
+* **Mock**: Determinístico, sin costo ni internet.
+* **Groq**: Ultra-rápido, alta disponibilidad.
+* **Gemini**: Modelo alternativo de Google.
+
+---
+
+## 🔧 Configuración General
+
+El proveedor activo se define mediante la clave `IA:Proveedor`. La configuración sigue un orden de prioridad (el último pisa al anterior):
+
+1. `appsettings.json` (Base)
+2. `appsettings.Development.json`
+3. **`User Secrets`** (Recomendado para desarrollo local)
+4. **`Variables de Entorno`** (Recomendado para despliegues)
+
+### Estructura de Prioridad
+
+> [!NOTE]
+> Cualquier valor definido en *User Secrets* o *Variables de Entorno* prevalecerá sobre el archivo `appsettings.json`.
+
+---
+
+## 🟦 Opción 1: Validador Mock (Default)
+
+Ideal para desarrollo y testing offline. No requiere configuración adicional.
+
+* **Setup**: En `appsettings.json` o `User Secrets`:
+```json
+{ "IA": { "Proveedor": "Mock" } }
+
+```
+
+
+* **Verificación al arrancar**:
+```text
+[IA] Proveedor seleccionado: Mock
+[IA] Usando validador Mock determinístico.
+
+```
+
+
+
+---
+
+## 🟢 Opción 2: Groq (Recomendado)
+
+Ofrece un *free tier* generoso y alta velocidad.
+
+### Pasos:
+
+1. **Obtener API Key**: Crea una cuenta en [Groq Console](https://console.groq.com/keys).
+2. **Configurar localmente**:
+```bash
+cd Clinico.API
+dotnet user-secrets init
+dotnet user-secrets set "IA:Proveedor" "Groq"
+dotnet user-secrets set "IA:Groq:ApiKey" "gsk_tu_key_aqui"
+
+```
+
+
+3. **Verificación**: Al arrancar la app, busca los logs:
+```text
+[IA] Proveedor seleccionado: Groq
+[IA] Modelo Groq: llama-3.3-70b-versatile
+[IA] API Key Groq cargada: gsk_xx...XXXX
+
+```
+
+
+
+> [!WARNING]
+> **Seguridad**: La API Key es personal. **NUNCA** la incluyas (commit) en el repositorio. Usa siempre `User Secrets`.
+
+---
+
+## 🟡 Opción 3: Gemini
+
+Proveedor alternativo de Google.
+
+### Pasos:
+
+1. **Obtener API Key**: Genera tu clave en [Google AI Studio](https://aistudio.google.com/apikey).
+2. **Configurar localmente**:
+```bash
+cd Clinico.API
+dotnet user-secrets set "IA:Proveedor" "Gemini"
+dotnet user-secrets set "IA:Gemini:ApiKey" "AQ_tu_key_aqui"
+
+```
+
+
+
+### Notas sobre Gemini:
+
+* **Modelo**: Se recomienda usar `gemini-flash-latest`.
+* **Errores 503**: Indica alta demanda temporal de Google; reintenta en unos segundos.
+* **Errores 429**: Verifica que el modelo seleccionado tenga acceso al *free tier* en tu cuenta.
+
+---
+
+## 🚀 Requisitos para ejecutar
+
+Para probar el validador, asegúrate de tener:
+
+1. Los **3 microservicios** levantados.
+2. La **Base de Datos** conectada y activa.
+3. Tu **API Key** configurada correctamente en el entorno local.
+
+---
