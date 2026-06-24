@@ -22,13 +22,15 @@ public static class InyeccionDependencias
         services.AddScoped<IObtenerEnfermeraPanelDeControlCasoDeUso, ObtenerPanelDeControlEnfermeraCasoDeUso>();
         services.AddScoped<IRegistrarAdministracionMedicacionCasoDeUso, RegistrarAdministracionMedicacionCasoDeUso>();
         services.AddScoped<IRegistrarOmisionMedicacionCasoDeUso, RegistrarOmisionMedicacionCasoDeUso>();
+        services.AddScoped<IPrescribirTratamientoCasoDeUso, PrescribirTratamientoCasoDeUso>();
 
         // ==========================================
         // MAPEADORES
         // ==========================================
-        services.AddScoped<IHistoriaClinicaMapper, HistoriaClinicaMapper>();
+        services.AddSingleton<IHistoriaClinicaMapper, HistoriaClinicaMapper>();
         services.AddSingleton<IRegistrarDiagnosticoMapeador, RegistrarDiagnosticoMapeador>();
-        services.AddScoped<IHistorialAuditoriaMapper, HistorialAuditoriaMapper>();
+        services.AddSingleton<IHistorialAuditoriaMapper, HistorialAuditoriaMapper>();
+        services.AddSingleton<IPrescribirTratamientoMapeador, PrescribirTratamientoMapeador>();
 
         return services;
     }
