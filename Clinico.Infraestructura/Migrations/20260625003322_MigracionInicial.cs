@@ -261,7 +261,7 @@ namespace Clinico.Infraestructura.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TratamientoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EnfermeraId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EnfermeraId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     FechaProgramada = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaSuministro = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FechaDelSistema = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -276,8 +276,7 @@ namespace Clinico.Infraestructura.Migrations
                         name: "FK_TratamientosDosis_Enfermeras_EnfermeraId",
                         column: x => x.EnfermeraId,
                         principalTable: "Enfermeras",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_TratamientosDosis_Tratamientos_TratamientoId",
                         column: x => x.TratamientoId,
@@ -305,7 +304,7 @@ namespace Clinico.Infraestructura.Migrations
                 columns: new[] { "Id", "Legajo", "Nombre", "SectorId" },
                 values: new object[,]
                 {
-                    { new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"), "ENF-1001", "Enf. Rodrigo Godoy", new Guid("99999999-9999-9999-9999-999999999999") },
+                    { new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"), "ENF-1001", "Enf. Rodrigo Godoy", new Guid("88888888-8888-8888-8888-888888888888") },
                     { new Guid("eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee"), "ENF-1002", "Enf. Matías Silva", new Guid("99999999-9999-9999-9999-999999999999") }
                 });
 
@@ -387,8 +386,16 @@ namespace Clinico.Infraestructura.Migrations
                 columns: new[] { "Id", "EnfermeraId", "Estado", "FechaDelSistema", "FechaProgramada", "FechaSuministro", "MotivoOmision", "Observaciones", "TratamientoId" },
                 values: new object[,]
                 {
-                    { new Guid("77777777-8888-8888-8888-777777777777"), new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
-                    { new Guid("88888888-8888-8888-8888-888888888888"), new Guid("eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee"), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") }
+                    { new Guid("77777777-1111-8888-8888-777777777777"), null, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 23, 8, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
+                    { new Guid("77777777-2222-8888-8888-777777777777"), null, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 23, 16, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
+                    { new Guid("77777777-3333-8888-8888-777777777777"), new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"), 2, new DateTime(2026, 6, 24, 8, 15, 30, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 24, 8, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 24, 8, 15, 0, 0, DateTimeKind.Unspecified), null, null, new Guid("55555555-7777-7777-7777-555555555555") },
+                    { new Guid("77777777-4444-8888-8888-777777777777"), null, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 24, 16, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
+                    { new Guid("77777777-5555-8888-8888-777777777777"), null, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
+                    { new Guid("77777777-6666-8888-8888-777777777777"), null, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 25, 8, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
+                    { new Guid("77777777-7777-8888-8888-777777777777"), null, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 26, 8, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
+                    { new Guid("88888888-1111-8888-8888-888888888888"), null, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 24, 10, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("66666666-7777-7777-7777-666666666666") },
+                    { new Guid("88888888-2222-8888-8888-888888888888"), null, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 24, 22, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("66666666-7777-7777-7777-666666666666") },
+                    { new Guid("88888888-3333-8888-8888-888888888888"), null, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 25, 10, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("66666666-7777-7777-7777-666666666666") }
                 });
 
             migrationBuilder.CreateIndex(

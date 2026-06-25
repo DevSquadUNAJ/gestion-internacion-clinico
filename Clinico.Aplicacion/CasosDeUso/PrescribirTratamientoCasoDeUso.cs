@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Clinico.Aplicacion.CasosDeUso
 {
-    public sealed class PrescribirTratamientoCasoDeUso : IPrescribirTratamientoCasoDeUso
+    public class PrescribirTratamientoCasoDeUso : IPrescribirTratamientoCasoDeUso
     {
         private readonly IDiagnosticoConsulta _diagnosticoConsulta;
         private readonly IHistoriaClinicaConsulta _historiaClinicaConsulta;

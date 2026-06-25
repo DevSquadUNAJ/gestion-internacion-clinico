@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Clinico.Infraestructura.Migrations
 {
     [DbContext(typeof(ContextoBaseDeDatos))]
-    [Migration("20260616162044_MigracionInicial")]
+    [Migration("20260625003322_MigracionInicial")]
     partial class MigracionInicial
     {
         /// <inheritdoc />
@@ -250,7 +250,7 @@ namespace Clinico.Infraestructura.Migrations
                             Id = new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"),
                             Legajo = "ENF-1001",
                             Nombre = "Enf. Rodrigo Godoy",
-                            SectorId = new Guid("99999999-9999-9999-9999-999999999999")
+                            SectorId = new Guid("88888888-8888-8888-8888-888888888888")
                         },
                         new
                         {
@@ -564,7 +564,7 @@ namespace Clinico.Infraestructura.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("EnfermeraId")
+                    b.Property<Guid?>("EnfermeraId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Estado")
@@ -599,21 +599,85 @@ namespace Clinico.Infraestructura.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("77777777-8888-8888-8888-777777777777"),
-                            EnfermeraId = new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"),
+                            Id = new Guid("77777777-1111-8888-8888-777777777777"),
                             Estado = 1,
                             FechaDelSistema = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaProgramada = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaProgramada = new DateTime(2026, 6, 23, 8, 0, 0, 0, DateTimeKind.Unspecified),
                             TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
                         },
                         new
                         {
-                            Id = new Guid("88888888-8888-8888-8888-888888888888"),
-                            EnfermeraId = new Guid("eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee"),
+                            Id = new Guid("77777777-2222-8888-8888-777777777777"),
                             Estado = 1,
                             FechaDelSistema = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaProgramada = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaProgramada = new DateTime(2026, 6, 23, 16, 0, 0, 0, DateTimeKind.Unspecified),
                             TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
+                        },
+                        new
+                        {
+                            Id = new Guid("77777777-3333-8888-8888-777777777777"),
+                            EnfermeraId = new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"),
+                            Estado = 2,
+                            FechaDelSistema = new DateTime(2026, 6, 24, 8, 15, 30, 0, DateTimeKind.Unspecified),
+                            FechaProgramada = new DateTime(2026, 6, 24, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaSuministro = new DateTime(2026, 6, 24, 8, 15, 0, 0, DateTimeKind.Unspecified),
+                            TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
+                        },
+                        new
+                        {
+                            Id = new Guid("77777777-4444-8888-8888-777777777777"),
+                            Estado = 1,
+                            FechaDelSistema = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaProgramada = new DateTime(2026, 6, 24, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
+                        },
+                        new
+                        {
+                            Id = new Guid("77777777-5555-8888-8888-777777777777"),
+                            Estado = 1,
+                            FechaDelSistema = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaProgramada = new DateTime(2026, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
+                        },
+                        new
+                        {
+                            Id = new Guid("77777777-6666-8888-8888-777777777777"),
+                            Estado = 1,
+                            FechaDelSistema = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaProgramada = new DateTime(2026, 6, 25, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
+                        },
+                        new
+                        {
+                            Id = new Guid("77777777-7777-8888-8888-777777777777"),
+                            Estado = 1,
+                            FechaDelSistema = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaProgramada = new DateTime(2026, 6, 26, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
+                        },
+                        new
+                        {
+                            Id = new Guid("88888888-1111-8888-8888-888888888888"),
+                            Estado = 1,
+                            FechaDelSistema = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaProgramada = new DateTime(2026, 6, 24, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            TratamientoId = new Guid("66666666-7777-7777-7777-666666666666")
+                        },
+                        new
+                        {
+                            Id = new Guid("88888888-2222-8888-8888-888888888888"),
+                            Estado = 1,
+                            FechaDelSistema = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaProgramada = new DateTime(2026, 6, 24, 22, 0, 0, 0, DateTimeKind.Unspecified),
+                            TratamientoId = new Guid("66666666-7777-7777-7777-666666666666")
+                        },
+                        new
+                        {
+                            Id = new Guid("88888888-3333-8888-8888-888888888888"),
+                            Estado = 1,
+                            FechaDelSistema = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaProgramada = new DateTime(2026, 6, 25, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            TratamientoId = new Guid("66666666-7777-7777-7777-666666666666")
                         });
                 });
 
@@ -740,9 +804,7 @@ namespace Clinico.Infraestructura.Migrations
                 {
                     b.HasOne("Clinico.Dominio.Entidades.Enfermera", "Enfermera")
                         .WithMany("TratamientosDosis")
-                        .HasForeignKey("EnfermeraId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EnfermeraId");
 
                     b.HasOne("Clinico.Dominio.Entidades.Tratamiento", "Tratamiento")
                         .WithMany("DosisProgramadas")

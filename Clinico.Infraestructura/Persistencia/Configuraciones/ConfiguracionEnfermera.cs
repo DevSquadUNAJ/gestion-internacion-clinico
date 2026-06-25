@@ -33,7 +33,7 @@ namespace Clinico.Infraestructura.Persistencia.Configuraciones
                     Id = Guid.Parse("dddddddd-dddd-dddd-dddd-dddddddddddd"),
                     Nombre = "Enf. Rodrigo Godoy",
                     Legajo = "ENF-1001",
-                    SectorId = Guid.Parse("99999999-9999-9999-9999-999999999999")
+                    SectorId = Guid.Parse("88888888-8888-8888-8888-888888888888")
                 },
                 new Enfermera
                 {
