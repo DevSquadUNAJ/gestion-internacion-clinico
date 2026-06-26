@@ -8,7 +8,7 @@ namespace Clinico.Dominio.Entidades
     {
         public Guid TratamientoId { get; set; }
 
-        public Guid EnfermeraId { get; set; }
+        public Guid? EnfermeraId { get; set; }
 
         public DateTime FechaProgramada { get; set; }
 

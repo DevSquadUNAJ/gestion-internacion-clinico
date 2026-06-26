@@ -1,5 +1,5 @@
 ﻿using Clinico.Aplicacion.DTOs.Solicitudes;
-using Clinico.Aplicacion.Excepciones; // Importante para nuestras excepciones
+using Clinico.Aplicacion.Excepciones;
 using Clinico.Aplicacion.Interfaces.ICasosDeUso;
 using Clinico.Aplicacion.Interfaces.IComandos;
 using Clinico.Aplicacion.Interfaces.IConsultas;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Clinico.Aplicacion.CasosDeUso
 {
-    public sealed class RegistrarAdministracionMedicacionCasoDeUso : IRegistrarAdministracionMedicacionCasoDeUso
+    public class RegistrarAdministracionMedicacionCasoDeUso : IRegistrarAdministracionMedicacionCasoDeUso
     {
         private readonly IObtenerTratamientoDosisConsulta _dosisConsulta;
         private readonly ITratamientoDosisComando _dosisComando;
@@ -44,7 +44,6 @@ namespace Clinico.Aplicacion.CasosDeUso
             if (dosis.FechaSuministro.HasValue)
                 throw new ExceptionBadRequest("Esta dosis ya fue administrada previamente.");
 
-            // Limpiamos el Spanglish
             dosis.FechaSuministro = solicitud.FechaSuministro;
             dosis.FechaDelSistema = DateTime.UtcNow;
             dosis.EnfermeraId = enfermeraId;

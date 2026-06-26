@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Clinico.Aplicacion.CasosDeUso
 {
-    public sealed class RegistrarOmisionMedicacionCasoDeUso : IRegistrarOmisionMedicacionCasoDeUso
+    public class RegistrarOmisionMedicacionCasoDeUso : IRegistrarOmisionMedicacionCasoDeUso
     {
         private readonly IObtenerTratamientoDosisConsulta _dosisConsulta;
         private readonly ITratamientoDosisComando _dosisComando;
