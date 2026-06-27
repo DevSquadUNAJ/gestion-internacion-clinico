@@ -12,5 +12,8 @@ namespace Clinico.Aplicacion.DTOs.Solicitudes
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin { get; set; }
         public string? Observaciones { get; set; }
+
+        // NUEVO CAMPO: Permite al médico saltarse la IA y activar el tratamiento de inmediato
+        public bool OmitirValidacionIA { get; set; }
     }
 }
