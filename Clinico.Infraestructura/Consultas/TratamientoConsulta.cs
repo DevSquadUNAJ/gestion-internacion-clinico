@@ -22,4 +22,10 @@ public class TratamientoConsulta : ITratamientoConsulta
             .AsNoTracking()
             .FirstOrDefaultAsync(t => t.Id == id);
     }
+
+    public async Task<Tratamiento?> ObtenerPorIdParaActualizarAsync(Guid id)
+    {
+        return await _context.Tratamientos
+            .FirstOrDefaultAsync(t => t.Id == id);
+    }
 }

@@ -23,6 +23,8 @@ public static class InyeccionDependencias
         services.AddScoped<IRegistrarAdministracionMedicacionCasoDeUso, RegistrarAdministracionMedicacionCasoDeUso>();
         services.AddScoped<IRegistrarOmisionMedicacionCasoDeUso, RegistrarOmisionMedicacionCasoDeUso>();
         services.AddScoped<IPrescribirTratamientoCasoDeUso, PrescribirTratamientoCasoDeUso>();
+        services.AddScoped<IConfirmarTratamientoCasoDeUso, ConfirmarTratamientoCasoDeUso>();
+        services.AddScoped<ICancelarTratamientoCasoDeUso, CancelarTratamientoCasoDeUso>();
 
         // ==========================================
         // MAPEADORES

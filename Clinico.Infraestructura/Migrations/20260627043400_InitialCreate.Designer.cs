@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Clinico.Infraestructura.Migrations
 {
     [DbContext(typeof(ContextoBaseDeDatos))]
-    [Migration("20260625003322_MigracionInicial")]
-    partial class MigracionInicial
+    [Migration("20260627043400_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -100,12 +100,16 @@ namespace Clinico.Infraestructura.Migrations
 
                     b.Property<string>("JustificacionClinica")
                         .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MensajeIA")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NivelRiesgo")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<Guid>("TratamientoId")
                         .HasColumnType("uniqueidentifier");
@@ -125,6 +129,7 @@ namespace Clinico.Infraestructura.Migrations
                             FueForzado = true,
                             JustificacionClinica = "El paciente presenta dolor agudo inmanejable. Se administrará dosis baja y se monitoreará la presión arterial cada 8 horas.",
                             MensajeIA = "⚠️ Precaución: El uso de AINEs (Ibuprofeno) puede aumentar la presión arterial en pacientes hipertensos.",
+                            NivelRiesgo = "Medio",
                             TratamientoId = new Guid("66666666-7777-7777-7777-666666666666")
                         });
                 });
@@ -570,7 +575,7 @@ namespace Clinico.Infraestructura.Migrations
                     b.Property<int>("Estado")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("FechaDelSistema")
+                    b.Property<DateTime?>("FechaDelSistema")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("FechaProgramada")
@@ -601,7 +606,6 @@ namespace Clinico.Infraestructura.Migrations
                         {
                             Id = new Guid("77777777-1111-8888-8888-777777777777"),
                             Estado = 1,
-                            FechaDelSistema = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FechaProgramada = new DateTime(2026, 6, 23, 8, 0, 0, 0, DateTimeKind.Unspecified),
                             TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
                         },
@@ -609,7 +613,6 @@ namespace Clinico.Infraestructura.Migrations
                         {
                             Id = new Guid("77777777-2222-8888-8888-777777777777"),
                             Estado = 1,
-                            FechaDelSistema = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FechaProgramada = new DateTime(2026, 6, 23, 16, 0, 0, 0, DateTimeKind.Unspecified),
                             TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
                         },
@@ -627,7 +630,6 @@ namespace Clinico.Infraestructura.Migrations
                         {
                             Id = new Guid("77777777-4444-8888-8888-777777777777"),
                             Estado = 1,
-                            FechaDelSistema = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FechaProgramada = new DateTime(2026, 6, 24, 16, 0, 0, 0, DateTimeKind.Unspecified),
                             TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
                         },
@@ -635,7 +637,6 @@ namespace Clinico.Infraestructura.Migrations
                         {
                             Id = new Guid("77777777-5555-8888-8888-777777777777"),
                             Estado = 1,
-                            FechaDelSistema = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FechaProgramada = new DateTime(2026, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
                         },
@@ -643,7 +644,6 @@ namespace Clinico.Infraestructura.Migrations
                         {
                             Id = new Guid("77777777-6666-8888-8888-777777777777"),
                             Estado = 1,
-                            FechaDelSistema = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FechaProgramada = new DateTime(2026, 6, 25, 8, 0, 0, 0, DateTimeKind.Unspecified),
                             TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
                         },
@@ -651,7 +651,6 @@ namespace Clinico.Infraestructura.Migrations
                         {
                             Id = new Guid("77777777-7777-8888-8888-777777777777"),
                             Estado = 1,
-                            FechaDelSistema = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FechaProgramada = new DateTime(2026, 6, 26, 8, 0, 0, 0, DateTimeKind.Unspecified),
                             TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
                         },
@@ -659,7 +658,6 @@ namespace Clinico.Infraestructura.Migrations
                         {
                             Id = new Guid("88888888-1111-8888-8888-888888888888"),
                             Estado = 1,
-                            FechaDelSistema = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FechaProgramada = new DateTime(2026, 6, 24, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             TratamientoId = new Guid("66666666-7777-7777-7777-666666666666")
                         },
@@ -667,7 +665,6 @@ namespace Clinico.Infraestructura.Migrations
                         {
                             Id = new Guid("88888888-2222-8888-8888-888888888888"),
                             Estado = 1,
-                            FechaDelSistema = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FechaProgramada = new DateTime(2026, 6, 24, 22, 0, 0, 0, DateTimeKind.Unspecified),
                             TratamientoId = new Guid("66666666-7777-7777-7777-666666666666")
                         },
@@ -675,7 +672,6 @@ namespace Clinico.Infraestructura.Migrations
                         {
                             Id = new Guid("88888888-3333-8888-8888-888888888888"),
                             Estado = 1,
-                            FechaDelSistema = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FechaProgramada = new DateTime(2026, 6, 25, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             TratamientoId = new Guid("66666666-7777-7777-7777-666666666666")
                         });

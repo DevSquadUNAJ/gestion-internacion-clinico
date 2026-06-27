@@ -19,4 +19,10 @@ public class AuditoriaIAComando : IAuditoriaIAComando
         await _contexto.AuditoriasIA.AddAsync(auditoriaIA);
         await _contexto.SaveChangesAsync();
     }
+
+    public async Task ActualizarAsync(AuditoriaIA auditoriaIA)
+    {
+        _contexto.AuditoriasIA.Update(auditoriaIA);
+        await _contexto.SaveChangesAsync();
+    }
 }

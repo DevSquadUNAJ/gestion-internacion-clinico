@@ -18,20 +18,26 @@ namespace Clinico.Infraestructura.Persistencia.Configuraciones
                    .HasForeignKey(aia => aia.TratamientoId);
 
             builder.Property(aia => aia.MensajeIA)
-                .HasMaxLength(500)
+                .HasColumnType("nvarchar(max)")
                 .IsRequired();
 
             builder.Property(aia => aia.JustificacionClinica)
+                .HasColumnType("nvarchar(max)")
                 .HasMaxLength(1000);
 
             builder.Property(aia => aia.FechaHora)
                 .IsRequired();
+
+            builder.Property(aia => aia.NivelRiesgo)
+                .HasConversion<string>()
+                .HasMaxLength(20);
 
             builder.HasData(
                 new AuditoriaIA
                 {
                     Id = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
                     TratamientoId = Guid.Parse("66666666-7777-7777-7777-666666666666"), // Tratamiento con Ibuprofeno
+                    NivelRiesgo = Dominio.Constantes.NivelRiesgoIA.Medio,
                     AlertaDetectada = true,
                     MensajeIA = "⚠️ Precaución: El uso de AINEs (Ibuprofeno) puede aumentar la presión arterial en pacientes hipertensos.",
                     FueForzado = true,

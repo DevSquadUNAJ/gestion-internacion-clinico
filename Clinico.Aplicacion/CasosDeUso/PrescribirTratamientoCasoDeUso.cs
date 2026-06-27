@@ -130,6 +130,7 @@ namespace Clinico.Aplicacion.CasosDeUso
                 {
                     Id = Guid.NewGuid(),
                     TratamientoId = tratamiento.Id,
+                    NivelRiesgo = resultadoIA.Analisis.NivelRiesgo,
                     AlertaDetectada = resultadoIA.Analisis.AlertaDetectada,
                     MensajeIA = resultadoIA.PayloadJsonCrudo ?? string.Empty,
                     FueForzado = false,

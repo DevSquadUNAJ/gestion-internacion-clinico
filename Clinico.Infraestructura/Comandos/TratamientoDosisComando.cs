@@ -20,4 +20,10 @@ public class TratamientoDosisComando : ITratamientoDosisComando
         _context.TratamientosDosis.UpdateRange(dosis);
         await _context.SaveChangesAsync();
     }
+
+    public async Task AgregarRangoAsync(List<TratamientoDosis> dosis)
+    {
+        await _context.TratamientosDosis.AddRangeAsync(dosis);
+        await _context.SaveChangesAsync();
+    }
 }

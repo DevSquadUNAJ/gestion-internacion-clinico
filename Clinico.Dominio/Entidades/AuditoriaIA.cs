@@ -1,4 +1,5 @@
 ﻿using Clinico.Dominio.Base;
+using Clinico.Dominio.Constantes;
 using System;
 
 namespace Clinico.Dominio.Entidades
@@ -6,6 +7,8 @@ namespace Clinico.Dominio.Entidades
     public class AuditoriaIA : EntidadBase
     {
         public Guid TratamientoId { get; set; }
+
+        public NivelRiesgoIA NivelRiesgo { get; set; }
 
         public bool AlertaDetectada { get; set; }
 

@@ -10,5 +10,6 @@ namespace Clinico.Aplicacion.Interfaces.IConsultas
     public interface ITratamientoConsulta
     {
         Task<Tratamiento?> ObtenerPorIdAsync(Guid id);
+        Task<Tratamiento?> ObtenerPorIdParaActualizarAsync(Guid id);
     }
 }

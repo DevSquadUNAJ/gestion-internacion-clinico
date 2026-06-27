@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Clinico.Aplicacion.Interfaces.IComandos;
-
-public interface ITratamientoDosisComando
+namespace Clinico.Aplicacion.Interfaces.IComandos
 {
-    Task ActualizarAsync(List<TratamientoDosis> dosis);
+    public interface ITratamientoDosisComando
+    {
+        Task ActualizarAsync(List<TratamientoDosis> dosis);
+        Task AgregarRangoAsync(List<TratamientoDosis> dosis);
+    }
 }
