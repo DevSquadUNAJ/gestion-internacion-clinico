@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Clinico.Aplicacion.CasosDeUso
 {
-    public class RegistrarAdministracionMedicacionCasoDeUso : IRegistrarAdministracionMedicacionCasoDeUso
+    public sealed class RegistrarAdministracionMedicacionCasoDeUso : IRegistrarAdministracionMedicacionCasoDeUso
     {
         private readonly IObtenerTratamientoDosisConsulta _dosisConsulta;
         private readonly ITratamientoDosisComando _dosisComando;
@@ -36,11 +36,9 @@ namespace Clinico.Aplicacion.CasosDeUso
             if (dosis is null)
                 throw new ExceptionNotFound("La dosis indicada no existe.");
 
-            // Solo pueden administrarse dosis pendientes
             if (dosis.Estado != EstadoDosis.Pendiente)
                 throw new ExceptionBadRequest("Solo pueden administrarse dosis que estén en estado pendiente.");
 
-            // No puede administrarse dos veces
             if (dosis.FechaSuministro.HasValue)
                 throw new ExceptionBadRequest("Esta dosis ya fue administrada previamente.");
 

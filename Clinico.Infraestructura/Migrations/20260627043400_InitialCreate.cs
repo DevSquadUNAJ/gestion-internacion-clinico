@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Clinico.Infraestructura.Migrations
 {
     /// <inheritdoc />
-    public partial class MigracionInicial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -238,10 +238,11 @@ namespace Clinico.Infraestructura.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TratamientoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NivelRiesgo = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     AlertaDetectada = table.Column<bool>(type: "bit", nullable: false),
-                    MensajeIA = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    MensajeIA = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FueForzado = table.Column<bool>(type: "bit", nullable: false),
-                    JustificacionClinica = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    JustificacionClinica = table.Column<string>(type: "nvarchar(max)", maxLength: 1000, nullable: true),
                     FechaHora = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -264,7 +265,7 @@ namespace Clinico.Infraestructura.Migrations
                     EnfermeraId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     FechaProgramada = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaSuministro = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    FechaDelSistema = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FechaDelSistema = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Estado = table.Column<int>(type: "int", nullable: false),
                     MotivoOmision = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Observaciones = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -378,24 +379,24 @@ namespace Clinico.Infraestructura.Migrations
 
             migrationBuilder.InsertData(
                 table: "AuditoriasIA",
-                columns: new[] { "Id", "AlertaDetectada", "FechaHora", "FueForzado", "JustificacionClinica", "MensajeIA", "TratamientoId" },
-                values: new object[] { new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), true, new DateTime(2026, 6, 16, 10, 30, 0, 0, DateTimeKind.Utc), true, "El paciente presenta dolor agudo inmanejable. Se administrará dosis baja y se monitoreará la presión arterial cada 8 horas.", "⚠️ Precaución: El uso de AINEs (Ibuprofeno) puede aumentar la presión arterial en pacientes hipertensos.", new Guid("66666666-7777-7777-7777-666666666666") });
+                columns: new[] { "Id", "AlertaDetectada", "FechaHora", "FueForzado", "JustificacionClinica", "MensajeIA", "NivelRiesgo", "TratamientoId" },
+                values: new object[] { new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), true, new DateTime(2026, 6, 16, 10, 30, 0, 0, DateTimeKind.Utc), true, "El paciente presenta dolor agudo inmanejable. Se administrará dosis baja y se monitoreará la presión arterial cada 8 horas.", "⚠️ Precaución: El uso de AINEs (Ibuprofeno) puede aumentar la presión arterial en pacientes hipertensos.", "Medio", new Guid("66666666-7777-7777-7777-666666666666") });
 
             migrationBuilder.InsertData(
                 table: "TratamientosDosis",
                 columns: new[] { "Id", "EnfermeraId", "Estado", "FechaDelSistema", "FechaProgramada", "FechaSuministro", "MotivoOmision", "Observaciones", "TratamientoId" },
                 values: new object[,]
                 {
-                    { new Guid("77777777-1111-8888-8888-777777777777"), null, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 23, 8, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
-                    { new Guid("77777777-2222-8888-8888-777777777777"), null, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 23, 16, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
+                    { new Guid("77777777-1111-8888-8888-777777777777"), null, 1, null, new DateTime(2026, 6, 23, 8, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
+                    { new Guid("77777777-2222-8888-8888-777777777777"), null, 1, null, new DateTime(2026, 6, 23, 16, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
                     { new Guid("77777777-3333-8888-8888-777777777777"), new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"), 2, new DateTime(2026, 6, 24, 8, 15, 30, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 24, 8, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 24, 8, 15, 0, 0, DateTimeKind.Unspecified), null, null, new Guid("55555555-7777-7777-7777-555555555555") },
-                    { new Guid("77777777-4444-8888-8888-777777777777"), null, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 24, 16, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
-                    { new Guid("77777777-5555-8888-8888-777777777777"), null, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
-                    { new Guid("77777777-6666-8888-8888-777777777777"), null, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 25, 8, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
-                    { new Guid("77777777-7777-8888-8888-777777777777"), null, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 26, 8, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
-                    { new Guid("88888888-1111-8888-8888-888888888888"), null, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 24, 10, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("66666666-7777-7777-7777-666666666666") },
-                    { new Guid("88888888-2222-8888-8888-888888888888"), null, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 24, 22, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("66666666-7777-7777-7777-666666666666") },
-                    { new Guid("88888888-3333-8888-8888-888888888888"), null, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 25, 10, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("66666666-7777-7777-7777-666666666666") }
+                    { new Guid("77777777-4444-8888-8888-777777777777"), null, 1, null, new DateTime(2026, 6, 24, 16, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
+                    { new Guid("77777777-5555-8888-8888-777777777777"), null, 1, null, new DateTime(2026, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
+                    { new Guid("77777777-6666-8888-8888-777777777777"), null, 1, null, new DateTime(2026, 6, 25, 8, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
+                    { new Guid("77777777-7777-8888-8888-777777777777"), null, 1, null, new DateTime(2026, 6, 26, 8, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
+                    { new Guid("88888888-1111-8888-8888-888888888888"), null, 1, null, new DateTime(2026, 6, 24, 10, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("66666666-7777-7777-7777-666666666666") },
+                    { new Guid("88888888-2222-8888-8888-888888888888"), null, 1, null, new DateTime(2026, 6, 24, 22, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("66666666-7777-7777-7777-666666666666") },
+                    { new Guid("88888888-3333-8888-8888-888888888888"), null, 1, null, new DateTime(2026, 6, 25, 10, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("66666666-7777-7777-7777-666666666666") }
                 });
 
             migrationBuilder.CreateIndex(

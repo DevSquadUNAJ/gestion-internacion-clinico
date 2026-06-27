@@ -48,6 +48,7 @@ public static class InyeccionDependencias
         services.AddScoped<IDiagnosticoConsulta, DiagnosticoConsulta>();
         services.AddScoped<IMedicamentoConsulta, MedicamentoConsulta>();
         services.AddScoped<IUnidadMedidaConsulta, UnidadMedidaConsulta>();
+        services.AddScoped<IAuditoriaIAConsulta, AuditoriaIAConsulta>();
 
         // ==========================================
         // COMANDOS
@@ -57,6 +58,7 @@ public static class InyeccionDependencias
         services.AddScoped<ITratamientoComando, TratamientoComando>();
         services.AddScoped<ITratamientoDosisComando, TratamientoDosisComando>();
         services.AddScoped<IAuditoriaIAComando, AuditoriaIAComando>();
+        services.AddScoped<IAuditoriaComando, AuditoriaComando>();
 
         // ==========================================
         // REFIT Y SERVICIOS EXTERNOS

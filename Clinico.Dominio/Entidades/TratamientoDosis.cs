@@ -14,7 +14,7 @@ namespace Clinico.Dominio.Entidades
 
         public DateTime? FechaSuministro { get; set; }
 
-        public DateTime FechaDelSistema { get; set; }
+        public DateTime? FechaDelSistema { get; set; }
 
         public EstadoDosis Estado { get; set; }
 
@@ -24,6 +24,6 @@ namespace Clinico.Dominio.Entidades
 
         public Tratamiento Tratamiento { get; set; } = null!;
 
-        public Enfermera Enfermera { get; set; } = null!;
+        public Enfermera? Enfermera { get; set; } = null!;
     }
 }
