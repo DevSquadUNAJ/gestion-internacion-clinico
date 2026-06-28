@@ -2,8 +2,7 @@
 using Clinico.Aplicacion.DTOs.Solicitudes;
 using Clinico.Aplicacion.Interfaces.ICasosDeUso;
 using Clinico.Application.DTOs.Respuestas;
-
-//using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -12,7 +11,7 @@ namespace Clinico.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-//[Authorize(Roles = "Medico")]
+[Authorize(Roles = "Medico")]
 public class DiagnosticosController : ControllerBase
 {
     private readonly IRegistrarDiagnosticoCasoDeUso

@@ -1,7 +1,7 @@
 ﻿using Clinico.Aplicacion.DTOs.Respuestas;
-using Clinico.Aplicacion.Excepciones;
 using Clinico.Aplicacion.Interfaces.ICasosDeUso;
 using Clinico.Application.DTOs.Respuestas;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,6 +11,7 @@ namespace Clinico.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admision,Medico")]
     public class HistoriaClinicaController : ControllerBase
     {
        private readonly IObtenerHistoriaClinicaCasoDeUso _obtenerHistoriaClinicaCasoDeUso;
