@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Clinico.Infraestructura.Migrations
 {
     [DbContext(typeof(ContextoBaseDeDatos))]
-    [Migration("20260627043400_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260628182633_MigracionInicial")]
+    partial class MigracionInicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -384,6 +384,78 @@ namespace Clinico.Infraestructura.Migrations
                             GrupoSanguineo = "O-",
                             ObservacionesGenerales = "Paciente derivado de consultorios externos.",
                             PacienteId = new Guid("22222222-bbbb-bbbb-bbbb-222222222222")
+                        },
+                        new
+                        {
+                            Id = new Guid("cccccccc-3333-3333-3333-cccccccccccc"),
+                            Alergias = "Ibuprofeno",
+                            Antecedentes = "Cirugía de apéndice en 2015",
+                            GrupoSanguineo = "B+",
+                            ObservacionesGenerales = "Control de rutina.",
+                            PacienteId = new Guid("33333333-2373-cccc-cccc-333333333333")
+                        },
+                        new
+                        {
+                            Id = new Guid("dddddddd-4444-4444-4444-dddddddddddd"),
+                            Alergias = "Ninguna conocida",
+                            Antecedentes = "Diabetes Tipo 2",
+                            GrupoSanguineo = "AB+",
+                            ObservacionesGenerales = "Requiere monitoreo de glucosa.",
+                            PacienteId = new Guid("44444444-2474-dddd-dddd-444444444444")
+                        },
+                        new
+                        {
+                            Id = new Guid("eeeeeeee-5555-5555-5555-eeeeeeeeeeee"),
+                            Alergias = "Lactosa, Maní",
+                            Antecedentes = "Sin antecedentes clínicos de relevancia",
+                            GrupoSanguineo = "O+",
+                            ObservacionesGenerales = "Chequeo pre-ocupacional.",
+                            PacienteId = new Guid("55555555-2575-eeee-eeee-555555555555")
+                        },
+                        new
+                        {
+                            Id = new Guid("ffffffff-6666-6666-6666-ffffffffffff"),
+                            Alergias = "Ninguna conocida",
+                            Antecedentes = "Hipotiroidismo",
+                            GrupoSanguineo = "A-",
+                            ObservacionesGenerales = "Medicación diaria con Levotiroxina.",
+                            PacienteId = new Guid("66666666-2676-ffff-ffff-666666666666")
+                        },
+                        new
+                        {
+                            Id = new Guid("aaaaaaaa-7777-7777-7777-aaaaaaaaaaaa"),
+                            Alergias = "Polvo, Ácaros",
+                            Antecedentes = "Fractura de fémur en 2010",
+                            GrupoSanguineo = "B-",
+                            ObservacionesGenerales = "Fisioterapia ocasional por dolor articular.",
+                            PacienteId = new Guid("77777777-2777-aaaa-aaaa-777777777777")
+                        },
+                        new
+                        {
+                            Id = new Guid("bbbbbbbb-8888-8888-8888-bbbbbbbbbbbb"),
+                            Alergias = "Amoxicilina",
+                            Antecedentes = "Migrañas crónicas",
+                            GrupoSanguineo = "O+",
+                            ObservacionesGenerales = "Tratamiento neurológico en curso.",
+                            PacienteId = new Guid("88888888-2878-bbbb-bbbb-888888888888")
+                        },
+                        new
+                        {
+                            Id = new Guid("cccccccc-9999-9999-9999-cccccccccccc"),
+                            Alergias = "Ninguna conocida",
+                            Antecedentes = "Colesterol alto",
+                            GrupoSanguineo = "AB-",
+                            ObservacionesGenerales = "Dieta estricta y control cardiológico.",
+                            PacienteId = new Guid("99999999-2979-cccc-cccc-999999999999")
+                        },
+                        new
+                        {
+                            Id = new Guid("dddddddd-1010-1010-1010-dddddddddddd"),
+                            Alergias = "Picadura de abejas",
+                            Antecedentes = "Episodio de anafilaxia en 2022",
+                            GrupoSanguineo = "A+",
+                            ObservacionesGenerales = "Porta autoinyector de epinefrina.",
+                            PacienteId = new Guid("10101010-3080-dddd-dddd-101010101010")
                         });
                 });
 
@@ -606,73 +678,28 @@ namespace Clinico.Infraestructura.Migrations
                         {
                             Id = new Guid("77777777-1111-8888-8888-777777777777"),
                             Estado = 1,
-                            FechaProgramada = new DateTime(2026, 6, 23, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaProgramada = new DateTime(2026, 6, 29, 17, 0, 0, 0, DateTimeKind.Unspecified),
                             TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
                         },
                         new
                         {
                             Id = new Guid("77777777-2222-8888-8888-777777777777"),
                             Estado = 1,
-                            FechaProgramada = new DateTime(2026, 6, 23, 16, 0, 0, 0, DateTimeKind.Unspecified),
-                            TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
-                        },
-                        new
-                        {
-                            Id = new Guid("77777777-3333-8888-8888-777777777777"),
-                            EnfermeraId = new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"),
-                            Estado = 2,
-                            FechaDelSistema = new DateTime(2026, 6, 24, 8, 15, 30, 0, DateTimeKind.Unspecified),
-                            FechaProgramada = new DateTime(2026, 6, 24, 8, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaSuministro = new DateTime(2026, 6, 24, 8, 15, 0, 0, DateTimeKind.Unspecified),
-                            TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
-                        },
-                        new
-                        {
-                            Id = new Guid("77777777-4444-8888-8888-777777777777"),
-                            Estado = 1,
-                            FechaProgramada = new DateTime(2026, 6, 24, 16, 0, 0, 0, DateTimeKind.Unspecified),
-                            TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
-                        },
-                        new
-                        {
-                            Id = new Guid("77777777-5555-8888-8888-777777777777"),
-                            Estado = 1,
-                            FechaProgramada = new DateTime(2026, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
-                        },
-                        new
-                        {
-                            Id = new Guid("77777777-6666-8888-8888-777777777777"),
-                            Estado = 1,
-                            FechaProgramada = new DateTime(2026, 6, 25, 8, 0, 0, 0, DateTimeKind.Unspecified),
-                            TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
-                        },
-                        new
-                        {
-                            Id = new Guid("77777777-7777-8888-8888-777777777777"),
-                            Estado = 1,
-                            FechaProgramada = new DateTime(2026, 6, 26, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaProgramada = new DateTime(2026, 6, 30, 1, 0, 0, 0, DateTimeKind.Unspecified),
                             TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
                         },
                         new
                         {
                             Id = new Guid("88888888-1111-8888-8888-888888888888"),
                             Estado = 1,
-                            FechaProgramada = new DateTime(2026, 6, 24, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaProgramada = new DateTime(2026, 6, 29, 18, 0, 0, 0, DateTimeKind.Unspecified),
                             TratamientoId = new Guid("66666666-7777-7777-7777-666666666666")
                         },
                         new
                         {
                             Id = new Guid("88888888-2222-8888-8888-888888888888"),
                             Estado = 1,
-                            FechaProgramada = new DateTime(2026, 6, 24, 22, 0, 0, 0, DateTimeKind.Unspecified),
-                            TratamientoId = new Guid("66666666-7777-7777-7777-666666666666")
-                        },
-                        new
-                        {
-                            Id = new Guid("88888888-3333-8888-8888-888888888888"),
-                            Estado = 1,
-                            FechaProgramada = new DateTime(2026, 6, 25, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaProgramada = new DateTime(2026, 6, 30, 6, 0, 0, 0, DateTimeKind.Unspecified),
                             TratamientoId = new Guid("66666666-7777-7777-7777-666666666666")
                         });
                 });

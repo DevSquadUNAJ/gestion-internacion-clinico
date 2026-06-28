@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Clinico.Infraestructura.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class MigracionInicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -324,7 +324,15 @@ namespace Clinico.Infraestructura.Migrations
                 values: new object[,]
                 {
                     { new Guid("aaaaaaaa-1111-1111-1111-aaaaaaaaaaaa"), "Penicilina", "Hipertensión controlada", "A+", "Paciente ingresa por guardia clínica.", new Guid("11111111-aaaa-aaaa-aaaa-111111111111") },
-                    { new Guid("bbbbbbbb-2222-2222-2222-bbbbbbbbbbbb"), "Ninguna conocida", "Asma en la infancia", "O-", "Paciente derivado de consultorios externos.", new Guid("22222222-bbbb-bbbb-bbbb-222222222222") }
+                    { new Guid("aaaaaaaa-7777-7777-7777-aaaaaaaaaaaa"), "Polvo, Ácaros", "Fractura de fémur en 2010", "B-", "Fisioterapia ocasional por dolor articular.", new Guid("77777777-2777-aaaa-aaaa-777777777777") },
+                    { new Guid("bbbbbbbb-2222-2222-2222-bbbbbbbbbbbb"), "Ninguna conocida", "Asma en la infancia", "O-", "Paciente derivado de consultorios externos.", new Guid("22222222-bbbb-bbbb-bbbb-222222222222") },
+                    { new Guid("bbbbbbbb-8888-8888-8888-bbbbbbbbbbbb"), "Amoxicilina", "Migrañas crónicas", "O+", "Tratamiento neurológico en curso.", new Guid("88888888-2878-bbbb-bbbb-888888888888") },
+                    { new Guid("cccccccc-3333-3333-3333-cccccccccccc"), "Ibuprofeno", "Cirugía de apéndice en 2015", "B+", "Control de rutina.", new Guid("33333333-2373-cccc-cccc-333333333333") },
+                    { new Guid("cccccccc-9999-9999-9999-cccccccccccc"), "Ninguna conocida", "Colesterol alto", "AB-", "Dieta estricta y control cardiológico.", new Guid("99999999-2979-cccc-cccc-999999999999") },
+                    { new Guid("dddddddd-1010-1010-1010-dddddddddddd"), "Picadura de abejas", "Episodio de anafilaxia en 2022", "A+", "Porta autoinyector de epinefrina.", new Guid("10101010-3080-dddd-dddd-101010101010") },
+                    { new Guid("dddddddd-4444-4444-4444-dddddddddddd"), "Ninguna conocida", "Diabetes Tipo 2", "AB+", "Requiere monitoreo de glucosa.", new Guid("44444444-2474-dddd-dddd-444444444444") },
+                    { new Guid("eeeeeeee-5555-5555-5555-eeeeeeeeeeee"), "Lactosa, Maní", "Sin antecedentes clínicos de relevancia", "O+", "Chequeo pre-ocupacional.", new Guid("55555555-2575-eeee-eeee-555555555555") },
+                    { new Guid("ffffffff-6666-6666-6666-ffffffffffff"), "Ninguna conocida", "Hipotiroidismo", "A-", "Medicación diaria con Levotiroxina.", new Guid("66666666-2676-ffff-ffff-666666666666") }
                 });
 
             migrationBuilder.InsertData(
@@ -387,16 +395,10 @@ namespace Clinico.Infraestructura.Migrations
                 columns: new[] { "Id", "EnfermeraId", "Estado", "FechaDelSistema", "FechaProgramada", "FechaSuministro", "MotivoOmision", "Observaciones", "TratamientoId" },
                 values: new object[,]
                 {
-                    { new Guid("77777777-1111-8888-8888-777777777777"), null, 1, null, new DateTime(2026, 6, 23, 8, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
-                    { new Guid("77777777-2222-8888-8888-777777777777"), null, 1, null, new DateTime(2026, 6, 23, 16, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
-                    { new Guid("77777777-3333-8888-8888-777777777777"), new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"), 2, new DateTime(2026, 6, 24, 8, 15, 30, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 24, 8, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 6, 24, 8, 15, 0, 0, DateTimeKind.Unspecified), null, null, new Guid("55555555-7777-7777-7777-555555555555") },
-                    { new Guid("77777777-4444-8888-8888-777777777777"), null, 1, null, new DateTime(2026, 6, 24, 16, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
-                    { new Guid("77777777-5555-8888-8888-777777777777"), null, 1, null, new DateTime(2026, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
-                    { new Guid("77777777-6666-8888-8888-777777777777"), null, 1, null, new DateTime(2026, 6, 25, 8, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
-                    { new Guid("77777777-7777-8888-8888-777777777777"), null, 1, null, new DateTime(2026, 6, 26, 8, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
-                    { new Guid("88888888-1111-8888-8888-888888888888"), null, 1, null, new DateTime(2026, 6, 24, 10, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("66666666-7777-7777-7777-666666666666") },
-                    { new Guid("88888888-2222-8888-8888-888888888888"), null, 1, null, new DateTime(2026, 6, 24, 22, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("66666666-7777-7777-7777-666666666666") },
-                    { new Guid("88888888-3333-8888-8888-888888888888"), null, 1, null, new DateTime(2026, 6, 25, 10, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("66666666-7777-7777-7777-666666666666") }
+                    { new Guid("77777777-1111-8888-8888-777777777777"), null, 1, null, new DateTime(2026, 6, 29, 17, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
+                    { new Guid("77777777-2222-8888-8888-777777777777"), null, 1, null, new DateTime(2026, 6, 30, 1, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("55555555-7777-7777-7777-555555555555") },
+                    { new Guid("88888888-1111-8888-8888-888888888888"), null, 1, null, new DateTime(2026, 6, 29, 18, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("66666666-7777-7777-7777-666666666666") },
+                    { new Guid("88888888-2222-8888-8888-888888888888"), null, 1, null, new DateTime(2026, 6, 30, 6, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, new Guid("66666666-7777-7777-7777-666666666666") }
                 });
 
             migrationBuilder.CreateIndex(

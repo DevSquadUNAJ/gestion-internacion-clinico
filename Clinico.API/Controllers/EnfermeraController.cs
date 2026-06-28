@@ -2,6 +2,7 @@
 using Clinico.Aplicacion.DTOs.Solicitudes;
 using Clinico.Aplicacion.Interfaces.ICasosDeUso;
 using Clinico.Application.DTOs.Respuestas;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,6 +14,7 @@ namespace Clinico.API.Controllers
 {
     [ApiController]
     [Route("api/enfermeras")]
+    [Authorize(Roles = "Enfermera")]
     public class EnfermerasController : ControllerBase
     {
         private readonly IObtenerEnfermeraPanelDeControlCasoDeUso _obtenerPanelCasoDeUso;
