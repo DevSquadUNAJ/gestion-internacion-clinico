@@ -1,4 +1,5 @@
-﻿using Clinico.Aplicacion.DTOs.Respuestas;
+﻿using Clinico.Aplicacion.CasosDeUso;
+using Clinico.Aplicacion.DTOs.Respuestas;
 using Clinico.Aplicacion.DTOs.Solicitudes;
 using Clinico.Aplicacion.Interfaces.ICasosDeUso;
 using Clinico.Application.DTOs.Respuestas;
@@ -20,15 +21,18 @@ namespace Clinico.API.Controllers
         private readonly IObtenerEnfermeraPanelDeControlCasoDeUso _obtenerPanelCasoDeUso;
         private readonly IRegistrarAdministracionMedicacionCasoDeUso _registrarAdministracionCasoDeUso;
         private readonly IRegistrarOmisionMedicacionCasoDeUso _registrarOmisionCasoDeUso;
+        private readonly IObtenerDosisProgramadasCasoDeUso _obtenerDosisProgramadasCasoDeUso;
 
         public EnfermerasController(
             IObtenerEnfermeraPanelDeControlCasoDeUso obtenerPanelCasoDeUso,
             IRegistrarAdministracionMedicacionCasoDeUso registrarAdministracionCasoDeUso,
-            IRegistrarOmisionMedicacionCasoDeUso registrarOmisionCasoDeUso)
+            IRegistrarOmisionMedicacionCasoDeUso registrarOmisionCasoDeUso,
+            IObtenerDosisProgramadasCasoDeUso obtenerDosisProgramadasCasoDeUso)
         {
             _obtenerPanelCasoDeUso = obtenerPanelCasoDeUso;
             _registrarAdministracionCasoDeUso = registrarAdministracionCasoDeUso;
             _registrarOmisionCasoDeUso = registrarOmisionCasoDeUso;
+            _obtenerDosisProgramadasCasoDeUso = obtenerDosisProgramadasCasoDeUso;
         }
 
         [HttpGet("{id:guid}/panel")]
@@ -87,6 +91,31 @@ namespace Clinico.API.Controllers
                 cancellationToken);
 
             return NoContent();
+        }
+
+        [HttpGet("{enfermeraId:guid}/dosis-programadas")]
+        [ProducesResponseType(typeof(PaginaRespuesta<DosisProgramadaRespuesta>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> ObtenerDosisProgramadas(
+            [FromRoute] Guid enfermeraId,
+            [FromQuery] DateTime fecha,
+            [FromQuery] int pagina = 1,
+            [FromQuery] int tamPagina = 10,
+            CancellationToken cancellationToken = default)
+        {
+            var resultado =
+                await _obtenerDosisProgramadasCasoDeUso.EjecutarAsync(
+                    enfermeraId,
+                    fecha,
+                    pagina,
+                    tamPagina,
+                    cancellationToken);
+
+            return Ok(resultado);
         }
     }
 }
