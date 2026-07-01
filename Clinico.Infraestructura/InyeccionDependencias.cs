@@ -49,6 +49,7 @@ public static class InyeccionDependencias
         services.AddScoped<IMedicamentoConsulta, MedicamentoConsulta>();
         services.AddScoped<IUnidadMedidaConsulta, UnidadMedidaConsulta>();
         services.AddScoped<IAuditoriaIAConsulta, AuditoriaIAConsulta>();
+        services.AddScoped<IObtenerDosisProgramadasConsulta, ObtenerDosisProgramadasConsulta>();
 
         // ==========================================
         // COMANDOS

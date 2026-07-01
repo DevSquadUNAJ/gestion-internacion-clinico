@@ -102,18 +102,13 @@ namespace Clinico.API.Controllers
         [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> ObtenerDosisProgramadas(
             [FromRoute] Guid enfermeraId,
-            [FromQuery] DateTime fecha,
-            [FromQuery] int pagina = 1,
-            [FromQuery] int tamPagina = 10,
-            CancellationToken cancellationToken = default)
+            [FromQuery] FiltroDosisProgramadasSolicitud filtro,
+            CancellationToken cancellationToken)
         {
-            var resultado =
-                await _obtenerDosisProgramadasCasoDeUso.EjecutarAsync(
-                    enfermeraId,
-                    fecha,
-                    pagina,
-                    tamPagina,
-                    cancellationToken);
+            var resultado = await _obtenerDosisProgramadasCasoDeUso.EjecutarAsync(
+                enfermeraId,
+                filtro,
+                cancellationToken);
 
             return Ok(resultado);
         }

@@ -1,8 +1,7 @@
-﻿using Clinico.Aplicacion.DTOs.Respuestas;
+﻿using Clinico.Dominio.Constantes;
+using Clinico.Dominio.Entidades;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,12 +9,12 @@ namespace Clinico.Aplicacion.Interfaces.IConsultas
 {
     public interface IObtenerDosisProgramadasConsulta
     {
-        Task<PaginaRespuesta<DosisProgramadaRespuesta>>
-            ObtenerAsync(
-                Guid sectorId,
-                DateTime fecha,
-                int pagina,
-                int tamPagina,
-                CancellationToken cancellationToken);
+        Task<(List<TratamientoDosis> Elementos, int TotalRegistros)> ObtenerAsync(
+            IReadOnlyCollection<Guid> pacientesIds,
+            DateTime fecha,
+            IReadOnlyCollection<EstadoDosis>? estados,
+            int pagina,
+            int tamPagina,
+            CancellationToken cancellationToken);
     }
 }

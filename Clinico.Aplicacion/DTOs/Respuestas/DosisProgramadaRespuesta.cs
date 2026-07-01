@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Clinico.Dominio.Constantes;
+using System;
 
 namespace Clinico.Aplicacion.DTOs.Respuestas
 {
     public sealed record DosisProgramadaRespuesta
     {
-        public Guid DosisId { get; set; }
-        public string Paciente { get; set; } = string.Empty;
-        public string Medicamento { get; set; } = string.Empty;
-        public DateTime FechaProgramada { get; set; }
-        public string Estado { get; set; } = string.Empty;
-        public string Prioridad { get; set; } = string.Empty;
+        public Guid DosisId { get; init; }
+        public Guid PacienteId { get; init; }
+        public string Paciente { get; init; } = string.Empty;
+        public int NumeroCama { get; init; }
+        public string Medicamento { get; init; } = string.Empty;
+        public decimal Dosis { get; init; }
+        public string UnidadMedida { get; init; } = string.Empty;
+        public DateTime FechaProgramada { get; init; }
+        public EstadoDosis Estado { get; init; }
+        public PrioridadDosis Prioridad { get; init; }
     }
 }
