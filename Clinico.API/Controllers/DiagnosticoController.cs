@@ -32,7 +32,7 @@ public class DiagnosticosController : ControllerBase
     [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<RegistrarDiagnosticoRespuesta>>RegistrarDiagnostico([FromBody] RegistrarDiagnosticoSolicitud solicitud)
     {
-        var respuesta =await _registrarDiagnosticoCasoDeUso.EjecutarAsync(solicitud);
+        var respuesta = await _registrarDiagnosticoCasoDeUso.EjecutarAsync(solicitud);
 
         return Created($"api/Diagnostico/{respuesta.DiagnosticoId}",respuesta);
     }
