@@ -22,17 +22,20 @@ namespace Clinico.API.Controllers
         private readonly IRegistrarAdministracionMedicacionCasoDeUso _registrarAdministracionCasoDeUso;
         private readonly IRegistrarOmisionMedicacionCasoDeUso _registrarOmisionCasoDeUso;
         private readonly IObtenerDosisProgramadasCasoDeUso _obtenerDosisProgramadasCasoDeUso;
+        private readonly IObtenerSectorEnfermeraCasoDeUso _obtenerSectorEnfermeraCasoDeUso;
 
         public EnfermerasController(
             IObtenerEnfermeraPanelDeControlCasoDeUso obtenerPanelCasoDeUso,
             IRegistrarAdministracionMedicacionCasoDeUso registrarAdministracionCasoDeUso,
             IRegistrarOmisionMedicacionCasoDeUso registrarOmisionCasoDeUso,
-            IObtenerDosisProgramadasCasoDeUso obtenerDosisProgramadasCasoDeUso)
+            IObtenerDosisProgramadasCasoDeUso obtenerDosisProgramadasCasoDeUso,
+            IObtenerSectorEnfermeraCasoDeUso obtenerSectorEnfermeraCasoDeUso)
         {
             _obtenerPanelCasoDeUso = obtenerPanelCasoDeUso;
             _registrarAdministracionCasoDeUso = registrarAdministracionCasoDeUso;
             _registrarOmisionCasoDeUso = registrarOmisionCasoDeUso;
             _obtenerDosisProgramadasCasoDeUso = obtenerDosisProgramadasCasoDeUso;
+            _obtenerSectorEnfermeraCasoDeUso = obtenerSectorEnfermeraCasoDeUso;
         }
 
         [HttpGet("{id:guid}/panel")]
@@ -111,6 +114,23 @@ namespace Clinico.API.Controllers
                 cancellationToken);
 
             return Ok(resultado);
+        }
+
+        [HttpGet("{enfermeraId:guid}/sector")]
+        [ProducesResponseType(typeof(SectorEnfermeraRespuesta), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<SectorEnfermeraRespuesta>> ObtenerSector(
+    [FromRoute] Guid enfermeraId,
+    CancellationToken cancellationToken)
+        {
+            var respuesta = await _obtenerSectorEnfermeraCasoDeUso.EjecutarAsync(
+                enfermeraId,
+                cancellationToken);
+
+            return Ok(respuesta);
         }
     }
 }

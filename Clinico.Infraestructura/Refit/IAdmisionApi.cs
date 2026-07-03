@@ -14,5 +14,8 @@ namespace Clinico.Infraestructura.Refit
 
         [Get("/api/sectores/{sectorId}/camas")]
         Task<IEnumerable<DetalleCamaRespuesta>> ObtenerCamasPorSectorAsync(Guid sectorId);
+
+        [Get("/api/sectores")]
+        Task<IEnumerable<SectorOcupacionRespuesta>> ObtenerSectoresAsync();
     }
 }

@@ -34,7 +34,7 @@ namespace Clinico.Infraestructura.Persistencia.Configuraciones
                 new Medicamento
                 {
                     Id = Guid.Parse("cccccccc-3333-3333-3333-cccccccccccc"),
-                    NombreComercial = "Amoxidal 500",
+                    NombreComercial = "Amoxidal",
                     DrogaGenerica = "Amoxicilina",
                     Presentacion = "Comprimidos",
                     ViaAdministracion = ViaAdministracion.Oral
@@ -42,7 +42,7 @@ namespace Clinico.Infraestructura.Persistencia.Configuraciones
                 new Medicamento
                 {
                     Id = Guid.Parse("dddddddd-4444-4444-4444-dddddddddddd"),
-                    NombreComercial = "Ibuprofeno 600",
+                    NombreComercial = "Ibuprofeno",
                     DrogaGenerica = "Ibuprofeno",
                     Presentacion = "Comprimidos recubiertos",
                     ViaAdministracion = ViaAdministracion.Oral

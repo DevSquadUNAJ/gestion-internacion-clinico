@@ -26,6 +26,7 @@ public static class InyeccionDependencias
         services.AddScoped<IConfirmarTratamientoCasoDeUso, ConfirmarTratamientoCasoDeUso>();
         services.AddScoped<ICancelarTratamientoCasoDeUso, CancelarTratamientoCasoDeUso>();
         services.AddScoped<IObtenerDosisProgramadasCasoDeUso, ObtenerDosisProgramadasCasoDeUso>();
+        services.AddScoped<IObtenerSectorEnfermeraCasoDeUso, ObtenerSectorEnfermeraCasoDeUso>();
 
         // ==========================================
         // MAPEADORES
@@ -34,6 +35,7 @@ public static class InyeccionDependencias
         services.AddSingleton<IRegistrarDiagnosticoMapeador, RegistrarDiagnosticoMapeador>();
         services.AddSingleton<IHistorialAuditoriaMapper, HistorialAuditoriaMapper>();
         services.AddSingleton<IPrescribirTratamientoMapeador, PrescribirTratamientoMapeador>();
+        services.AddSingleton<ISectorEnfermeraMapeador, SectorEnfermeraMapeador>();
 
         return services;
     }
