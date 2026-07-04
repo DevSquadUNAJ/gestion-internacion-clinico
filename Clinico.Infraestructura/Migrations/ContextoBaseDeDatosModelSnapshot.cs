@@ -367,7 +367,7 @@ namespace Clinico.Infraestructura.Migrations
                         new
                         {
                             Id = new Guid("aaaaaaaa-1111-1111-1111-aaaaaaaaaaaa"),
-                            Alergias = "Penicilina",
+                            Alergias = "Ninguna conocida",
                             Antecedentes = "Hipertensión controlada",
                             GrupoSanguineo = "A+",
                             ObservacionesGenerales = "Paciente ingresa por guardia clínica.",
@@ -388,7 +388,7 @@ namespace Clinico.Infraestructura.Migrations
                             Alergias = "Ibuprofeno",
                             Antecedentes = "Cirugía de apéndice en 2015",
                             GrupoSanguineo = "B+",
-                            ObservacionesGenerales = "Control de rutina.",
+                            ObservacionesGenerales = "Paciente ingresa por guardia clínica.",
                             PacienteId = new Guid("33333333-2373-cccc-cccc-333333333333")
                         },
                         new
@@ -397,25 +397,25 @@ namespace Clinico.Infraestructura.Migrations
                             Alergias = "Ninguna conocida",
                             Antecedentes = "Diabetes Tipo 2",
                             GrupoSanguineo = "AB+",
-                            ObservacionesGenerales = "Requiere monitoreo de glucosa.",
+                            ObservacionesGenerales = "Paciente ingresa por guardia clínica.",
                             PacienteId = new Guid("44444444-2474-dddd-dddd-444444444444")
                         },
                         new
                         {
                             Id = new Guid("eeeeeeee-5555-5555-5555-eeeeeeeeeeee"),
-                            Alergias = "Lactosa, Maní",
+                            Alergias = "Penicilina",
                             Antecedentes = "Sin antecedentes clínicos de relevancia",
                             GrupoSanguineo = "O+",
-                            ObservacionesGenerales = "Chequeo pre-ocupacional.",
+                            ObservacionesGenerales = "Paciente ingresa por guardia clínica.",
                             PacienteId = new Guid("55555555-2575-eeee-eeee-555555555555")
                         },
                         new
                         {
                             Id = new Guid("ffffffff-6666-6666-6666-ffffffffffff"),
                             Alergias = "Ninguna conocida",
-                            Antecedentes = "Hipotiroidismo",
+                            Antecedentes = "Úlcera gástrica",
                             GrupoSanguineo = "A-",
-                            ObservacionesGenerales = "Medicación diaria con Levotiroxina.",
+                            ObservacionesGenerales = "Paciente ingresa por guardia clínica.",
                             PacienteId = new Guid("66666666-2676-ffff-ffff-666666666666")
                         },
                         new
@@ -498,7 +498,7 @@ namespace Clinico.Infraestructura.Migrations
                         {
                             Id = new Guid("cccccccc-3333-3333-3333-cccccccccccc"),
                             DrogaGenerica = "Amoxicilina",
-                            NombreComercial = "Amoxidal 500",
+                            NombreComercial = "Amoxidal",
                             Presentacion = "Comprimidos",
                             RequiereControl = false,
                             ViaAdministracion = 1
@@ -507,8 +507,17 @@ namespace Clinico.Infraestructura.Migrations
                         {
                             Id = new Guid("dddddddd-4444-4444-4444-dddddddddddd"),
                             DrogaGenerica = "Ibuprofeno",
-                            NombreComercial = "Ibuprofeno 600",
+                            NombreComercial = "Ibuprofeno",
                             Presentacion = "Comprimidos recubiertos",
+                            RequiereControl = false,
+                            ViaAdministracion = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("eeeeeeee-5555-5555-5555-eeeeeeeeeeee"),
+                            DrogaGenerica = "Paracetamol",
+                            NombreComercial = "Paracetamol",
+                            Presentacion = "Comprimidos",
                             RequiereControl = false,
                             ViaAdministracion = 1
                         });
@@ -675,28 +684,28 @@ namespace Clinico.Infraestructura.Migrations
                         {
                             Id = new Guid("77777777-1111-8888-8888-777777777777"),
                             Estado = 1,
-                            FechaProgramada = new DateTime(2026, 6, 29, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaProgramada = new DateTime(2026, 7, 6, 20, 0, 0, 0, DateTimeKind.Unspecified),
                             TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
                         },
                         new
                         {
                             Id = new Guid("77777777-2222-8888-8888-777777777777"),
                             Estado = 1,
-                            FechaProgramada = new DateTime(2026, 6, 30, 1, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaProgramada = new DateTime(2026, 7, 7, 4, 0, 0, 0, DateTimeKind.Unspecified),
                             TratamientoId = new Guid("55555555-7777-7777-7777-555555555555")
                         },
                         new
                         {
                             Id = new Guid("88888888-1111-8888-8888-888888888888"),
                             Estado = 1,
-                            FechaProgramada = new DateTime(2026, 6, 29, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaProgramada = new DateTime(2026, 7, 6, 21, 0, 0, 0, DateTimeKind.Unspecified),
                             TratamientoId = new Guid("66666666-7777-7777-7777-666666666666")
                         },
                         new
                         {
                             Id = new Guid("88888888-2222-8888-8888-888888888888"),
                             Estado = 1,
-                            FechaProgramada = new DateTime(2026, 6, 30, 6, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaProgramada = new DateTime(2026, 7, 7, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             TratamientoId = new Guid("66666666-7777-7777-7777-666666666666")
                         });
                 });

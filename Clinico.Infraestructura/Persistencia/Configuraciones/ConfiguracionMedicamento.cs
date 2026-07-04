@@ -46,6 +46,14 @@ namespace Clinico.Infraestructura.Persistencia.Configuraciones
                     DrogaGenerica = "Ibuprofeno",
                     Presentacion = "Comprimidos recubiertos",
                     ViaAdministracion = ViaAdministracion.Oral
+                },
+                new Medicamento
+                {
+                    Id = Guid.Parse("eeeeeeee-5555-5555-5555-eeeeeeeeeeee"),
+                    NombreComercial = "Paracetamol",
+                    DrogaGenerica = "Paracetamol",
+                    Presentacion = "Comprimidos",
+                    ViaAdministracion = ViaAdministracion.Oral
                 }
             );
         }
