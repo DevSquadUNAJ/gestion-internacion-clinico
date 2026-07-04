@@ -12,5 +12,7 @@ namespace Clinico.Aplicacion.DTOs.Solicitudes
         public Guid? SectorId { get; set; }
         public int Pagina { get; set; } = 1;
         public int TamPagina { get; set; } = 10;
+        public DateTime? FechaHoraDesde { get; set; }
+        public DateTime? FechaHoraHasta { get; set; }
     }
 }

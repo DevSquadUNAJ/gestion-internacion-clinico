@@ -1,5 +1,4 @@
 ﻿using Clinico.Aplicacion.DTOs.Respuestas;
-using Clinico.Aplicacion.DTOs.Respuestas.Admision;
 using Clinico.Aplicacion.DTOs.Solicitudes;
 using Clinico.Aplicacion.Excepciones;
 using Clinico.Aplicacion.Interfaces.ICasosDeUso;
@@ -7,7 +6,6 @@ using Clinico.Aplicacion.Interfaces.IConsultas;
 using Clinico.Aplicacion.Interfaces.IExternos;
 using Clinico.Dominio.Constantes;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -83,6 +81,8 @@ namespace Clinico.Aplicacion.CasosDeUso
                 filtro.Estados,
                 filtro.Pagina,
                 filtro.TamPagina,
+                filtro.FechaHoraDesde,
+                filtro.FechaHoraHasta,
                 cancellationToken);
 
             var elementos = dosis.Select(d =>
