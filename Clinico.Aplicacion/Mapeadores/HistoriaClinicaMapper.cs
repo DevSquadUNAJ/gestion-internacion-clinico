@@ -2,19 +2,13 @@
 using Clinico.Aplicacion.Interfaces.IMapeadores;
 using Clinico.Dominio.Constantes;
 using Clinico.Dominio.Entidades;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Clinico.Aplicacion.Mapeadores
 {
-    public class HistoriaClinicaMapper
-    : IHistoriaClinicaMapper
+    public class HistoriaClinicaMapper : IHistoriaClinicaMapper
     {
-        public ObtenerHistoriaClinicaRespuesta Mapear(
-            HistoriaClinica historiaClinica)
+        public ObtenerHistoriaClinicaRespuesta Mapear(HistoriaClinica historiaClinica)
         {
             return new ObtenerHistoriaClinicaRespuesta
             {
@@ -37,19 +31,23 @@ namespace Clinico.Aplicacion.Mapeadores
                     .ToList(),
 
                 TratamientosActivos = historiaClinica.Diagnosticos
-                    .SelectMany(d => d.Tratamientos)
-                    .Where(t => t.Estado == EstadoTratamiento.Activo)
-                    .Select(t => new TratamientoActivoRespuesta
-                    {
-                        TratamientoId = t.Id,
-                        Medicamento = t.Medicamento.NombreComercial,
-                        Dosis = t.Dosis,
-                        UnidadMedida = t.UnidadMedida.Abreviatura,
-                        Frecuencia = t.FrecuenciaAdministracion.Descripcion,
-                        FechaInicio = t.FechaInicio,
-                        FechaFin = t.FechaFin,
-                        Estado = t.Estado.ToString(),
-                    })
+                    .SelectMany(d => d.Tratamientos
+                        .Where(t => t.Estado == EstadoTratamiento.Activo)
+                        .Select(t => new TratamientoActivoRespuesta
+                        {
+                            TratamientoId = t.Id,
+                            Medicamento = t.Medicamento.NombreComercial,
+                            Dosis = t.Dosis,
+                            UnidadMedida = t.UnidadMedida.Abreviatura,
+                            Frecuencia = t.FrecuenciaAdministracion.Descripcion,
+                            FechaInicio = t.FechaInicio,
+                            FechaFin = t.FechaFin,
+                            Estado = t.Estado.ToString(),
+                            // Datos traídos directamente desde el padre (Diagnostico)
+                            CodigoCie10 = d.CodigoCie10,
+                            DescripcionDiagnostico = d.CatalogoCie10.Descripcion,
+                            FechaHoraDiagnostico = d.FechaHora // <--- NUEVO MAPEO AÑADIDO AQUÍ
+                        }))
                     .ToList()
             };
         }

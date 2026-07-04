@@ -53,5 +53,11 @@ namespace Clinico.Aplicacion.DTOs.Respuestas
         public DateTime? FechaFin { get; set; }
 
         public string Estado { get; set; } = string.Empty;
+
+        public string CodigoCie10 { get; set; } = string.Empty;
+
+        public string DescripcionDiagnostico { get; set; } = string.Empty;
+
+        public DateTime FechaHoraDiagnostico { get; set; }
     }
 }
