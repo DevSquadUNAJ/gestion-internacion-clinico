@@ -15,6 +15,8 @@ namespace Clinico.Aplicacion.Interfaces.IConsultas
             IReadOnlyCollection<EstadoDosis>? estados,
             int pagina,
             int tamPagina,
+            DateTime? fechaHoraDesde,
+            DateTime? fechaHoraHasta,
             CancellationToken cancellationToken);
     }
 }
