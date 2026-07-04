@@ -34,7 +34,7 @@ namespace Clinico.Infraestructura.Persistencia.Configuraciones
                     Id = Guid.Parse("aaaaaaaa-1111-1111-1111-aaaaaaaaaaaa"),
                     PacienteId = Guid.Parse("11111111-aaaa-aaaa-aaaa-111111111111"), // Carlos Mendoza
                     GrupoSanguineo = "A+",
-                    Alergias = "Penicilina",
+                    Alergias = "Ninguna conocida",
                     Antecedentes = "Hipertensión controlada",
                     ObservacionesGenerales = "Paciente ingresa por guardia clínica."
                 },
@@ -54,7 +54,7 @@ namespace Clinico.Infraestructura.Persistencia.Configuraciones
                     GrupoSanguineo = "B+",
                     Alergias = "Ibuprofeno",
                     Antecedentes = "Cirugía de apéndice en 2015",
-                    ObservacionesGenerales = "Control de rutina."
+                    ObservacionesGenerales = "Paciente ingresa por guardia clínica."
                 },
                 new HistoriaClinica
                 {
@@ -63,16 +63,16 @@ namespace Clinico.Infraestructura.Persistencia.Configuraciones
                     GrupoSanguineo = "AB+",
                     Alergias = "Ninguna conocida",
                     Antecedentes = "Diabetes Tipo 2",
-                    ObservacionesGenerales = "Requiere monitoreo de glucosa."
+                    ObservacionesGenerales = "Paciente ingresa por guardia clínica."
                 },
                 new HistoriaClinica
                 {
                     Id = Guid.Parse("eeeeeeee-5555-5555-5555-eeeeeeeeeeee"),
                     PacienteId = Guid.Parse("55555555-2575-eeee-eeee-555555555555"), // Javier Rodríguez
                     GrupoSanguineo = "O+",
-                    Alergias = "Lactosa, Maní",
+                    Alergias = "Penicilina",
                     Antecedentes = "Sin antecedentes clínicos de relevancia",
-                    ObservacionesGenerales = "Chequeo pre-ocupacional."
+                    ObservacionesGenerales = "Paciente ingresa por guardia clínica."
                 },
                 new HistoriaClinica
                 {
@@ -80,8 +80,8 @@ namespace Clinico.Infraestructura.Persistencia.Configuraciones
                     PacienteId = Guid.Parse("66666666-2676-ffff-ffff-666666666666"), // Silvana López
                     GrupoSanguineo = "A-",
                     Alergias = "Ninguna conocida",
-                    Antecedentes = "Hipotiroidismo",
-                    ObservacionesGenerales = "Medicación diaria con Levotiroxina."
+                    Antecedentes = "Úlcera gástrica",
+                    ObservacionesGenerales = "Paciente ingresa por guardia clínica."
                 },
                 new HistoriaClinica
                 {

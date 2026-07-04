@@ -35,7 +35,7 @@ namespace Clinico.Infraestructura.Persistencia.Configuraciones
                     Id = Guid.Parse("77777777-1111-8888-8888-777777777777"),
                     TratamientoId = Guid.Parse("55555555-7777-7777-7777-555555555555"),
                     EnfermeraId = null,
-                    FechaProgramada = new DateTime(2026, 06, 29, 17, 0, 0), // Hoy 17:00 PM (Atrasada)
+                    FechaProgramada = new DateTime(2026, 07, 06, 20, 0, 0), // Hoy 17:00 (Atrasada) (le resta 3 el front)
                     Estado = (EstadoDosis)1 // Pendiente
                 },
                 new TratamientoDosis
@@ -43,7 +43,7 @@ namespace Clinico.Infraestructura.Persistencia.Configuraciones
                     Id = Guid.Parse("77777777-2222-8888-8888-777777777777"),
                     TratamientoId = Guid.Parse("55555555-7777-7777-7777-555555555555"),
                     EnfermeraId = null,
-                    FechaProgramada = new DateTime(2026, 06, 30, 1, 0, 0), // Mañana 1:00 PM
+                    FechaProgramada = new DateTime(2026, 07, 07, 4, 0, 0), // Mañana 1:00 (le resta 3 el front)
                     Estado = (EstadoDosis)1 // Pendiente
                 },
 
@@ -55,7 +55,7 @@ namespace Clinico.Infraestructura.Persistencia.Configuraciones
                     Id = Guid.Parse("88888888-1111-8888-8888-888888888888"),
                     TratamientoId = Guid.Parse("66666666-7777-7777-7777-666666666666"),
                     EnfermeraId = null,
-                    FechaProgramada = new DateTime(2026, 06, 29, 18, 0, 0), // Hoy 18:00 PM (Atrasada)
+                    FechaProgramada = new DateTime(2026, 07, 06, 21, 0, 0), // Hoy 18:00 (Atrasada) (le resta 3 el front)
                     Estado = (EstadoDosis)1 // Pendiente
                 },
                 new TratamientoDosis
@@ -63,7 +63,7 @@ namespace Clinico.Infraestructura.Persistencia.Configuraciones
                     Id = Guid.Parse("88888888-2222-8888-8888-888888888888"),
                     TratamientoId = Guid.Parse("66666666-7777-7777-7777-666666666666"),
                     EnfermeraId = null,
-                    FechaProgramada = new DateTime(2026, 06, 30, 6, 0, 0), // Mañana 6:00 AM
+                    FechaProgramada = new DateTime(2026, 07, 07, 09, 0, 0), // Mañana 06:00 (le resta 3 el front)
                     Estado = (EstadoDosis)1 // Pendiente
                 }
             );
