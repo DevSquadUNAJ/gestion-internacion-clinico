@@ -58,5 +58,25 @@ namespace Clinico.Infraestructura.ServiciosExternos
                 throw new Exception($"Error de infraestructura al comunicarse con el microservicio de Admisión: {ex.Message}", ex);
             }
         }
+
+        public async Task<IEnumerable<SectorOcupacionRespuesta>> ObtenerSectoresAsync()
+        {
+            try
+            {
+                return await _admisionApi.ObtenerSectoresAsync();
+            }
+            catch (ApiException ex)
+            {
+                if (ex.StatusCode == System.Net.HttpStatusCode.Unauthorized
+                    || ex.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                {
+                    throw new ExceptionUnauthorized(
+                        "El usuario actual no tiene permisos o su sesión es inválida para comunicarse con Admisión.");
+                }
+
+                throw new Exception(
+                    $"Error de infraestructura al comunicarse con el microservicio de Admisión: {ex.Message}", ex);
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Clinico.Aplicacion.DTOs.Respuestas.Admision;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Clinico.Aplicacion.Interfaces.IExternos
@@ -10,5 +11,7 @@ namespace Clinico.Aplicacion.Interfaces.IExternos
         Task<ContextoInternacionRespuesta> ObtenerContextoInternacionAsync(Guid internacionId);
 
         Task<IEnumerable<DetalleCamaRespuesta>> ObtenerCamasPorSectorAsync(Guid sectorId);
+
+        Task<IEnumerable<SectorOcupacionRespuesta>> ObtenerSectoresAsync();
     }
 }
