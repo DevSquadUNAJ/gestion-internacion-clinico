@@ -42,15 +42,28 @@ public class ModificarTratamientoCasoDeUso : IModificarTratamientoCasoDeUso
         if (tratamiento.Estado == EstadoTratamiento.Finalizado)
             throw new ExceptionBadRequest("El tratamiento ya se encuentra finalizado.");
 
-        var frecuencia = await _frecuenciaConsulta.ObtenerPorIdAsync(solicitud.FrecuenciaAdministracionId);
-        if (frecuencia is null)
-            throw new ExceptionNotFound("La frecuencia no existe");
+        string nombreFrecuencia = "No modificada";
 
-        tratamiento.Dosis = solicitud.Dosis;
-        tratamiento.FrecuenciaAdministracionId = solicitud.FrecuenciaAdministracionId;
+        // 1. Modificar Frecuencia SOLO si fue enviada en la solicitud
+        if (solicitud.FrecuenciaAdministracionId.HasValue)
+        {
+            var frecuencia = await _frecuenciaConsulta.ObtenerPorIdAsync(solicitud.FrecuenciaAdministracionId.Value);
+            if (frecuencia is null)
+                throw new ExceptionNotFound("La frecuencia no existe");
+
+            tratamiento.FrecuenciaAdministracionId = solicitud.FrecuenciaAdministracionId.Value;
+            nombreFrecuencia = frecuencia.Descripcion;
+        }
+
+        // 2. Modificar Dosis SOLO si fue enviada en la solicitud
+        if (solicitud.Dosis.HasValue)
+        {
+            tratamiento.Dosis = solicitud.Dosis.Value;
+        }
 
         var dosisCanceladas = 0;
 
+        // 3. Lógica de Suspensión (Ya estaba perfecta)
         if (solicitud.Suspender)
         {
             tratamiento.Estado = EstadoTratamiento.Suspendido;
@@ -64,7 +77,10 @@ public class ModificarTratamientoCasoDeUso : IModificarTratamientoCasoDeUso
             }
 
             dosisCanceladas = dosisFuturas.Count;
-            await _tratamientoDosisComando.ActualizarAsync(dosisFuturas);
+            if (dosisFuturas.Any())
+            {
+                await _tratamientoDosisComando.ActualizarAsync(dosisFuturas);
+            }
         }
 
         await _tratamientoComando.ActualizarAsync(tratamiento);
@@ -73,7 +89,7 @@ public class ModificarTratamientoCasoDeUso : IModificarTratamientoCasoDeUso
         {
             TratamientoId = tratamiento.Id,
             Dosis = tratamiento.Dosis,
-            Frecuencia = frecuencia.Descripcion,
+            Frecuencia = nombreFrecuencia,
             Estado = tratamiento.Estado,
             DosisCanceladas = dosisCanceladas,
             FechaModificacion = DateTime.UtcNow
