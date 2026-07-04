@@ -14,19 +14,21 @@ namespace Clinico.Aplicacion.Mapeadores
             {
                 HistoriaClinicaId = historiaClinica.Id,
                 PacienteId = historiaClinica.PacienteId,
-                GrupoSanguineo = historiaClinica.GrupoSanguineo,
-                Alergias = historiaClinica.Alergias,
-                Antecedentes = historiaClinica.Antecedentes,
+                // Solución a las líneas 18 y 19 (y agregamos antecedentes por seguridad):
+                GrupoSanguineo = historiaClinica.GrupoSanguineo ?? string.Empty,
+                Alergias = historiaClinica.Alergias ?? string.Empty,
+                Antecedentes = historiaClinica.Antecedentes ?? string.Empty,
 
                 Diagnosticos = historiaClinica.Diagnosticos
                     .OrderByDescending(d => d.FechaHora)
                     .Select(d => new DiagnosticoResumenRespuesta
                     {
                         DiagnosticoId = d.Id,
-                        CodigoCie10 = d.CodigoCie10,
-                        Descripcion = d.CatalogoCie10.Descripcion,
+                        CodigoCie10 = d.CodigoCie10 ?? string.Empty,
+                        // Solución a la línea 29 (usamos ?. por si CatalogoCie10 no vino en el Include):
+                        Descripcion = d.CatalogoCie10?.Descripcion ?? string.Empty,
                         FechaHora = d.FechaHora,
-                        Observaciones = d.Observaciones
+                        Observaciones = d.Observaciones ?? string.Empty
                     })
                     .ToList(),
 
@@ -36,17 +38,16 @@ namespace Clinico.Aplicacion.Mapeadores
                         .Select(t => new TratamientoActivoRespuesta
                         {
                             TratamientoId = t.Id,
-                            Medicamento = t.Medicamento.NombreComercial,
+                            Medicamento = t.Medicamento?.NombreComercial ?? string.Empty,
                             Dosis = t.Dosis,
-                            UnidadMedida = t.UnidadMedida.Abreviatura,
-                            Frecuencia = t.FrecuenciaAdministracion.Descripcion,
+                            UnidadMedida = t.UnidadMedida?.Abreviatura ?? string.Empty,
+                            Frecuencia = t.FrecuenciaAdministracion?.Descripcion ?? string.Empty,
                             FechaInicio = t.FechaInicio,
                             FechaFin = t.FechaFin,
                             Estado = t.Estado.ToString(),
-                            // Datos traídos directamente desde el padre (Diagnostico)
-                            CodigoCie10 = d.CodigoCie10,
-                            DescripcionDiagnostico = d.CatalogoCie10.Descripcion,
-                            FechaHoraDiagnostico = d.FechaHora // <--- NUEVO MAPEO AÑADIDO AQUÍ
+                            CodigoCie10 = d.CodigoCie10 ?? string.Empty,
+                            DescripcionDiagnostico = d.CatalogoCie10?.Descripcion ?? string.Empty,
+                            FechaHoraDiagnostico = d.FechaHora
                         }))
                     .ToList()
             };
