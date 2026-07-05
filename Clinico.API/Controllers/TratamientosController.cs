@@ -56,7 +56,7 @@ public class TratamientosController : ControllerBase
         return Created($"api/tratamientos/{respuesta.TratamientoId}", respuesta);
     }
 
-    [HttpPost("{tratamientoId:guid}/confirmar")]
+    [HttpPost("{tratamientoId:guid}/confirmacion")]
     [ProducesResponseType(typeof(ConfirmarTratamientoRespuesta), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status401Unauthorized)]
@@ -73,7 +73,7 @@ public class TratamientosController : ControllerBase
         return Ok(respuesta);
     }
 
-    [HttpPost("{tratamientoId:guid}/cancelar")]
+    [HttpPost("{tratamientoId:guid}/cancelacion")]
     [ProducesResponseType(typeof(CancelarTratamientoRespuesta), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorApiRespuesta), StatusCodes.Status401Unauthorized)]
