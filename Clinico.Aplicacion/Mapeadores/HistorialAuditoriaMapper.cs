@@ -22,8 +22,8 @@ namespace Clinico.Aplicacion.Mapeadores
                     Accion = a.Accion,
                     Entidad = a.Entidad,
                     EntidadId = a.EntidadId,
-                    Descripcion = a.Descripcion,
-                    PayloadJson = a.PayloadJson,
+                    Descripcion = a.Descripcion ?? string.Empty,
+                    PayloadJson = a.PayloadJson ?? string.Empty,
                     FechaHora = a.FechaHora
                 }).ToList()
             };

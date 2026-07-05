@@ -71,6 +71,12 @@ namespace Clinico.API
                 });
             });
 
+            // Forzar que las URLs generadas sean en minúsculas
+            builder.Services.AddRouting(opciones =>
+            {
+                opciones.LowercaseUrls = true;
+            });
+
             // Controllers + serialización de enums como string
             builder.Services
                 .AddControllers()
