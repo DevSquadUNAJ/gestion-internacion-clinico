@@ -6,6 +6,7 @@ using Clinico.Aplicacion.Interfaces.IConsultas;
 using Clinico.Aplicacion.Interfaces.IExternos;
 using Clinico.Dominio.Constantes;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -43,25 +44,40 @@ namespace Clinico.Aplicacion.CasosDeUso
             if (filtro.TamPagina < 1)
                 throw new ExceptionBadRequest("El tamaño de página debe ser mayor o igual a 1.");
 
-            // Sector: el del filtro si vino, si no el de la enfermera.
+            DateTime desde;
+            DateTime hasta;
+
+            if (filtro.ProximasHoras.HasValue)
+            {
+                if (filtro.ProximasHoras.Value <= 0)
+                    throw new ExceptionBadRequest("La cantidad de próximas horas debe ser mayor a cero.");
+
+                desde = DateTime.UtcNow;
+                hasta = desde.AddHours(filtro.ProximasHoras.Value);
+            }
+            else if (filtro.Fecha.HasValue)
+            {
+                desde = filtro.Fecha.Value.Date;
+                hasta = desde.AddDays(1);
+            }
+            else
+            {
+                throw new ExceptionBadRequest("Debe indicar una fecha o una cantidad de próximas horas.");
+            }
+
             var sectorId = filtro.SectorId ?? enfermera.SectorId;
 
-            // Refit a Admisión: resolver camas del sector → pacientes + datos de cama.
             var camas = await _admisionServicio.ObtenerCamasPorSectorAsync(sectorId);
             var camasOcupadas = camas.Where(c => c.PacienteId.HasValue).ToList();
 
-            // Mapa pacienteId → datos de cama (para enriquecer sin N+1).
             var datosPorPaciente = camasOcupadas
                 .GroupBy(c => c.PacienteId!.Value)
                 .ToDictionary(g => g.Key, g => g.First());
 
             var pacientesIds = datosPorPaciente.Keys.ToList();
 
-            // Filtro opcional por paciente puntual.
             if (filtro.PacienteId.HasValue)
-            {
                 pacientesIds = pacientesIds.Where(id => id == filtro.PacienteId.Value).ToList();
-            }
 
             if (pacientesIds.Count == 0)
             {
@@ -77,12 +93,11 @@ namespace Clinico.Aplicacion.CasosDeUso
 
             var (dosis, totalRegistros) = await _dosisConsulta.ObtenerAsync(
                 pacientesIds,
-                filtro.Fecha,
+                desde,
+                hasta,
                 filtro.Estados,
                 filtro.Pagina,
                 filtro.TamPagina,
-                filtro.FechaHoraDesde,
-                filtro.FechaHoraHasta,
                 cancellationToken);
 
             var elementos = dosis.Select(d =>

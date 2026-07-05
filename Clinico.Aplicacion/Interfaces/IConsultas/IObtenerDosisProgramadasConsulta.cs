@@ -11,12 +11,11 @@ namespace Clinico.Aplicacion.Interfaces.IConsultas
     {
         Task<(List<TratamientoDosis> Elementos, int TotalRegistros)> ObtenerAsync(
             IReadOnlyCollection<Guid> pacientesIds,
-            DateTime fecha,
+            DateTime desde,
+            DateTime hasta,
             IReadOnlyCollection<EstadoDosis>? estados,
             int pagina,
             int tamPagina,
-            DateTime? fechaHoraDesde,
-            DateTime? fechaHoraHasta,
             CancellationToken cancellationToken);
     }
 }
